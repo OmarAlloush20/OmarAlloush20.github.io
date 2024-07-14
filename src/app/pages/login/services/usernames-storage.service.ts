@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { afterRender, Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
 const _usernamesLocalStorageKey = 'login_usernames';
@@ -12,9 +12,11 @@ export class UsernamesStorageService {
    }
 
   private initUserNames() {
-    const usernamesAsString : string = localStorage.getItem(_usernamesLocalStorageKey) ?? '';
-    const usernamesList = usernamesAsString ? usernamesAsString.split(',') : [];
-    this.userNames$.next(usernamesList);
+    afterRender(() => {
+      const usernamesAsString : string = localStorage.getItem(_usernamesLocalStorageKey) ?? '';
+      const usernamesList = usernamesAsString ? usernamesAsString.split(',') : [];
+      this.userNames$.next(usernamesList);
+    });
   }
 
   storeUsername(username: string) {
