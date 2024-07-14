@@ -1,0 +1,23 @@
+$primary-color: #ff5e0e;
+$secondary-color: #008575;
+$primary-light-color: #A3E7D8;
+$secondary-light-color: #CFC194;
+
+$on-light-color: #695D47;
+$on-dark-color: #A3E7D8;
+
+$font-size-base: 16px;
+$font-family: Arial, sans-serif;
+
+:root {
+  --primary-color: $primary-color;
+  --secondary-color: $secondary-color;
+  --primary-light-color: $primary-light-color;
+  --secondary-light-color: $secondary-light-color;
+  
+  --on-light-color: $on-light-color;
+  --on-light-color: $on-dark-color;
+
+  --font-size-base: $font-size-base;
+  --font-family: $font-family;
+}
