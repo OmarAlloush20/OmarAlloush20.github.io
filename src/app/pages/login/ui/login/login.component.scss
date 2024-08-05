@@ -1,111 +1,87 @@
 // Variables for easy customization
-$primary-color: #4CAF50;
-$secondary-color: #2196F3;
-$font-color: #333;
-$bg-color: #f5f5f5;
 
-.login-container {
+@import "variables";
+
+.login-card-container {
+  height: 100vh;
+  width: 100vw;
+}
+
+.login-form-container {
   display: flex;
+  flex-direction: column;
+  position: relative;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-  
-  form {
-    background-color: $bg-color;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  height: 100%;
+  width: 100%;
+  background: url('/assets/images/travel-agent.jpeg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-position-y: 15;
+  background-color: black;
+
+  * {
+    z-index: 1;
+  }
+
+  .login-container-overlay {
+    position: absolute;
+    z-index: 0;
     width: 100%;
-    max-width: 400px;
-    
+    height: 100%;
+    background: linear-gradient(to top, #000000d8 40%, #00000097 70%, #ffffff00 100%);
+  }
+
+  form {
+    padding: 20px;
+    width: 100%;
+    max-width: 350px;
+    min-height: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    h1 {
+      text-align: center;
+      font-size: 45px;
+    }
+
     h2 {
       text-align: center;
       margin-bottom: 30px;
       font-size: 28px;
-      color: $font-color;
       text-transform: uppercase;
       letter-spacing: 2px;
     }
-    
-    .form-group {
-      margin-bottom: 20px;
+
+    p {
+      text-align: center;
       
-      label {
-        display: block;
-        font-size: 16px;
-        color: $font-color;
-        margin-bottom: 8px;
-        font-weight: bold;
-      }
-      
-      input[type="text"],
-      input[type="password"] {
-        width: 100%;
-        padding: 12px;
-        font-size: 16px;
-        border: 1px solid #ccc;
-        border-radius: 6px;
-        box-sizing: border-box;
-        transition: border-color 0.3s ease;
-        
-        &:focus {
-          outline: none;
-          border-color: $primary-color;
-        }
-      }
-    }
-    
-    .btn-primary {
-      width: 100%;
-      padding: 12px;
-      font-size: 18px;
-      color: #fff;
-      background-color: $primary-color;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      
-      &:hover {
-        background-color: darken($primary-color, 10%);
-      }
-      
-      &:disabled {
-        background-color: #ccc;
-        cursor: not-allowed;
+      &.slogan {
+        margin-bottom: 20px;
       }
     }
   }
-  
-  @media (max-width: 600px) {
-    form {
-      padding: 15px;
-      
-      h2 {
-        font-size: 24px;
-        margin-bottom: 20px;
-      }
-      
-      .form-group {
-        margin-bottom: 15px;
-        
-        label {
-          font-size: 14px;
-        }
-        
-        input[type="text"],
-        input[type="password"] {
-          font-size: 14px;
-          padding: 10px;
-        }
-      }
-      
-      .btn-primary {
-        padding: 10px;
-        font-size: 16px;
-      }
-    }
+}
+
+.new-account-btn {
+  margin-top: 20px;
+  min-width: 200px;
+}
+
+.or-separator-container {
+  display: flex;
+  align-items: center;
+
+  p {
+    margin: 0px 12px;
+  }
+
+  span {
+    height: 1px;
+    background-color: $on-dark-secondary-color;
+    min-width: 100px;
   }
 }

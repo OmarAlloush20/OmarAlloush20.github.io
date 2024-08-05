@@ -1,17 +1,31 @@
-<div class="login-container">
-  <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
-    <h2>Login</h2>
-    
-    <div class="form-group">
-      <label for="username">Username</label>
-      <input type="text" id="username" name="username" class="form-control" required [(ngModel)]="model.username">
+<div class="login-card-container">
+  <div class="login-form-container">
+    <div class="login-container-overlay"></div>
+    <form (ngSubmit)="onSubmit()" [formGroup]="loginForm">
+      <h1>TravelFlow</h1>
+      <p class="slogan">where the journey begins</p>
+
+      <h2>Login</h2>
+
+      <div class="form-group">
+        <input type="text" id="username" formControlName="username" class="form-control" required>
+        <label for="username">Username</label>
+
+      </div>
+
+      <div class="form-group">
+        <input type="password" id="password" formControlName="password" class="form-control" required>
+        <label for="password">Password</label>
+      </div>
+
+      <button type="submit" class="btn btn-primary">Login</button>
+    </form>
+
+    <div class="or-separator-container">
+      <span></span> <p>or</p> <span></span>
     </div>
-    
-    <div class="form-group">
-      <label for="password">Password</label>
-      <input type="password" id="password" name="password" class="form-control" required [(ngModel)]="model.password">
-    </div>
-    
-    <button type="submit" class="btn btn-primary" [disabled]="!loginForm.form.valid">Login</button>
-  </form>
+
+    <button type="submit" class="btn btn-secondary new-account-btn">Create new account</button>
+
+  </div>
 </div>

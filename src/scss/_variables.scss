@@ -5,6 +5,8 @@ $secondary-light-color: #CFC194;
 
 $on-light-color: #695D47;
 $on-dark-color: #A3E7D8;
+$on-light-secondary-color: #7b6f59;
+$on-dark-secondary-color: #b2b9b8;
 
 $font-size-base: 16px;
 $font-family: Arial, sans-serif;
@@ -16,7 +18,7 @@ $font-family: Arial, sans-serif;
   --secondary-light-color: $secondary-light-color;
   
   --on-light-color: $on-light-color;
-  --on-light-color: $on-dark-color;
+  --on-dark-color: $on-dark-color;
 
   --font-size-base: $font-size-base;
   --font-family: $font-family;
