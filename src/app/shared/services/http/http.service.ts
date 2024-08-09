@@ -3,7 +3,6 @@ import {
   HttpClient,
   HttpHeaders,
   HttpErrorResponse,
-  HttpRequest,
   HttpResponse,
 } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
@@ -15,31 +14,36 @@ import { AuthService } from '../auth/auth.service';
   providedIn: 'root',
 })
 export class HttpService {
-  private baseUrl = environment.baseUrl; 
+  private baseUrl = environment.baseUrl;
   private httpOptions = {}; // Initial value
 
   constructor(private http: HttpClient, private auth : AuthService) {
     this.initHttpOptions();
+    this.listenToAuthChanges();
   }
 
   private initHttpOptions() {
     this.httpOptions = {
       headers: new HttpHeaders({
-        'Authorization': 'Bearer YOUR_TOKEN_HERE' // Replace YOUR_TOKEN_HERE with your actual token
+        'Authorization': 'Bearer YOUR_TOKEN_HERE' 
       }),
-      observe: 'response' as const // Observe the full response
+      observe: 'response' as const
     };
   }
 
+  private listenToAuthChanges() {
+
+  }
+
   // GET Method
-  getData<T>(endpoint: string): Observable<HttpResponse<T>> {
+  get<T>(endpoint: string): Observable<HttpResponse<T>> {
     return this.http
       .get<HttpResponse<T>>(`${this.baseUrl}/${endpoint}`)
       .pipe(catchError(this.handleError));
   }
 
   // POST Method
-  postData<T>(endpoint: string, body: any): Observable<HttpResponse<T>> {
+  post<T>(endpoint: string, body: any): Observable<HttpResponse<T>> {
     return this.http
       .post<HttpResponse<T>>(
         `${this.baseUrl}/${endpoint}`,
@@ -50,7 +54,7 @@ export class HttpService {
   }
 
   // UPDATE Method
-  updateData<T>(endpoint: string, body: any): Observable<HttpResponse<T>> {
+  update<T>(endpoint: string, body: any): Observable<HttpResponse<T>> {
     return this.http
       .put<HttpResponse<T>>(
         `${this.baseUrl}/${endpoint}`,
@@ -61,7 +65,7 @@ export class HttpService {
   }
 
   // DELETE Method
-  deleteData<T>(endpoint: string): Observable<HttpResponse<T>> {
+  delete<T>(endpoint: string): Observable<HttpResponse<T>> {
     return this.http
       .delete<HttpResponse<T>>(
         `${this.baseUrl}/${endpoint}`,
@@ -71,7 +75,7 @@ export class HttpService {
   }
 
   // Multipart File Upload
-  uploadFile<T>(
+  multipart<T>(
     endpoint: string,
     formData: FormData
   ): Observable<HttpResponse<T>> {
