@@ -2,12 +2,19 @@
 /// Text ///
 ////////////
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   color: $primary-color;
 }
 
-p, div, span {
-color: $on-dark-secondary-color;
+p,
+div,
+span {
+  color: $on-dark-secondary-color;
 }
 
 ////////////
@@ -81,8 +88,14 @@ $disabled-btn-color: #454140;
   &.btn-primary {
     background-color: $primary-color;
 
-    &:hover {
-      scale: 1.1
+    &:not(.disabled) {
+      &:hover {
+        scale: 1.1;
+      }
+
+      &:active {
+        background-color: rgb(254, 167, 123);
+      }
     }
 
     &.disabled {
@@ -100,5 +113,3 @@ $disabled-btn-color: #454140;
     }
   }
 }
-
-

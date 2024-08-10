@@ -18,14 +18,16 @@
         <label for="password">Password</label>
       </div>
 
-      <button type="submit" class="btn btn-primary">Login</button>
+      <button type="submit" class="btn btn-primary login-btn" [ngClass]="{ 'disabled': logginIn }">
+        {{logginIn ? "Logging in..." : "Login"}}
+      </button>
     </form>
-
+    <!-- 
     <div class="or-separator-container">
       <span></span> <p>or</p> <span></span>
     </div>
 
-    <button type="submit" class="btn btn-secondary new-account-btn">Create new account</button>
+    <button type="submit" class="btn btn-secondary new-account-btn">Create new account</button> -->
 
   </div>
 </div>
