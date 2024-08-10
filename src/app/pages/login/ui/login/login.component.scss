@@ -1,0 +1,87 @@
+// Variables for easy customization
+
+@import "variables";
+
+.login-card-container {
+  height: 100vh;
+  width: 100vw;
+}
+
+.login-form-container {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  background: url('/assets/images/travel-agent.jpeg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-position-y: 15;
+  background-color: black;
+
+  * {
+    z-index: 1;
+  }
+
+  .login-container-overlay {
+    position: absolute;
+    z-index: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to top, #000000d8 40%, #00000097 70%, #ffffff00 100%);
+  }
+
+  form {
+    padding: 20px;
+    width: 100%;
+    max-width: 350px;
+    min-height: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    h1 {
+      text-align: center;
+      font-size: 45px;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 28px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    p {
+      text-align: center;
+      
+      &.slogan {
+        margin-bottom: 20px;
+      }
+    }
+  }
+}
+
+.new-account-btn {
+  margin-top: 20px;
+  min-width: 200px;
+}
+
+.or-separator-container {
+  display: flex;
+  align-items: center;
+
+  p {
+    margin: 0px 12px;
+  }
+
+  span {
+    height: 1px;
+    background-color: $on-dark-secondary-color;
+    min-width: 100px;
+  }
+}

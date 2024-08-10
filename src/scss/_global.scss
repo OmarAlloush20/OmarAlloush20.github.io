@@ -1,0 +1,115 @@
+////////////
+/// Text ///
+////////////
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: $primary-color;
+}
+
+p,
+div,
+span {
+  color: $on-dark-secondary-color;
+}
+
+////////////
+/// Input //
+/// ////////
+
+$grey: rgb(177, 177, 177);
+
+// Used when the label should be top
+.shrinked-label {
+  font-size: 0.8rem;
+  top: 0px;
+  transition: 200ms;
+}
+
+.form-group {
+  position: relative;
+  transition: 500ms;
+  margin-bottom: 5px;
+
+  input {
+    width: 100%;
+    padding: 0px 12px;
+    margin: 10px 0px;
+    background-color: rgba(41, 41, 41, 0.514);
+    color: $on-dark-secondary-color;
+    border: none;
+    outline: none;
+    min-height: 35px;
+    transition: 500ms;
+
+    ~ label {
+      position: absolute;
+      display: block;
+      color: $on-dark-color;
+      top: 20px;
+      margin: 0px 10px;
+      transition: 200ms;
+      pointer-events: none;
+    }
+
+    &:focus,
+    &:valid {
+      ~ label {
+        font-size: 0.8rem; // Manually applying .shrinked-label styles
+        top: -8px; // Manually applying .shrinked-label styles
+        transition: 200ms; // Manually applying .shrinked-label styles
+      }
+    }
+
+    &::placeholder {
+      color: transparent;
+    }
+  }
+}
+
+///////////////
+/// Buttons ///
+///////////////
+
+$disabled-btn-color: #454140;
+
+.btn {
+  color: white;
+  min-height: 30px;
+  padding: 6px;
+  border: none;
+  cursor: pointer;
+  transition: 200ms;
+
+  &.btn-primary {
+    background-color: $primary-color;
+
+    &:not(.disabled) {
+      &:hover {
+        scale: 1.1;
+      }
+
+      &:active {
+        background-color: rgb(254, 167, 123);
+      }
+    }
+
+    &.disabled {
+      background-color: $disabled-btn-color;
+    }
+  }
+
+  &.btn-secondary {
+    background-color: transparent;
+    border: solid 1px $on-dark-color;
+    padding: 6px;
+
+    &:hover {
+      background-color: #a3e7d833;
+    }
+  }
+}
