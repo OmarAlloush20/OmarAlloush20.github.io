@@ -13,6 +13,7 @@ import { CommonModule } from '@angular/common';
 import { map, Subscription } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { LoginResult } from '../../types/login.types';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-login',
@@ -34,12 +35,13 @@ export class LoginComponent implements OnInit, OnDestroy {
   constructor(
     private loginService: LoginService,
     private usernamesStorage: UsernamesStorageService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private toastr: ToastrService
   ) {}
 
   ngOnInit(): void {
     this.loginForm = this.fb.group({
-      username: ['', [Validators.required, Validators.minLength(6)]],
+      username: ['', [Validators.required]],
       password: ['', [Validators.required, Validators.minLength(6)]],
     });
   }
@@ -58,21 +60,50 @@ export class LoginComponent implements OnInit, OnDestroy {
   onSubmit() {
     if (!this.logginIn) {
       this.logginIn = true;
-      console.log('logging in');
       if (this.loginForm.valid) {
         const loginSubscription = this.loginService
           .login(this.loginForm.value)
           .subscribe((res) => this.processLoginResult(res));
         this.subscriptions.push(loginSubscription);
-      } else {
-        console.log('invalid');
       }
     }
   }
 
   processLoginResult(result?: LoginResult) {
-    console.log(result);
+    switch (result) {
+      case 'success':
+        this._onLoginSuccess();
+        break;
+      case 'wrong-credentials':
+        this._onLoginWrongCredentials();
+        break;
+
+      case 'unknown':
+      case 'internal-server-error':
+        this._onLoginError();
+        break;
+    }
     this.logginIn = false;
-    console.log(this.logginIn);
+  }
+
+  private _onLoginSuccess() {
+    this.toastr.success('Logged in successfully');
+    // login
+  }
+
+  private _onLoginWrongCredentials() {
+    this.toastr.warning('Wrong credentials', undefined, {
+      timeOut: 7000,
+    });
+  }
+
+  private _onLoginError() {
+    this.toastr.error(
+      'An error occurred. Please make sure you have an internet connection and try again.',
+      undefined,
+      {
+        timeOut: 8000,
+      }
+    );
   }
 }

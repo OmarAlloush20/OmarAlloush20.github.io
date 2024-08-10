@@ -25,10 +25,19 @@ export class LoginRepository {
     //   })
     // );
 
-    const mockResult = {
-      status: HttpStatusCode.Ok,
+    let status = HttpStatusCode.Ok;
+
+    switch (credentials.username) {
+      case 'error':
+        status = HttpStatusCode.InternalServerError
+        break;
+      case 'warning':
+        status = HttpStatusCode.BadRequest
+        break;
+    }
+    const mockResult: RepositoryResult<any> = {
+      status: status,
     };
-  
     return of(mockResult).pipe(delay(2000));
   }
 }
