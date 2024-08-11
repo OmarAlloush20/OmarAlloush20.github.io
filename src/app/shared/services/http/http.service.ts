@@ -4,9 +4,10 @@ import {
   HttpHeaders,
   HttpErrorResponse,
   HttpResponse,
+  HttpStatusCode,
 } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, tap } from 'rxjs/operators';
 import { environment } from '../../../../environments/environment';
 import { AuthService } from '../auth/auth.service';
 
@@ -17,29 +18,25 @@ export class HttpService {
   private baseUrl = environment.baseUrl;
   private httpOptions = {}; // Initial value
 
-  constructor(private http: HttpClient, private auth : AuthService) {
+  constructor(private http: HttpClient, private auth: AuthService) {
     this.initHttpOptions();
-    this.listenToAuthChanges();
   }
 
   private initHttpOptions() {
     this.httpOptions = {
       headers: new HttpHeaders({
-        'Authorization': 'Bearer YOUR_TOKEN_HERE' 
+        Authorization: `Bearer ${this.auth.token}`,
       }),
-      observe: 'response' as const
+      observe: 'response' as const,
     };
-  }
-
-  private listenToAuthChanges() {
-
   }
 
   // GET Method
   get<T>(endpoint: string): Observable<HttpResponse<T>> {
-    return this.http
-      .get<HttpResponse<T>>(`${this.baseUrl}/${endpoint}`)
-      .pipe(catchError(this.handleError));
+    return this.http.get<HttpResponse<T>>(`${this.baseUrl}/${endpoint}`).pipe(
+      tap((res) => this._checkIfUnauthorized(res.status)),
+      catchError(this.handleError)
+    );
   }
 
   // POST Method
@@ -50,7 +47,10 @@ export class HttpService {
         body,
         this.httpOptions
       )
-      .pipe(catchError(this.handleError));
+      .pipe(
+        tap((res) => this._checkIfUnauthorized(res.status)),
+        catchError(this.handleError)
+      );
   }
 
   // UPDATE Method
@@ -61,17 +61,20 @@ export class HttpService {
         body,
         this.httpOptions
       )
-      .pipe(catchError(this.handleError));
+      .pipe(
+        tap((res) => this._checkIfUnauthorized(res.status)),
+        catchError(this.handleError)
+      );
   }
 
   // DELETE Method
   delete<T>(endpoint: string): Observable<HttpResponse<T>> {
     return this.http
-      .delete<HttpResponse<T>>(
-        `${this.baseUrl}/${endpoint}`,
-        this.httpOptions
-      )
-      .pipe(catchError(this.handleError));
+      .delete<HttpResponse<T>>(`${this.baseUrl}/${endpoint}`, this.httpOptions)
+      .pipe(
+        tap((res) => this._checkIfUnauthorized(res.status)),
+        catchError(this.handleError)
+      );
   }
 
   // Multipart File Upload
@@ -85,7 +88,10 @@ export class HttpService {
         formData,
         this.httpOptions
       )
-      .pipe(catchError(this.handleError));
+      .pipe(
+        tap((res) => this._checkIfUnauthorized(res.status)),
+        catchError(this.handleError)
+      );
   }
 
   private handleError(error: HttpErrorResponse) {
@@ -97,5 +103,12 @@ export class HttpService {
       );
     }
     return throwError('Something bad happened; please try again later.');
+  }
+
+  private _checkIfUnauthorized(statusCode: number) {
+    if (statusCode === HttpStatusCode.Unauthorized) {
+      this.auth.invalidate();
+      throw new Error('Unauthorized');
+    }
   }
 }
