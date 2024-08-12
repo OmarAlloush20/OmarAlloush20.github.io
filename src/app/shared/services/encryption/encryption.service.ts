@@ -10,7 +10,7 @@ export class EncryptionService {
 
   localEncrypt(text: string): string {
     const encrypted = CryptoJS.AES.encrypt(text, environment.localEncKey);
-    const result = encrypted.ciphertext.toString();
+    const result = encrypted.toString();
     return result
   }
 
