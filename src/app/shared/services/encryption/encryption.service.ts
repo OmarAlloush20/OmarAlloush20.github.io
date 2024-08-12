@@ -10,11 +10,13 @@ export class EncryptionService {
 
   localEncrypt(text: string): string {
     const encrypted = CryptoJS.AES.encrypt(text, environment.localEncKey);
-    return encrypted.toString();
+    const result = encrypted.ciphertext.toString();
+    return result
   }
 
   localDecrypt(text: string): string {
-    const encrypted = CryptoJS.AES.decrypt(text, environment.localEncKey);
-    return encrypted.toString();
+    const decrypted = CryptoJS.AES.decrypt(text, environment.localEncKey);
+    const result = decrypted.toString(CryptoJS.enc.Utf8);
+    return result;
   }
 }
