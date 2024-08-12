@@ -14,6 +14,7 @@ import { map, Subscription } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { LoginResult } from '../../types/login.types';
 import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -36,7 +37,8 @@ export class LoginComponent implements OnInit, OnDestroy {
     private loginService: LoginService,
     private usernamesStorage: UsernamesStorageService,
     private fb: FormBuilder,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private router : Router
   ) {}
 
   ngOnInit(): void {
@@ -88,7 +90,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   private _onLoginSuccess() {
     this.toastr.success('Logged in successfully');
-    // login
+    this.router.navigate(['main'])
   }
 
   private _onLoginWrongCredentials() {
