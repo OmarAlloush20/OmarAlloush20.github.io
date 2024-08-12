@@ -50,15 +50,19 @@ export class AuthService {
 
   private _loadToken() {
     const token = localStorage.getItem(_tokenLocalStorageKey) || '';
-    const decrypted = this.enc.localDecrypt(token);
-    this._token$.next(decrypted.toString());
+    if (token) {
+      const decrypted = this.enc.localDecrypt(token);
+      this._token$.next(decrypted.toString());
+    }
   }
 
   private _loadUser() {
     const user = localStorage.getItem(_userLocalStorageKey) || '';
-    const decrypted = this.enc.localDecrypt(user);
-    const decUser = JSON.parse(decrypted);
-    this._user$.next(decUser);
+    if (user) {
+      const decrypted = this.enc.localDecrypt(user);
+      const decUser = JSON.parse(decrypted);
+      this._user$.next(decUser);
+    }
   }
 
   private _listenToTokenChanges() {

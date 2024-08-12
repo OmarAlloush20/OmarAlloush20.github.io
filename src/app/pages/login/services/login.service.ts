@@ -18,7 +18,11 @@ export class LoginService {
     password: string;
   }): Observable<LoginResult | undefined> {
     return this.repository.login(credentials).pipe(map((val, _) => {
-      return loginResultMapper(val)
+      const result = loginResultMapper(val);
+      if(result === 'success') {
+        this.authService.update({token: 'assdfdsafdsafdsafdsafsa', user: {firstName: "Hesham", lastName: "Seddik", imageUrl: ""}})
+      }
+      return result;
     }));
   }
 }
