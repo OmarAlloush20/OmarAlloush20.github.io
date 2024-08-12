@@ -21,8 +21,8 @@ span {
 /// Input //
 /// ////////
 
-$grey: rgb(177, 177, 177);
-
+$input-background-color: #252525be;
+$input-background-color-autofilled: #202020;
 // Used when the label should be top
 .shrinked-label {
   font-size: 0.8rem;
@@ -34,40 +34,50 @@ $grey: rgb(177, 177, 177);
   position: relative;
   transition: 500ms;
   margin-bottom: 5px;
+}
 
-  input {
-    width: 100%;
-    padding: 0px 12px;
-    margin: 10px 0px;
-    background-color: rgba(41, 41, 41, 0.514);
-    color: $on-dark-secondary-color;
-    border: none;
-    outline: none;
-    min-height: 35px;
-    transition: 500ms;
+input {
+  width: 100%;
+  padding: 0px 12px;
+  margin: 10px 0px;
+  background-color: $input-background-color;
+  color: $on-dark-secondary-color;
+  border: none;
+  outline: none;
+  min-height: 35px;
+  transition: 500ms;
 
+  ~ label {
+    position: absolute;
+    display: block;
+    color: $on-dark-color;
+    top: 20px;
+    margin: 0px 10px;
+    transition: 200ms;
+    pointer-events: none;
+  }
+
+  &:focus,
+  &:valid {
     ~ label {
-      position: absolute;
-      display: block;
-      color: $on-dark-color;
-      top: 20px;
-      margin: 0px 10px;
-      transition: 200ms;
-      pointer-events: none;
+      font-size: 0.8rem; // Manually applying .shrinked-label styles
+      top: -8px; // Manually applying .shrinked-label styles
+      transition: 200ms; // Manually applying .shrinked-label styles
     }
+  }
 
-    &:focus,
-    &:valid {
-      ~ label {
-        font-size: 0.8rem; // Manually applying .shrinked-label styles
-        top: -8px; // Manually applying .shrinked-label styles
-        transition: 200ms; // Manually applying .shrinked-label styles
-      }
-    }
+  &:autofill,
+  &:autofill:hover,
+  &:autofill:focus {
+    box-shadow: 0 0 0px 1000px $input-background-color-autofilled inset;
+    -webkit-box-shadow: 0 0 0px 1000px $input-background-color-autofilled inset;
+    color: $on-dark-secondary-color;
+    -webkit-text-fill-color: $on-dark-secondary-color;
+    caret-color: white;
+  }
 
-    &::placeholder {
-      color: transparent;
-    }
+  &::placeholder {
+    color: transparent;
   }
 }
 
