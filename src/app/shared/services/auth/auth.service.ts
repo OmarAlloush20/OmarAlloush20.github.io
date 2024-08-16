@@ -19,11 +19,10 @@ export class AuthService {
     return this._token$.value;
   }
 
-  private _authStatus: AuthStatus = 'undetermined';
+  private _authStatus$ = new BehaviorSubject<AuthStatus>('undetermined');
 
-  public get isAuthenticated(): boolean {
-    if (this._authStatus !== 'authenticated') return false;
-    return true;
+  public get authStatus$() {
+    return this._authStatus$.asObservable();
   }
 
   private _user$ = new BehaviorSubject<User | undefined>(undefined);
@@ -32,12 +31,12 @@ export class AuthService {
     return this._user$.asObservable();
   }
 
-  constructor(private router: Router, private enc: EncryptionService) {
+  constructor(private enc: EncryptionService, private router: Router) {
     this._initAuth();
-    this._listenToTokenChanges();
   }
 
   private _initAuth() {
+    this._routeToLoginWhenInauthenticated()
     afterRender(() => {
       this.loadAuth();
     });
@@ -46,13 +45,14 @@ export class AuthService {
   loadAuth() {
     this._loadToken();
     this._loadUser();
+    this._updateStatus();
   }
 
   private _loadToken() {
     const token = localStorage.getItem(_tokenLocalStorageKey) || '';
     if (token) {
       const decrypted = this.enc.localDecrypt(token);
-      this._token$.next(decrypted.toString());
+      this._token$.next(decrypted);
     }
   }
 
@@ -65,24 +65,22 @@ export class AuthService {
     }
   }
 
-  private _listenToTokenChanges() {
-    this._token$.subscribe((token) => this._onTokenChanged(token));
+  private _updateStatus() {
+    this._authStatus$.next(this.token ? 'authenticated' : 'inauthenticated');
   }
 
-  private _onTokenChanged(token: string) {
-    this._updateAuthStatus(token);
-    if (!this.isAuthenticated) {
-      this.router.navigate(['/login']);
-    }
-  }
-
-  private _updateAuthStatus(token: string) {
-    this._authStatus = token ? 'authenticated' : 'inauthenticated';
+  private _routeToLoginWhenInauthenticated() {
+    this._authStatus$.subscribe((status) => {
+      if (status === 'inauthenticated') {
+        this.router.navigate(['login']);
+      }
+    });
   }
 
   update(authInfo: { user?: User; token?: string }) {
     if (authInfo.user) this._updateUser(authInfo.user);
     if (authInfo.token) this._updateToken(authInfo.token);
+    this._updateStatus();
   }
 
   private _updateUser(user: User) {
@@ -93,7 +91,7 @@ export class AuthService {
 
   private _updateToken(token: string) {
     const enc = this.enc.localEncrypt(token);
-    localStorage.setItem(_userLocalStorageKey, enc.toString());
+    localStorage.setItem(_tokenLocalStorageKey, enc.toString());
     this._token$.next(token);
   }
 
@@ -102,5 +100,6 @@ export class AuthService {
     localStorage.removeItem(_userLocalStorageKey);
     this._token$.next('');
     this._user$.next(undefined);
+    this._authStatus$.next('inauthenticated');
   }
 }
