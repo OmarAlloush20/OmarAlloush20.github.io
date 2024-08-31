@@ -4,6 +4,10 @@
   box-sizing: border-box;
 }
 
+a {
+  all: unset;
+}
+
 html,
 body,
 div,
@@ -110,3 +114,4 @@ input {
 button {
   all: unset;
 }
+

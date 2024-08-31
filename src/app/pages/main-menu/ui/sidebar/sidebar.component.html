@@ -11,25 +11,25 @@
     <div class="nav-items-container">
         <ul class="nav-items">
             <li class="nav-item">
-                <a>
+                <a [routerLink]="['/main/customers']">
                     <i class="item-icon icon customer-icon"></i>
                     <label>Customers</label>
                 </a>
             </li>
             <li class="nav-item">
-                <a>
+                <a [routerLink]="['/main/trips']" >
                     <div class="item-icon icon airplane-icon"></div>
                     <label>Trips</label>
                 </a>
             </li>
             <li class="nav-item">
-                <a>
+                <a [routerLink]="['/main/agents']">
                     <div class="item-icon icon agent-icon"></div>
                     <label>Agents</label>
                 </a>
             </li>
             <li class="nav-item">
-                <a>
+                <a [routerLink]="['/main/admin']">
                     <div class="item-icon icon admin-icon"></div>
                     <label>Admin Area</label>
                 </a>
@@ -55,7 +55,7 @@
             <div class="user-card-body">
                 <ul class="user-card-body-items">
                     <li>
-                        <button class="btn logout-btn">
+                        <button class="btn logout-btn" (click)="logout()">
                             <label>Logout</label>
                             <i class="icon logout-icon"></i>
                         </button>

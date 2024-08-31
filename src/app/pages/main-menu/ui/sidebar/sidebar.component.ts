@@ -1,10 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component } from '@angular/core';
+import { LoginService } from '../../../login/services/login.service';
+import { AuthService } from '../../../../shared/services/auth/auth.service';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-sidebar',
   standalone: true,
-  imports: [ CommonModule,],
+  imports: [ CommonModule, RouterModule],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.scss'
 })
@@ -17,7 +20,7 @@ export class SidebarComponent {
 
   userRole = 'Admin';
 
-  constructor(private cdr : ChangeDetectorRef){}
+  constructor(private cdr : ChangeDetectorRef, private authService : AuthService){}
 
   toggleExpanded() {
     this.isExpanded = ! this.isExpanded;
@@ -29,6 +32,10 @@ export class SidebarComponent {
     this.isExpanded = true;
     this.isFooterExpanded = ! this.isFooterExpanded;
     this.cdr.detectChanges();
+  }
+
+  logout() {
+    this.authService.invalidate();
   }
 
 }
