@@ -1,0 +1,34 @@
+.icon {
+  mask-repeat: no-repeat;
+  mask-size: contain;
+
+  &.logout-icon {
+    -webkit-mask-image: url("/assets/icons/logout.svg");
+    mask-image: url("/assets/icons/logout.svg");
+  }
+
+  &.triangle-caret-icon {
+    -webkit-mask-image: url("/assets/icons/caret.svg");
+    mask-image: url("/assets/icons/caret.svg");
+  }
+
+  &.customer-icon {
+    -webkit-mask-image: url("/assets/icons/customer.svg");
+    mask-image: url("/assets/icons/customer.svg");
+  }
+
+  &.airplane-icon {
+    -webkit-mask-image: url("/assets/icons/airplane.svg");
+    mask-image: url("/assets/icons/airplane.svg");
+  }
+
+  &.agent-icon {
+    -webkit-mask-image: url("/assets/icons/agent.svg");
+    mask-image: url("/assets/icons/agent.svg");
+  }
+
+  &.admin-icon {
+    -webkit-mask-image: url("/assets/icons/admin.svg");
+    mask-image: url("/assets/icons/admin.svg");
+  }
+}

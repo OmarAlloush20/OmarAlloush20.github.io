@@ -94,6 +94,7 @@ $disabled-btn-color: #454140;
   border: none;
   cursor: pointer;
   transition: 200ms;
+  text-align: center;
 
   &.btn-primary {
     background-color: $primary-color;
