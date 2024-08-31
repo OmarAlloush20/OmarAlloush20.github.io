@@ -1,3 +1,68 @@
-<p>sidebar works!</p>
+<nav class="sidebar" [ngClass]="{'expanded' : isExpanded}">
+    <div class="nav-header">
+        <p class="nav-header-title">TravelFlow</p>
+        <button (click)="toggleExpanded()" class="hamburger">
+            <span class="hamburger-line1"></span>
+            <span class="hamburger-line2"></span>
+            <span class="hamburger-line3"></span>
+        </button>
+    </div>
+    <hr>
+    <div class="nav-items-container">
+        <ul class="nav-items">
+            <li class="nav-item">
+                <a>
+                    <i class="item-icon icon customer-icon"></i>
+                    <label>Customers</label>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a>
+                    <div class="item-icon icon airplane-icon"></div>
+                    <label>Trips</label>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a>
+                    <div class="item-icon icon agent-icon"></div>
+                    <label>Agents</label>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a>
+                    <div class="item-icon icon admin-icon"></div>
+                    <label>Admin Area</label>
+                </a>
+            </li>
+            <div class="highlight"></div>
+        </ul>
+    </div>
+    <div class="nav-footer" [ngClass]="{'footer-expanded' : isFooterExpanded}">
+        <div class="user-card">
+            <div class="user-card-header" (click)="toogleFooterExpanded()">
+                <div class="avatar">
+                    <img #userAvatar src="https://avatar.iran.liara.run/public" alt="avatar">
+                </div>
+                <div class="user-card-labels">
+                    <label class="title" for="userAvatar">{{username}}</label>
+                    <p class="subtitle">{{userRole}}</p>
+                </div>
+                <div class="user-card-arrow">
+                    <div class="user-card-arrow-icon"></div>
+                </div>
+            </div>
 
-<!-- img src="https://avatar.iran.liara.run/public" -->
+            <div class="user-card-body">
+                <ul class="user-card-body-items">
+                    <li>
+                        <button class="btn logout-btn">
+                            <label>Logout</label>
+                            <i class="icon logout-icon"></i>
+                        </button>
+
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</nav>

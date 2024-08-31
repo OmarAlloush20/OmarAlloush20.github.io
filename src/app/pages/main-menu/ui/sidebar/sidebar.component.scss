@@ -1,0 +1,421 @@
+@import "presets";
+
+$border-radius: 15px;
+$header-height: 60px;
+$footer-height: 50px;
+$nav-list-item-height: 70px;
+$navbar-dark-primary: #18283b;
+$navbar-dark-secondary: #2c3e50;
+
+$hamburger-height: 12px;
+$hamburger-width: 16px;
+$hamburger-line-height: 1.5px;
+
+$scrollbar-width: 8px;
+$scrollbar-thumb-color: #888;
+$scrollbar-track-color: transparent;
+
+$number-of-items: 8;
+
+$rectangle-caret-path: "M6.902 12h6.196c.751 0 1.172-.754.708-1.268L10.708 7.3c-.36-.399-1.055-.399-1.416 0l-3.098 3.433C5.73 11.246 6.151 12 6.902 12Z";
+
+$number-of-footer-btns: 1;
+$footer-expansion-added-height: calc($number-of-footer-btns * 35px);
+
+nav {
+  position: relative;
+  width: 70px;
+  height: calc(100vh - 16px);
+  margin-top: 8px;
+  margin-bottom: 8px;
+  margin-left: 8px;
+  transition: width 500ms;
+
+  background-color: $navbar-dark-primary;
+
+  border-radius: $border-radius;
+
+  .nav-header {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    height: $header-height;
+    padding: 10px;
+    @extend .center;
+
+    .nav-header-title {
+      color: white;
+      font-size: 2rem;
+
+      opacity: 0;
+      width: 0px;
+      transition: 200ms;
+    }
+
+    .hamburger {
+      background-color: transparent;
+      border: none;
+      cursor: pointer;
+      width: $hamburger-width;
+      height: $hamburger-height;
+      position: relative;
+
+      span {
+        position: absolute;
+        border-radius: 15px;
+        height: $hamburger-line-height;
+        width: 80%;
+        left: 10%;
+        background-color: white;
+        transition: 200ms;
+
+        &:nth-child(1) {
+          top: 0px;
+        }
+
+        &:nth-child(2) {
+          top: 5px;
+        }
+
+        &:nth-child(3) {
+          top: 10px;
+        }
+      }
+    }
+  }
+
+  hr {
+    position: absolute;
+    top: calc($header-height - 10px);
+    right: 15px;
+    left: 15px;
+    border-color: grey;
+  }
+
+  .nav-items-container {
+    position: absolute;
+    top: $header-height;
+    bottom: $footer-height;
+    width: 100%;
+
+    ul.nav-items {
+      z-index: 2;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      overflow-y: auto;
+      overflow-x: hidden;
+      max-height: 100%;
+
+      &::-webkit-scrollbar {
+        width: $scrollbar-width;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background-color: $scrollbar-thumb-color;
+        border-radius: 4px;
+      }
+
+      &::-webkit-scrollbar-track {
+        background-color: $scrollbar-track-color;
+      }
+
+      .highlight {
+        position: absolute;
+        top: 0;
+        left: 10px;
+        height: calc($nav-list-item-height - 20px);
+        width: calc(100% - 10px);
+        border-radius: 10px 0px 0px 10px;
+
+        z-index: 1;
+        transition: 200ms;
+      }
+
+      li {
+        min-height: $nav-list-item-height;
+        margin: 0px 15px;
+        padding-top: 5px;
+        width: calc(100% - 15px);
+
+        z-index: 10;
+        position: relative;
+        @extend .center-vertical;
+
+        a {
+          width: 100%;
+          transition: 200ms;
+          @extend .center-horizontal;
+
+          .item-icon {
+            height: 25px;
+            width: 25px;
+            background-color: white;
+            transition: 500ms;
+          }
+
+          label {
+            display: none;
+            font-size: 1.2rem;
+            transition: 500ms;
+          }
+        }
+
+        @for $i from 1 through $number-of-items {
+          &:nth-of-type(#{$i}):hover {
+            label {
+              color: black;
+            }
+
+            .item-icon {
+              background-color: black;
+            }
+
+            ~ .highlight {
+              background-color: white;
+              top: calc(#{$i - 1} * $nav-list-item-height + 12px);
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .nav-footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: $footer-height;
+    z-index: 10;
+
+    transition: 200ms;
+
+    .user-card {
+      height: 100%;
+      width: 100%;
+      border-radius: $border-radius;
+      background-color: $navbar-dark-secondary;
+      transition: 200ms;
+
+      .user-card-header {
+        cursor: pointer;
+        padding: 5px 10px;
+        height: $footer-height;
+        display: flex;
+        justify-content: center;
+        border-radius: $border-radius;
+        transition: 200ms;
+
+        &:hover {
+          background-color: #3a4c5e;
+        }
+
+        .avatar {
+          padding: 2px;
+          height: 35px;
+          width: 35px;
+          border: 1px solid white;
+          border-radius: 50%;
+          @extend .center;
+          transition: 200ms;
+
+          &:hover {
+            scale: 1.1;
+          }
+
+          img {
+            height: 100%;
+          }
+        }
+
+        .user-card-labels {
+          display: none;
+          margin-left: 10px;
+          transition: 200ms;
+
+          &:hover {
+            scale: 1.1;
+          }
+
+          .title {
+            font-size: 0.9;
+            margin-bottom: 4px;
+          }
+
+          .subtitle {
+            font-size: 0.7rem;
+          }
+        }
+
+        .user-card-arrow {
+          display: none;
+
+          .user-card-arrow-icon {
+            height: 20px;
+            width: 20px;
+            clip-path: path($rectangle-caret-path);
+            background-color: white;
+            // mask-image: url("/assets/icons/caret.svg");
+            // -webkit-mask-image: url("/assets/icons/caret.svg");
+            transition: 200ms;
+          }
+        }
+      }
+
+      .user-card-body {
+        height: 0px;
+        transition: 200ms;
+
+        .user-card-body-items {
+          display: none;
+        }
+      }
+    }
+
+    &.footer-expanded {
+      height: calc($footer-height + $footer-expansion-added-height);
+
+      .user-card {
+        padding: 0px;
+        .user-card-arrow {
+          .user-card-arrow-icon {
+            rotate: 180deg;
+          }
+        }
+
+        .user-card-body {
+          height: $footer-expansion-added-height;
+          border-radius: $border-radius;
+          width: 100%;
+
+          ul {
+            display: block;
+            height: 100%;
+            width: 100%;
+
+            li {
+              width: 100%;
+
+              button.logout-btn {
+                box-sizing: border-box;
+
+                padding: 5px 8px 5px 15px;
+                min-width: 100%;
+                height: 35px;
+                font-size: 0.8rem;
+
+                border-radius: $border-radius;
+                background-color: #abd0fd16;
+
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+
+                * {
+                  transition: 200ms;
+                }
+
+                i {
+                  background-color: white;
+                  height: 15px;
+                  width: 24px;
+                }
+
+                &:hover {
+                  background-color: #abd0fd23;
+
+                  > * {
+                    scale: 1.1;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  &.expanded {
+    width: 230px;
+
+    .nav-header {
+      justify-content: space-between;
+
+      .nav-header-title {
+        opacity: 1;
+        width: auto;
+      }
+
+      .hamburger {
+        span {
+          &:nth-child(1) {
+            rotate: 30deg;
+            top: 5.5px;
+            left: 20%;
+            width: 50%;
+          }
+
+          &:nth-child(2) {
+            top: 6px;
+            height: 2px;
+
+            opacity: 0;
+          }
+
+          &:nth-child(3) {
+            top: calc($hamburger-height - $hamburger-line-height - 8.5px);
+
+            rotate: -30deg;
+            width: 50%;
+            left: 20%;
+          }
+        }
+      }
+    }
+
+    hr {
+      right: 30px;
+    }
+
+    .nav-items-container {
+      ul.nav-items {
+        align-items: start;
+        li {
+          a {
+            justify-content: start;
+
+            .item-icon {
+              margin-right: 15px;
+            }
+
+            label {
+              display: block;
+            }
+          }
+        }
+      }
+    }
+
+    .nav-footer {
+      .user-card {
+        .user-card-header {
+          align-items: center;
+
+          .user-card-arrow {
+            flex-grow: 1;
+            display: flex;
+            justify-content: flex-end;
+          }
+
+          .user-card-labels {
+            display: flex;
+            flex-direction: column;
+          }
+        }
+      }
+    }
+  }
+}

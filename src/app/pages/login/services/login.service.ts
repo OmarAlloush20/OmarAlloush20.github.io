@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { LoginRepository } from '../repositories/login.repository';
 import { AuthService } from '../../../shared/services/auth/auth.service';
-import {  map, Observable, } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { LoginResult, loginResultMapper } from '../types/login.types';
 import { HttpService } from '../../../shared/services/http/http.service';
 
@@ -17,12 +17,17 @@ export class LoginService {
     username: string;
     password: string;
   }): Observable<LoginResult | undefined> {
-    return this.repository.login(credentials).pipe(map((val, _) => {
-      const result = loginResultMapper(val);
-      if(result === 'success') {
-        this.authService.update({token: 'assdfdsafdsafdsafdsafsa', user: {firstName: "Hesham", lastName: "Seddik", imageUrl: ""}})
-      }
-      return result;
-    }));
+    return this.repository.login(credentials).pipe(
+      map((val, _) => {
+        const result = loginResultMapper(val);
+        if (result === 'success') {
+          this.authService.update({
+            token: 'assdfdsafdsafdsafdsafsa',
+            user: { firstName: 'Hesham', lastName: 'Seddik', imageUrl: '' },
+          });
+        }
+        return result;
+      })
+    );
   }
 }
