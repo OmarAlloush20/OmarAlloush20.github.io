@@ -23,7 +23,7 @@ export class LoginService {
         if (result === 'success') {
           this.authService.update({
             token: 'assdfdsafdsafdsafdsafsa',
-            user: { firstName: 'Hesham', lastName: 'Seddik', imageUrl: '' },
+            user: { firstName: 'Hesham', lastName: 'Seddik', gender: 'male', userType: 'admin', username: 'hesham',},
           });
         }
         return result;

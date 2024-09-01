@@ -1,8 +1,8 @@
 import { afterRender, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { User } from '../../models/user.model';
 import { EncryptionService } from '../encryption/encryption.service';
+import { User } from '../../../pages/users/models/user.model';
 
 const _tokenLocalStorageKey = '__a__';
 const _userLocalStorageKey = '__u__';
