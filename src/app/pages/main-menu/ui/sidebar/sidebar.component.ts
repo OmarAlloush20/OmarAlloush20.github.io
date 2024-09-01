@@ -1,6 +1,5 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component } from '@angular/core';
-import { LoginService } from '../../../login/services/login.service';
 import { AuthService } from '../../../../shared/services/auth/auth.service';
 import { RouterModule } from '@angular/router';
 
@@ -12,7 +11,7 @@ import { RouterModule } from '@angular/router';
   styleUrl: './sidebar.component.scss'
 })
 export class SidebarComponent {
-  isExpanded = true;
+  isExpanded = false;
 
   isFooterExpanded = false;
 
