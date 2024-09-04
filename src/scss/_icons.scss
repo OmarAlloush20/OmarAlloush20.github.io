@@ -1,6 +1,8 @@
 .icon {
   mask-repeat: no-repeat;
   mask-size: contain;
+  display: block;
+  transition: 200ms;
 
   &.logout-icon {
     -webkit-mask-image: url("/assets/icons/logout.svg");
@@ -30,5 +32,31 @@
   &.admin-icon {
     -webkit-mask-image: url("/assets/icons/admin.svg");
     mask-image: url("/assets/icons/admin.svg");
+  }
+
+  &.magnifying-glass-icon {
+    -webkit-mask-image: url("/assets/icons/magnifying-glass.svg");
+    mask-image: url("/assets/icons/magnifying-glass.svg");
+  }
+
+  &.plus-icon {
+    -webkit-mask-image: url("/assets/icons/plus.svg");
+    mask-image: url("/assets/icons/plus.svg");
+  }
+
+  &.ex-icon {
+    -webkit-mask-image: url("/assets/icons/x.svg");
+    mask-image: url("/assets/icons/x.svg");
+    
+  }
+
+  &.edit-icon {
+    -webkit-mask-image: url("/assets/icons/edit.svg");
+    mask-image: url("/assets/icons/edit.svg");
+  }
+
+  &.lock-icon {
+    -webkit-mask-image: url("/assets/icons/lock.svg");
+    mask-image: url("/assets/icons/lock.svg");
   }
 }
