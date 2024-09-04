@@ -6,4 +6,5 @@ export interface User {
     middleName?: string;
     gender: "male" | "female";
     userType: "admin" | "employee" | "owner";
+    isActive : boolean;
   }

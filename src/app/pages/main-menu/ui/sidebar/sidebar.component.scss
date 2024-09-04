@@ -1,16 +1,23 @@
 @import "presets";
+@import 'variables';
+
+// colors
+$navbar-background: #ff9864;
+$on-navbar-background: $dark-primary;
+$user-card-background: $primary-color;
+$user-card-background-hover: #ff6e26;
 
 $border-radius: 15px;
 $header-height: 60px;
 $footer-height: 50px;
 $nav-list-item-height: 70px;
-$navbar-dark-primary: #18283b;
-$navbar-dark-secondary: #2c3e50;
 
+// Hamburger
 $hamburger-height: 12px;
 $hamburger-width: 16px;
 $hamburger-line-height: 1.5px;
 
+// scrollbar
 $scrollbar-width: 8px;
 $scrollbar-thumb-color: #888;
 $scrollbar-track-color: transparent;
@@ -31,7 +38,7 @@ nav {
   margin-left: 8px;
   transition: width 500ms;
 
-  background-color: $navbar-dark-primary;
+  background-color: $navbar-background;
 
   border-radius: $border-radius;
 
@@ -45,7 +52,7 @@ nav {
     @extend .center;
 
     .nav-header-title {
-      color: white;
+      color: $on-navbar-background;
       font-size: 2rem;
 
       opacity: 0;
@@ -67,7 +74,7 @@ nav {
         height: $hamburger-line-height;
         width: 80%;
         left: 10%;
-        background-color: white;
+        background-color: $on-navbar-background;
         transition: 200ms;
 
         &:nth-child(1) {
@@ -152,13 +159,14 @@ nav {
           .item-icon {
             height: 25px;
             width: 25px;
-            background-color: white;
+            background-color: $on-navbar-background;
             transition: 500ms;
           }
 
           label {
             display: none;
             font-size: 1.2rem;
+            color: $on-navbar-background;
             transition: 500ms;
           }
         }
@@ -166,15 +174,15 @@ nav {
         @for $i from 1 through $number-of-items {
           &:nth-of-type(#{$i}):hover {
             label {
-              color: black;
+              color: $navbar-background;
             }
 
             .item-icon {
-              background-color: black;
+              background-color: $navbar-background;
             }
 
             ~ .highlight {
-              background-color: white;
+              background-color: $dark-primary;
               top: calc(#{$i - 1} * $nav-list-item-height + 12px);
             }
           }
@@ -196,7 +204,7 @@ nav {
       height: 100%;
       width: 100%;
       border-radius: $border-radius;
-      background-color: $navbar-dark-secondary;
+      background-color: $user-card-background;
       transition: 200ms;
 
       .user-card-header {
@@ -209,7 +217,7 @@ nav {
         transition: 200ms;
 
         &:hover {
-          background-color: #3a4c5e;
+          background-color: $user-card-background-hover;
         }
 
         .avatar {
@@ -237,6 +245,10 @@ nav {
 
           &:hover {
             scale: 1.1;
+          }
+
+          .title, .subtitle {
+            color: white;
           }
 
           .title {

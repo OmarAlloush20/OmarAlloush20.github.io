@@ -1,6 +1,10 @@
-.main-menu-container {
-    position: relative;
+@import 'variables';
 
+.main-menu-container {
+    background-color: $dark-primary;
+    position: relative;
+    height: 100vh;
+    
     .main-menu-sidebar {
         position: absolute;
         top: 0;
@@ -13,5 +17,6 @@
         left: 78px; // sidebar width when collapsed
         top: 0;
         bottom: 0;
+        right: 0;
     }
 }
