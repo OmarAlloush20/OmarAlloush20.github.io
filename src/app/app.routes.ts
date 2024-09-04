@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { LoginComponent } from './pages/login/ui/login/login.component';
 import { MainMenuComponent } from './pages/main-menu/ui/main-menu/main-menu.component';
 import { authGuard } from './shared/guards/auth.guard';
+import { UsersComponent } from './pages/users/ui/users.component';
 
 export const routes: Routes = [
   {
@@ -12,10 +13,10 @@ export const routes: Routes = [
     path: 'main',
     canActivate: [authGuard],
     component: MainMenuComponent,
-    // children: [
-    //     {path: '',},
-    //     {path: '',}
-    // ]
+    children: [
+        {path: 'users', component: UsersComponent},
+        // {path: '',}
+    ]
   },
   {
     path: '',
