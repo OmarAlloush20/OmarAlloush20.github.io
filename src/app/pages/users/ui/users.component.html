@@ -1,49 +1,12 @@
 <div class="users-table-container">
     <h1>Users</h1>
-    <table class="users-table">
-        <caption class="filter-bar-container">
-            <div class="filter-bar">
-                <form (ngSubmit)="search(searchQuery)" class="search-input-container">
-                    <input class="search-input" type="text" placeholder="Search..." [(ngModel)]="searchQuery"
-                        [ngModelOptions]="{standalone: true}">
-                    <button class="search-btn" type="submit">
-                        <i class="icon magnifying-glass-icon"></i>
-                    </button>
-                </form>
-
-                <div class="separator"></div>
-
-                <div class="actions-container">
-                    <button class="add"><i class="icon plus-icon"></i></button>
-                    <button [disabled]="selectedUser === undefined" class="edit"><i class="icon edit-icon"></i></button>
-                    <button [disabled]="selectedUser === undefined" class="delete"><i class="icon ex-icon"></i></button>
-                    <!-- <button [disabled]="selectedUser === undefined" class="deactivate"><i
-                            class="icon lock-icon"></i></button> -->
-                </div>
-            </div>
-        </caption>
-        <thead>
-            <tr>
-                <th scope="col">First Name</th>
-                <th scope="col">Last Name</th>
-                <th scope="col">Middle Name</th>
-                <th scope="col">Username</th>
-                <th scope="col">Gender</th>
-                <th scope="col">Role</th>
-                <th scope="col">Active</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let user of users; index as i" (click)="setSelectedUser(user)"
-                [ngClass]="{'selected' : selectedUser?._id == user._id}">
-                <td data-label="First Name">{{user.firstName | titlecase}}</td>
-                <td data-label="Last Name">{{user.lastName | titlecase}}</td>
-                <td data-label="Middle Name">{{user.middleName ?? '--' | titlecase}}</td>
-                <td data-label="Username">{{user.username}}</td>
-                <td data-label="Gender">{{user.gender | titlecase}}</td>
-                <td data-label="Role">{{user.userType | titlecase}}</td>
-                <td data-label="Active">{{user.isActive ? "Yes" : "No"}}</td>
-            </tr>
-        </tbody>
-    </table>
+    <app-data-table
+    [headers]="tableHeaders"
+    [data]="users"
+    [cellValueFn]="headerToValue"
+    [onAdd]="addUser"
+    [onEdit]="editUser"
+    [onDelete]="deleteUser"
+    [onSearch]="search"
+    ></app-data-table>
 </div>
