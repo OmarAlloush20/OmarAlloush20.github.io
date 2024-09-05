@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { User } from '../models/user.model';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-users',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './users.component.html',
   styleUrl: './users.component.scss',
 })
@@ -43,6 +44,8 @@ export class UsersComponent {
 
   selectedUser? : User;
 
+  searchQuery : string = '';
+
   setSelectedUser(user? : User) {
     this.selectedUser = user;
   }
@@ -58,15 +61,22 @@ export class UsersComponent {
       
     }
   }
+
   deleteUser(user? : User) {
     if(user) {
       
     }
   }
+
   toggleUserActivation(user? : User) {
     if(user) {
       
     }
   }
 
+  search(query : string) {
+    if(query) {
+      console.log(query);
+    }
+  }
 }

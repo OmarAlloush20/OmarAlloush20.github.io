@@ -3,12 +3,13 @@
     <table class="users-table">
         <caption class="filter-bar-container">
             <div class="filter-bar">
-                <div class="search-input-container">
-                    <input class="search-input" type="text" placeholder="Search...">
-                    <button class="search-btn">
+                <form (ngSubmit)="search(searchQuery)" class="search-input-container">
+                    <input class="search-input" type="text" placeholder="Search..." [(ngModel)]="searchQuery"
+                        [ngModelOptions]="{standalone: true}">
+                    <button class="search-btn" type="submit">
                         <i class="icon magnifying-glass-icon"></i>
                     </button>
-                </div>
+                </form>
 
                 <div class="separator"></div>
 
@@ -16,7 +17,8 @@
                     <button class="add"><i class="icon plus-icon"></i></button>
                     <button [disabled]="selectedUser === undefined" class="edit"><i class="icon edit-icon"></i></button>
                     <button [disabled]="selectedUser === undefined" class="delete"><i class="icon ex-icon"></i></button>
-                    <button [disabled]="selectedUser === undefined" class="deactivate"><i class="icon lock-icon"></i></button>
+                    <!-- <button [disabled]="selectedUser === undefined" class="deactivate"><i
+                            class="icon lock-icon"></i></button> -->
                 </div>
             </div>
         </caption>
@@ -28,6 +30,7 @@
                 <th scope="col">Username</th>
                 <th scope="col">Gender</th>
                 <th scope="col">Role</th>
+                <th scope="col">Active</th>
             </tr>
         </thead>
         <tbody>
@@ -39,6 +42,7 @@
                 <td data-label="Username">{{user.username}}</td>
                 <td data-label="Gender">{{user.gender | titlecase}}</td>
                 <td data-label="Role">{{user.userType | titlecase}}</td>
+                <td data-label="Active">{{user.isActive ? "Yes" : "No"}}</td>
             </tr>
         </tbody>
     </table>

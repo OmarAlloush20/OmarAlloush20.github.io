@@ -12,117 +12,6 @@ $disable-icon-color: #ffbf00;
 
 $filter-bar-height: 40px;
 
-.filter-bar-container {
-  border: 1px solid white;
-  border-radius: 30px;
-  margin-bottom: 15px;
-  padding: 6px;
-
-  .filter-bar {
-    display: flex;
-    align-items: center;
-    gap: 2%;
-    max-height: $filter-bar-height;
-    width: 100%;
-
-    .search-input-container {
-      @extend .center-vertical;
-
-      position: relative;
-      border-radius: 15px;
-      flex-grow: 1;
-
-      input {
-        margin: 0;
-        background-color: transparent;
-        background-color: #5479a733;
-        border-radius: 30px;
-        color: white;
-
-        &::placeholder {
-          color: grey;
-        }
-      }
-
-      .search-btn {
-        // position: absolute;
-        right: 0;
-        height: 100%;
-        width: 50px;
-        // background-color: cyan;
-
-        i {
-          height: 15px;
-          width: 15px;
-          background-color: white;
-          transition: 200ms;
-        }
-
-        &:hover {
-          i {
-            scale: 1.2;
-          }
-        }
-      }
-    }
-
-    .separator {
-      height: 30px;
-      width: 1px;
-      background-color: white;
-    }
-
-    .actions-container {
-      display: flex;
-      gap: 12px;
-      margin-right: 6px;
-
-      button {
-        i {
-          height: 20px;
-          width: 20px;
-          background-color: white;
-
-          &.ex-icon {
-            height: 18px;
-            width: 18px;
-          }
-        }
-
-        &:hover:not(:disabled) {
-          i {
-            scale: 1.2;
-            transform: translateY(-2px);
-
-            &.ex-icon {
-              background-color: $delete-icon-color;
-            }
-
-            &.edit-icon {
-              background-color: $edit-icon-color;
-            }
-
-            &.plus-icon {
-              background-color: $add-icon-color;
-            }
-            &.lock-icon {
-              background-color: $disable-icon-color;
-            }
-          }
-        }
-
-        
-        &:disabled {
-          i {
-            background-color: rgba(140, 138, 138, 0.607);
-            scale: 0.9
-          }
-        }
-      }
-    }
-  }
-}
-
 .users-table-container {
   padding: 20px;
   width: 100%;
@@ -135,9 +24,121 @@ $filter-bar-height: 40px;
 
   position: relative;
 
+  overflow-y: auto;
+  
   h1 {
     margin-bottom: 20px;
     font-size: 1.5rem;
+  }
+
+  .filter-bar-container {
+    border: 1px solid white;
+    border-radius: 30px;
+    margin-bottom: 15px;
+    padding: 6px;
+
+    .filter-bar {
+      display: flex;
+      align-items: center;
+      gap: 2%;
+      max-height: $filter-bar-height;
+      width: 100%;
+
+      .search-input-container {
+        @extend .center-vertical;
+
+        position: relative;
+        border-radius: 15px;
+        flex-grow: 1;
+
+        input {
+          margin: 0;
+          background-color: transparent;
+          background-color: #5479a733;
+          border-radius: 30px;
+          color: white;
+
+          &::placeholder {
+            color: grey;
+          }
+        }
+
+        .search-btn {
+          // position: absolute;
+          right: 0;
+          height: 100%;
+          width: 50px;
+          // background-color: cyan;
+
+          i {
+            height: 15px;
+            width: 15px;
+            background-color: white;
+            transition: 200ms;
+          }
+
+          &:hover {
+            i {
+              scale: 1.2;
+            }
+          }
+        }
+      }
+
+      .separator {
+        height: 30px;
+        width: 1px;
+        background-color: rgba(255, 255, 255, 0.645);
+      }
+
+      .actions-container {
+        display: flex;
+        gap: 12px;
+        margin-right: 6px;
+
+        button {
+          i {
+            height: 20px;
+            width: 20px;
+            background-color: white;
+
+            &.ex-icon {
+              height: 18px;
+              width: 18px;
+            }
+          }
+
+          &:hover:not(:disabled) {
+            i {
+              scale: 1.2;
+              transform: translateY(-2px);
+
+              &.ex-icon {
+                background-color: $delete-icon-color;
+              }
+
+              &.edit-icon {
+                background-color: $edit-icon-color;
+              }
+
+              &.plus-icon {
+                background-color: $add-icon-color;
+              }
+              &.lock-icon {
+                background-color: $disable-icon-color;
+              }
+            }
+          }
+
+          &:disabled {
+            i {
+              background-color: rgba(140, 138, 138, 0.607);
+              scale: 0.9;
+            }
+          }
+        }
+      }
+    }
   }
 
   table {
@@ -155,6 +156,7 @@ $filter-bar-height: 40px;
 
       &.selected {
         background-color: #58d3e13b;
+        color: white;
       }
     }
 
@@ -183,12 +185,27 @@ $filter-bar-height: 40px;
   }
 
   @media screen and (max-width: 600px) {
-    table {
-      border: 0;
-    }
+    .filter-bar-container {
+      min-width: 250px;
+      border: none;
 
-    table caption {
-      font-size: 1.3em;
+      .filter-bar {
+        flex-direction: column-reverse;
+        max-height: fit-content;
+        gap: 15px;
+
+        .separator {
+          width: 90%;
+          height: 1px;
+        }
+
+        .actions-container {
+          justify-content: space-around;
+          width: 100%;
+          padding: 0px 10px;
+          // background-color: red;
+        }
+      }
     }
 
     table thead {
@@ -203,9 +220,11 @@ $filter-bar-height: 40px;
     }
 
     table tr {
-      border-bottom: 3px solid #ddd;
+      border-radius: 15px;
+      border: 1px solid #ffffff65;
+      border-bottom: 5px double #ffffff65;
       display: block;
-      margin-bottom: 0.625em;
+      padding-bottom: 2px;
     }
 
     table td {
@@ -216,10 +235,6 @@ $filter-bar-height: 40px;
     }
 
     table td::before {
-      /*
-          * aria-label has no advantage, it won't be read inside a table
-          content: attr(aria-label);
-          */
       content: attr(data-label);
       float: left;
       font-weight: bold;
@@ -228,6 +243,10 @@ $filter-bar-height: 40px;
 
     table td:last-child {
       border-bottom: 0;
+    }
+
+    table tbody {
+      overflow-y: auto;
     }
   }
 
