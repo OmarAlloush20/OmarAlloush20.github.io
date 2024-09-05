@@ -1,0 +1,38 @@
+<table>
+    <caption class="filter-bar-container">
+        <div class="filter-bar">
+            <form (ngSubmit)="search(searchQuery)" class="search-input-container">
+                <input class="search-input" type="text" placeholder="Search..." [(ngModel)]="searchQuery"
+                    [ngModelOptions]="{standalone: true}">
+                <button class="search-btn" type="submit">
+                    <i class="icon magnifying-glass-icon"></i>
+                </button>
+            </form>
+
+            <div class="separator"></div>
+
+            <div class="actions-container">
+                <button class="add" (click)="add(selectedValue)"><i class="icon plus-icon"></i></button>
+                <button [disabled]="selectedValue === undefined" class="edit" (click)="edit(selectedValue)"><i
+                        class="icon edit-icon"></i></button>
+                <button [disabled]="selectedValue === undefined" class="delete" (click)="delete(selectedValue)"><i
+                        class="icon ex-icon"></i></button>
+
+            </div>
+        </div>
+    </caption>
+    <thead>
+        <tr>
+            <th *ngFor="let header of headers" scope="col">{{header}}</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let value of data; index as i" (click)="setSelectedValue(value)"
+            [ngClass]="{'selected' : selectedValue === value}">
+            <td *ngFor="let header of headers; index as j" [attr.data-label]="header">{{cellValueFn(header, value) ??
+                '--'}}
+            </td>
+
+        </tr>
+    </tbody>
+</table>
