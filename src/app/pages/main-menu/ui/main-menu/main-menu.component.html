@@ -2,7 +2,7 @@
     <div class="decoration-bottom-right"></div>
     <div class="decoration-top-left"></div>
     
-    <div class="main-menu-content-container">
+    <div class="main-menu-content-container" (scroll)="onScroll($event)">
         <router-outlet class="main-menu-content"></router-outlet>
     </div>
     <app-sidebar class="main-menu-sidebar"></app-sidebar>

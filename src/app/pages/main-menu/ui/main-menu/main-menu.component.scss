@@ -1,22 +1,24 @@
-@import 'variables';
+@import "variables";
 
 .main-menu-container {
-    background-color: $dark-primary;
-    position: relative;
-    height: 100vh;
-    
-    .main-menu-sidebar {
-        position: absolute;
-        top: 0;
-        left: 0;
-        bottom: 0;
-    }
+  background-color: $dark-primary;
+  position: relative;
+  height: 100vh;
 
-    .main-menu-content-container {
-        position: absolute;
-        left: 78px; // sidebar width when collapsed
-        top: 0;
-        bottom: 0;
-        right: 0;
-    }
+  .main-menu-sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+  }
+
+  .main-menu-content-container {
+    position: absolute;
+    left: 78px; // sidebar width when collapsed
+    top: 0;
+    bottom: 0;
+    right: 0;
+
+    overflow: auto;
+  }
 }
