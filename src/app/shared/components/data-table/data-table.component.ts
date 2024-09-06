@@ -1,62 +1,109 @@
-import { Component, Input } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  Input,
+  OnInit,
+  Renderer2,
+  ViewChild,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { MainMenuScrollService } from '../../../pages/main-menu/services/main-menu-scroll.service';
 
-type CellValueFunction = (header : string, value : any) => string | undefined;
+type CellValueFunction = (header: string, value: any) => string | undefined;
 
 @Component({
   selector: 'app-data-table',
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './data-table.component.html',
-  styleUrl: './data-table.component.scss'
+  styleUrl: './data-table.component.scss',
 })
-export class DataTableComponent {
-  @Input("headers") headers : string[] = [];
+export class DataTableComponent implements OnInit {
+  @ViewChild('popupActions') popupActions!: ElementRef<HTMLElement>;
 
-  @Input("data") data : any[] = [];
+  constructor(
+    private renderer: Renderer2,
+    private scrollService: MainMenuScrollService
+  ) {}
 
-  @Input("cellValueFn") cellValueFn! : CellValueFunction;
+  ngOnInit(): void {}
 
-  @Input("onAdd") onAdd! : (value : any) => any;
+  positionPopup(event: MouseEvent): void {
+    if (!this.selectedValue || !this.popupActions.nativeElement) return;
 
-  @Input("onEdit") onEdit! : (value : any) => any;
+    const popupWidth = this.popupActions.nativeElement.offsetWidth || 103;
+    const popupHeight = this.popupActions.nativeElement.offsetHeight || 31;
 
-  @Input("onDelete") onDelete! : (value : any) => any;
+    const scrollY = this.scrollService.scrollPosition.y;
+    const scrollX = this.scrollService.scrollPosition.x;
 
-  @Input("onSearch") onSearch! : (value : any) => any;
+    let left = event.clientX - scrollX - popupWidth * 0.75;
+    let top = event.clientY + scrollY - popupHeight * 0.75;
 
-  selectedValue? : any;
+    // Adjust position if popup would go off-screen
+    if (left + popupWidth > window.innerWidth) {
+      left = event.clientX - scrollX - popupWidth * 2;
+      
+    }
 
-  searchQuery : string = '';
+    if (top + popupHeight > window.innerHeight) {
+      top = event.clientY + scrollY - popupHeight;
+    }
 
-  setSelectedValue(value? : any) {
-    this.selectedValue = value;
+    this.renderer.setStyle(
+      this.popupActions.nativeElement,
+      'left',
+      `${left}px`
+    );
+    this.renderer.setStyle(this.popupActions.nativeElement, 'top', `${top}px`);
+    this.renderer.setStyle(this.popupActions.nativeElement, 'display', 'block');
   }
 
-  add(value? : any) {
-    if(value) {
+  @Input('headers') headers: string[] = [];
+
+  @Input('data') data: any[] = [];
+
+  @Input('cellValueFn') cellValueFn!: CellValueFunction;
+
+  @Input('onAdd') onAdd!: (value: any) => any;
+
+  @Input('onEdit') onEdit!: (value: any) => any;
+
+  @Input('onDelete') onDelete!: (value: any) => any;
+
+  @Input('onSearch') onSearch!: (value: any) => any;
+
+  selectedValue?: any;
+
+  searchQuery: string = '';
+
+  setSelectedValue(event: MouseEvent, value?: any) {
+    this.selectedValue = value;
+    this.positionPopup(event);
+  }
+
+  add(value?: any) {
+    if (value) {
       this.onAdd(value);
     }
   }
-  
-  edit(value? : any) {
-    if(value) {
+
+  edit(value?: any) {
+    if (value) {
       this.onEdit(value);
-      
     }
   }
 
-  delete(value? : any) {
-    if(value) {
+  delete(value?: any) {
+    if (value) {
       this.onDelete(value);
     }
   }
 
-  search(query : string) {
-    if(query) {
+  search(query: string) {
+    if (query) {
       this.onSearch(query);
     }
   }
-
 }

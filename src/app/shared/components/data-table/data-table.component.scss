@@ -12,227 +12,286 @@ $disable-icon-color: #ffbf00;
 
 $filter-bar-height: 40px;
 
-  .filter-bar-container {
-    border: 1px solid white;
-    border-radius: 30px;
-    margin-bottom: 15px;
-    padding: 6px;
+.filter-bar-container {
+  border: 1px solid white;
+  border-radius: 30px;
+  margin-bottom: 15px;
+  padding: 6px;
 
-    .filter-bar {
+  .filter-bar {
+    display: flex;
+    align-items: center;
+    gap: 2%;
+    max-height: $filter-bar-height;
+    width: 100%;
+
+    .search-input-container {
+      @extend .center-vertical;
+
+      position: relative;
+      border-radius: 15px;
+      flex-grow: 1;
+
+      input {
+        margin: 0;
+        background-color: transparent;
+        background-color: #5479a733;
+        border-radius: 30px;
+        color: white;
+
+        &::placeholder {
+          color: grey;
+        }
+      }
+
+      .search-btn {
+        // position: absolute;
+        right: 0;
+        height: 100%;
+        width: 50px;
+        // background-color: cyan;
+
+        i {
+          height: 15px;
+          width: 15px;
+          background-color: white;
+          transition: 200ms;
+        }
+
+        &:hover {
+          i {
+            scale: 1.2;
+          }
+        }
+      }
+    }
+
+    .separator {
+      height: 30px;
+      width: 1px;
+      background-color: rgba(255, 255, 255, 0.645);
+    }
+
+    .actions-container {
       display: flex;
-      align-items: center;
-      gap: 2%;
-      max-height: $filter-bar-height;
-      width: 100%;
+      gap: 12px;
+      margin-right: 6px;
 
-      .search-input-container {
-        @extend .center-vertical;
+      button {
+        i {
+          height: 20px;
+          width: 20px;
+          background-color: white;
 
-        position: relative;
-        border-radius: 15px;
-        flex-grow: 1;
-
-        input {
-          margin: 0;
-          background-color: transparent;
-          background-color: #5479a733;
-          border-radius: 30px;
-          color: white;
-
-          &::placeholder {
-            color: grey;
+          &.ex-icon {
+            height: 18px;
+            width: 18px;
           }
         }
 
-        .search-btn {
-          // position: absolute;
-          right: 0;
-          height: 100%;
-          width: 50px;
-          // background-color: cyan;
-
+        &:hover:not(:disabled) {
           i {
-            height: 15px;
-            width: 15px;
-            background-color: white;
-            transition: 200ms;
-          }
-
-          &:hover {
-            i {
-              scale: 1.2;
-            }
-          }
-        }
-      }
-
-      .separator {
-        height: 30px;
-        width: 1px;
-        background-color: rgba(255, 255, 255, 0.645);
-      }
-
-      .actions-container {
-        display: flex;
-        gap: 12px;
-        margin-right: 6px;
-
-        button {
-          i {
-            height: 20px;
-            width: 20px;
-            background-color: white;
+            scale: 1.2;
+            transform: translateY(-2px);
 
             &.ex-icon {
-              height: 18px;
-              width: 18px;
+              background-color: $delete-icon-color;
+            }
+
+            &.edit-icon {
+              background-color: $edit-icon-color;
+            }
+
+            &.plus-icon {
+              background-color: $add-icon-color;
+            }
+            &.lock-icon {
+              background-color: $disable-icon-color;
             }
           }
+        }
 
-          &:hover:not(:disabled) {
-            i {
-              scale: 1.2;
-              transform: translateY(-2px);
-
-              &.ex-icon {
-                background-color: $delete-icon-color;
-              }
-
-              &.edit-icon {
-                background-color: $edit-icon-color;
-              }
-
-              &.plus-icon {
-                background-color: $add-icon-color;
-              }
-              &.lock-icon {
-                background-color: $disable-icon-color;
-              }
-            }
-          }
-
-          &:disabled {
-            i {
-              background-color: rgba(140, 138, 138, 0.607);
-              scale: 0.9;
-            }
+        &:disabled {
+          i {
+            background-color: rgba(140, 138, 138, 0.607);
+            scale: 0.9;
           }
         }
       }
     }
   }
+}
 
-  table {
-    border: 2px solid #ccc;
-    border-radius: 15px;
-    border-collapse: separate;
-    background-color: $table-background-color;
+table {
+  border: 2px solid #ccc;
+  border-radius: 15px;
+  border-collapse: separate;
+  background-color: $table-background-color;
 
-    tr {
-      transition: 200ms;
+  tbody tr {
+    transition: 200ms;
 
-      &:hover {
-        background-color: #e19a583b;
-      }
-
-      &.selected {
-        background-color: #58d3e13b;
-        color: white;
-      }
+    &:hover {
+      background-color: #e19a583b;
     }
 
-    thead {
-      border-bottom: 1px solid white !important;
-      border-collapse: separate;
+    &.selected {
+      background-color: #58d3e13b;
       color: white;
-      font-size: 1.05rem;
-      tr {
-        outline: white solid 1px;
-        border-radius: 15px 15px 0px 0px;
-      }
-    }
-
-    th,
-    td {
-      padding: 0.625em;
-      text-align: center;
-    }
-
-    th {
-      font-size: 0.85em;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
     }
   }
 
-  @media screen and (max-width: 600px) {
-    .filter-bar-container {
-      min-width: 250px;
-      border: none;
-
-      .filter-bar {
-        flex-direction: column-reverse;
-        max-height: fit-content;
-        gap: 15px;
-
-        .separator {
-          width: 90%;
-          height: 1px;
-        }
-
-        .actions-container {
-          justify-content: space-around;
-          width: 100%;
-          padding: 0px 10px;
-          // background-color: red;
-        }
-      }
-    }
-
-    table thead {
-      border: none;
-      clip: rect(0 0 0 0);
-      height: 1px;
-      margin: -1px;
-      overflow: hidden;
-      padding: 0;
-      position: absolute;
-      width: 1px;
-    }
-
-    table tr {
-      border-radius: 15px;
-      border: 1px solid #ffffff65;
-      border-bottom: 5px double #ffffff65;
-      display: block;
-      padding-bottom: 2px;
-    }
-
-    table td {
-      border-bottom: 1px solid #ddd;
-      display: block;
-      font-size: 0.8em;
-      text-align: right;
-    }
-
-    table td::before {
-      content: attr(data-label);
-      float: left;
-      font-weight: bold;
-      text-transform: uppercase;
-    }
-
-    table td:last-child {
-      border-bottom: 0;
-    }
-
-    table tbody {
-      overflow-y: auto;
+  thead {
+    border-bottom: 1px solid white !important;
+    border-collapse: separate;
+    color: white;
+    font-size: 1.05rem;
+    tr {
+      outline: white solid 1px;
+      border-radius: 15px 15px 0px 0px;
     }
   }
 
-  button.add-user-btn {
+  th,
+  td {
+    padding: 0.625em;
+    text-align: center;
+  }
+
+  th {
+    font-size: 0.85em;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .filter-bar-container {
+    min-width: 250px;
+    border: none;
+
+    .filter-bar {
+      flex-direction: column-reverse;
+      max-height: fit-content;
+      gap: 15px;
+
+      .separator {
+        width: 90%;
+        height: 1px;
+      }
+
+      // .actions-container {
+      //   justify-content: space-around;
+      //   width: 100%;
+      //   padding: 0px 10px;
+      //   // background-color: red;
+      // }
+    }
+  }
+
+  table thead {
+    border: none;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
     position: absolute;
-    bottom: 30px;
-    right: 30px;
+    width: 1px;
   }
+
+  table tr {
+    border-radius: 15px;
+    border: 1px solid #ffffff65;
+    border-bottom: 5px double #ffffff65;
+    display: block;
+    padding-bottom: 2px;
+  }
+
+  table td {
+    border-bottom: 1px solid #ddd;
+    display: block;
+    font-size: 0.8em;
+    text-align: right;
+  }
+
+  table td::before {
+    content: attr(data-label);
+    float: left;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+
+  table td:last-child {
+    border-bottom: 0;
+  }
+
+  // table tbody {
+  //   overflow-y: auto;
+  // }
+}
+
+button.add-user-btn {
+  position: absolute;
+  bottom: 30px;
+  right: 30px;
+}
+
+.popup-actions {
+  position: absolute;
+  border: 1px solid #ccc;
+  border-radius: 30px;
+  padding: 5px 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: $table-background-color;
+
+  &.hidden {
+    display: none;
+  }
+}
+
+.actions-container {
+  display: flex;
+  gap: 12px;
+  button {
+    i {
+      height: 20px;
+      width: 20px;
+      background-color: white;
+
+      &.ex-icon {
+        height: 18px;
+        width: 18px;
+      }
+    }
+
+    &:hover:not(:disabled) {
+      i {
+        scale: 1.2;
+        transform: translateY(-2px);
+
+        &.ex-icon {
+          background-color: $delete-icon-color;
+        }
+
+        &.edit-icon {
+          background-color: $edit-icon-color;
+        }
+
+        &.plus-icon {
+          background-color: $add-icon-color;
+        }
+        &.lock-icon {
+          background-color: $disable-icon-color;
+        }
+      }
+    }
+
+    &:disabled {
+      i {
+        background-color: rgba(140, 138, 138, 0.607);
+        scale: 0.9;
+      }
+    }
+  }
+}

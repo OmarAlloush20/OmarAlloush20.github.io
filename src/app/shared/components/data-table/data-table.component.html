@@ -10,15 +10,6 @@
             </form>
 
             <div class="separator"></div>
-
-            <div class="actions-container">
-                <button class="add" (click)="add(selectedValue)"><i class="icon plus-icon"></i></button>
-                <button [disabled]="selectedValue === undefined" class="edit" (click)="edit(selectedValue)"><i
-                        class="icon edit-icon"></i></button>
-                <button [disabled]="selectedValue === undefined" class="delete" (click)="delete(selectedValue)"><i
-                        class="icon ex-icon"></i></button>
-
-            </div>
         </div>
     </caption>
     <thead>
@@ -27,7 +18,7 @@
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let value of data; index as i" (click)="setSelectedValue(value)"
+        <tr *ngFor="let value of data; index as i" (mousedown)="setSelectedValue($event, value)"
             [ngClass]="{'selected' : selectedValue === value}">
             <td *ngFor="let header of headers; index as j" [attr.data-label]="header">{{cellValueFn(header, value) ??
                 '--'}}
@@ -36,3 +27,13 @@
         </tr>
     </tbody>
 </table>
+
+<div class="popup-actions" #popupActions [ngClass]="{'hidden' : selectedValue === undefined}">
+    <div class="actions-container">
+        <button class="add" (click)="add(selectedValue)"><i class="icon plus-icon"></i></button>
+        <button [disabled]="selectedValue === undefined" class="edit" (click)="edit(selectedValue)"><i
+                class="icon edit-icon"></i></button>
+        <button [disabled]="selectedValue === undefined" class="delete" (click)="delete(selectedValue)"><i
+                class="icon ex-icon"></i></button>
+    </div>
+</div>
