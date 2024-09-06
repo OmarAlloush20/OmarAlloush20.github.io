@@ -74,9 +74,17 @@ export class DataTableComponent implements OnInit {
 
   @Input('onSearch') onSearch!: (value: any) => any;
 
+  @Input('maxPages') maxPages: number = 1;
+
+  @Input('onPageChanged') onPageChanged!: (value: number) => any;
+
+  @Input('loading') loading: boolean = false;
+
   selectedValue?: any;
 
   searchQuery: string = '';
+
+  currentPage: number = 1;
 
   setSelectedValue(event: MouseEvent, value?: any) {
     this.selectedValue = value;
@@ -105,5 +113,18 @@ export class DataTableComponent implements OnInit {
     if (query) {
       this.onSearch(query);
     }
+  }
+
+  onPageNumberChange(pageNumber : number) {
+    if(pageNumber >= this.maxPages) {
+      this.currentPage = this.maxPages;
+    } else if (pageNumber <= 1) {
+      this.currentPage = 1;
+    } 
+    else {
+      this.currentPage = pageNumber;
+    }
+
+    this.onPageChanged(this.currentPage);
   }
 }

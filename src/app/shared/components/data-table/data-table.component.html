@@ -10,14 +10,37 @@
             </form>
 
             <div class="separator"></div>
+
+            <div class="pagination-container">
+                <button class="btn prev-page-btn" [disabled]="currentPage === 1"
+                    (click)="onPageNumberChange(currentPage - 1)">
+                    <i class="icon triangle-caret-icon"></i>
+                </button>
+
+                <div class="pagination-status-container">
+                    <input (keydown.enter)="onPageNumberChange(currentPage)" type="number" [(ngModel)]="currentPage"
+                        [max]="maxPages" min="1">
+                    <span> / </span>
+                    <span>{{maxPages}}</span>
+                </div>
+
+                <button class="btn next-page-btn" [disabled]="currentPage === maxPages"
+                    (click)="onPageNumberChange(currentPage + 1)">
+                    <i class="icon triangle-caret-icon"></i>
+                </button>
+            </div>
         </div>
     </caption>
+
     <thead>
         <tr>
             <th *ngFor="let header of headers" scope="col">{{header}}</th>
         </tr>
     </thead>
     <tbody>
+        <tr class="loading-row" *ngIf="loading">
+            <td><div class="loader"></div></td>
+        </tr>
         <tr *ngFor="let value of data; index as i" (mousedown)="setSelectedValue($event, value)"
             [ngClass]="{'selected' : selectedValue === value}">
             <td *ngFor="let header of headers; index as j" [attr.data-label]="header">{{cellValueFn(header, value) ??
