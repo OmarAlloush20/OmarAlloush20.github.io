@@ -44,7 +44,6 @@ input {
   color: $on-dark-secondary-color;
   border: none;
   outline: none;
-  min-height: 35px;
   transition: 500ms;
 
   ~ label {
@@ -89,7 +88,6 @@ $disabled-btn-color: #454140;
 
 .btn {
   color: white;
-  min-height: 30px;
   padding: 6px;
   border: none;
   cursor: pointer;
