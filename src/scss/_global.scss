@@ -26,8 +26,8 @@ $input-background-color-autofilled: #202020;
 // Used when the label should be top
 .shrinked-label {
   font-size: 0.8rem;
-  top: 0px;
-  transition: 200ms;
+  top: -8px;
+  transition: 200ms; 
 }
 
 .form-group {
@@ -39,6 +39,7 @@ $input-background-color-autofilled: #202020;
 input {
   width: 100%;
   padding: 0px 12px;
+  height: 35px;
   margin: 10px 0px;
   background-color: $input-background-color;
   color: $on-dark-secondary-color;
@@ -56,8 +57,8 @@ input {
     pointer-events: none;
   }
 
-  &:focus,
-  &:valid {
+  &:focus{
+  // &:valid {
     ~ label {
       font-size: 0.8rem; // Manually applying .shrinked-label styles
       top: -8px; // Manually applying .shrinked-label styles
