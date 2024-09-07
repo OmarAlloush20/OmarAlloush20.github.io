@@ -1,0 +1,26 @@
+@import 'presets';
+
+.user-modal-container {
+  padding: 15px;
+  @extend .center;
+}
+
+h2 {
+  font-size: 1.3rem;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.user-modal-fields {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+
+  width: 250px;
+  gap: 10px;
+}
+
+.btn.btn-primary {
+  max-width: 250px;
+}

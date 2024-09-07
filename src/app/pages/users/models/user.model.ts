@@ -4,6 +4,7 @@ export interface User {
     firstName: string;
     lastName: string;
     middleName?: string;
+    password? : string;
     gender: "male" | "female";
     userType: "admin" | "employee" | "owner";
     isActive : boolean;

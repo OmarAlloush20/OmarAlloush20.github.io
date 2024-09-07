@@ -33,10 +33,6 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   subscriptions: Subscription[] = [];
 
-  username = '';
-
-  password = '';
-
   constructor(
     private loginService: LoginService,
     private usernamesStorage: UsernamesStorageService,
@@ -68,7 +64,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       this.logginIn = true;
       if (this.loginForm.valid) {
         const loginSubscription = this.loginService
-          .login({username: this.username, password: this.password})
+          .login(this.loginForm.value)
           .subscribe((res) => this.processLoginResult(res));
         this.subscriptions.push(loginSubscription);
       }

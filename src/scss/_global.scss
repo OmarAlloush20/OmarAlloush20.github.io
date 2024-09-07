@@ -26,7 +26,7 @@ $input-background-color-autofilled: #202020;
 // Used when the label should be top
 .shrinked-label {
   font-size: 0.8rem;
-  top: -8px;
+  top: -8px !important;
   transition: 200ms;
 }
 
@@ -36,7 +36,7 @@ $input-background-color-autofilled: #202020;
   margin-bottom: 5px;
 }
 
-input[type="text"] {
+input[type="text"], input[type="password"] {
   width: 100%;
   padding: 0px 12px;
   height: 35px;
@@ -130,8 +130,7 @@ select ~ label {
   pointer-events: none;
 }
 
-select:focus ~ label,
-select:not(:placeholder-shown) ~ label {
+select:focus ~ label {
   font-size: 0.8rem;
   top: -8px;
   transition: 200ms;
@@ -156,6 +155,8 @@ option:hover {
 /// Toggle ///
 //////////////
 
+$toggle-container-height: 40px;
+
 $toggle-width: 40px;
 $toggle-height: 20px;
 
@@ -164,16 +165,17 @@ $toggle-active-color: lighten($toggle-active-background-color, 50%);
 $toggle-inactive-background-color: grey;
 $toggle-inactive-color: lighten(grey, 30%);
 
-$toggle-left-distance: 80px;
+$toggle-left-distance: 10px;
 
 .tgl-form-group {
   position: relative;
-  min-height: calc($toggle-height * 1.75);
+  min-height: $toggle-container-height;
+  background-color: $input-background-color;
 
   input {
     position: absolute;
-    top: 13px;
-    left: $toggle-left-distance;
+    top: 10px;
+    right: $toggle-left-distance;
     margin: 0;
     height: $toggle-height;
     width: $toggle-width;
@@ -192,8 +194,8 @@ $toggle-left-distance: 80px;
 
       width: 10px;
       height: 10px;
-      left: calc($toggle-left-distance + 5px);
-      top: 18px;
+      right: calc($toggle-left-distance + 25px);
+      top: 15px;
 
       border-radius: 50%;
       background-color: $toggle-inactive-color;
@@ -203,8 +205,8 @@ $toggle-left-distance: 80px;
     ~ label {
       position: absolute;
       font-size: 1.2rem;
-      margin: 0 0 0 5px;
-      top: 11px;
+      margin: 0 0 0 8px;
+      top: 9px;
       left: 0px;
       transition: 200ms;
     }
@@ -214,7 +216,7 @@ $toggle-left-distance: 80px;
       border: 2px solid $toggle-active-color;
 
       ~ span.tgl-dot {
-        left: calc($toggle-left-distance + 25px);
+        right: calc($toggle-left-distance + 5px);
         background-color: $toggle-active-color;
       }
 
