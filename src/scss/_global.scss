@@ -27,7 +27,7 @@ $input-background-color-autofilled: #202020;
 .shrinked-label {
   font-size: 0.8rem;
   top: -8px;
-  transition: 200ms; 
+  transition: 200ms;
 }
 
 .form-group {
@@ -36,7 +36,7 @@ $input-background-color-autofilled: #202020;
   margin-bottom: 5px;
 }
 
-input {
+input[type="text"] {
   width: 100%;
   padding: 0px 12px;
   height: 35px;
@@ -57,8 +57,8 @@ input {
     pointer-events: none;
   }
 
-  &:focus{
-  // &:valid {
+  &:focus {
+    // &:valid {
     ~ label {
       font-size: 0.8rem; // Manually applying .shrinked-label styles
       top: -8px; // Manually applying .shrinked-label styles
@@ -78,6 +78,150 @@ input {
 
   &::placeholder {
     color: transparent;
+  }
+}
+
+//////////////
+/// Select ///
+//////////////
+
+.dropdown-form-group {
+  position: relative;
+  transition: 500ms;
+  margin-bottom: 5px;
+}
+
+select {
+  width: 100%;
+  padding: 0px 12px;
+  height: 35px;
+  margin: 10px 0px;
+  background-color: #252525be; /* $input-background-color */
+  color: #ffffff; /* Assuming this is $on-dark-secondary-color */
+  border: none;
+  outline: none;
+  transition: 500ms;
+  appearance: none; /* Remove default select arrow */
+  -webkit-appearance: none; /* For Safari */
+}
+
+select::-ms-expand {
+  display: none; /* Hide the default arrow on IE and Edge */
+}
+
+.form-group.dropdown::after {
+  content: "\25BC"; /* Down arrow */
+  position: absolute;
+  right: 15px;
+  top: calc(50% + 2px);
+  pointer-events: none;
+  font-size: 12px;
+  color: $on-dark-color; /* Assuming this is $on-dark-color */
+}
+
+select ~ label {
+  position: absolute;
+  display: block;
+  // color: #ffffff; /* Assuming this is $on-dark-color */
+  color: $on-dark-color; /* Assuming this is $on-dark-color */
+  top: 20px;
+  margin: 0px 10px;
+  transition: 200ms;
+  pointer-events: none;
+}
+
+select:focus ~ label,
+select:not(:placeholder-shown) ~ label {
+  font-size: 0.8rem;
+  top: -8px;
+  transition: 200ms;
+}
+
+select:focus {
+  box-shadow: 0 0 0px 1000px #202020 inset; /* $input-background-color-autofilled */
+  -webkit-box-shadow: 0 0 0px 1000px #202020 inset;
+  color: #ffffff; /* Assuming this is $on-dark-secondary-color */
+}
+
+option {
+  background-color: #252525be; /* $input-background-color */
+  color: #ffffff; /* Assuming this is $on-dark-secondary-color */
+}
+
+option:hover {
+  background-color: #333333;
+}
+
+//////////////
+/// Toggle ///
+//////////////
+
+$toggle-width: 40px;
+$toggle-height: 20px;
+
+$toggle-active-background-color: darken($on-dark-color, 50%);
+$toggle-active-color: lighten($toggle-active-background-color, 50%);
+$toggle-inactive-background-color: grey;
+$toggle-inactive-color: lighten(grey, 30%);
+
+$toggle-left-distance: 80px;
+
+.tgl-form-group {
+  position: relative;
+  min-height: calc($toggle-height * 1.75);
+
+  input {
+    position: absolute;
+    top: 13px;
+    left: $toggle-left-distance;
+    margin: 0;
+    height: $toggle-height;
+    width: $toggle-width;
+
+    background-color: $toggle-inactive-background-color;
+
+    border: 2px solid $toggle-inactive-color;
+    border-radius: 15px;
+
+    transition: 500ms;
+
+    ~ span.tgl-dot {
+      display: block;
+      position: absolute;
+      pointer-events: none;
+
+      width: 10px;
+      height: 10px;
+      left: calc($toggle-left-distance + 5px);
+      top: 18px;
+
+      border-radius: 50%;
+      background-color: $toggle-inactive-color;
+      transition: 500ms;
+    }
+
+    ~ label {
+      position: absolute;
+      font-size: 1.2rem;
+      margin: 0 0 0 5px;
+      top: 11px;
+      left: 0px;
+      transition: 200ms;
+    }
+
+    &:checked {
+      background-color: $toggle-active-background-color;
+      border: 2px solid $toggle-active-color;
+
+      ~ span.tgl-dot {
+        left: calc($toggle-left-distance + 25px);
+        background-color: $toggle-active-color;
+      }
+
+      ~ label {
+        color: $toggle-active-color;
+      }
+    }
   }
 }
 
@@ -150,7 +294,7 @@ $scrollbar-track-color: transparent;
   height: 24px;
   border-radius: 50%;
   display: inline-block;
-  border-top: 3px solid #FFF;
+  border-top: 3px solid #fff;
   border-right: 3px solid transparent;
   box-sizing: border-box;
   animation: rotation 1s linear infinite;
@@ -163,4 +307,4 @@ $scrollbar-track-color: transparent;
   100% {
     transform: rotate(360deg);
   }
-}  
+}
