@@ -25,7 +25,7 @@ export class HttpService {
   private initHttpOptions() {
     this.httpOptions = {
       headers: new HttpHeaders({
-        Authorization: `Bearer ${this.auth.token}`,
+        'Authorization': `Bearer ${this.auth.token}`,
       }),
       observe: 'response' as const,
     };
@@ -33,8 +33,11 @@ export class HttpService {
 
   // GET Method
   get<T>(endpoint: string): Observable<HttpResponse<T>> {
-    return this.http.get<HttpResponse<T>>(`${this.baseUrl}/${endpoint}`).pipe(
-      tap((res) => this._checkIfUnauthorized(res.status)),
+    return this.http.get<HttpResponse<T>>(`${this.baseUrl}/${endpoint}`, this.httpOptions).pipe(
+      tap((res) => {
+        this._checkIfUnauthorized(res.status);
+        return res;
+      }),
       catchError(this.handleError)
     );
   }
@@ -102,7 +105,9 @@ export class HttpService {
         `Backend returned code ${error.status}, body was: ${error.error}`
       );
     }
-    return throwError(() => new Error('Something bad happened; please try again later.'));
+    return throwError(
+      () => new Error('Something bad happened; please try again later.')
+    );
   }
 
   private _checkIfUnauthorized(statusCode: number) {

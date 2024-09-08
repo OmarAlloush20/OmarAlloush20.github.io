@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpService } from '../../../shared/services/http/http.service';
-import { catchError, map, Observable, of, tap, throwError } from 'rxjs';
+import { catchError, map, Observable, of } from 'rxjs';
 import { User } from '../models/user.model';
 import { HttpStatusCode } from '@angular/common/http';
 
@@ -12,7 +12,7 @@ export class UsersService {
   constructor(private http: HttpService) {}
 
   fetchUsers(query?: string): Observable<User[] | undefined> {
-    const endpoint = `${this._endpoint}?query=${query}`;
+    const endpoint = `${this._endpoint}${query ? `?query=${query}` : ''}`;
     return this.http.get(endpoint).pipe(
       map((val) => (val.body as any).data as User[]),
       catchError((_) => of(undefined))
