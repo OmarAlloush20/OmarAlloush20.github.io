@@ -46,8 +46,7 @@
 
   &.ex-icon {
     -webkit-mask-image: url("/assets/icons/x.svg");
-    mask-image: url("/assets/icons/x.svg");
-    
+    mask-image: url("/assets/icons/x.svg");    
   }
 
   &.edit-icon {
@@ -58,5 +57,10 @@
   &.lock-icon {
     -webkit-mask-image: url("/assets/icons/lock.svg");
     mask-image: url("/assets/icons/lock.svg");
+  }
+
+  &.eye-icon {
+    -webkit-mask-image: url("/assets/icons/eye.svg");
+    mask-image: url("/assets/icons/eye.svg");
   }
 }

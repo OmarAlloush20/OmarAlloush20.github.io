@@ -5,12 +5,13 @@
     <div class="user-modal-fields">
       <div class="form-group">
         <input formControlName="username" type="text" id="username" required autocomplete="username">
-        <label for="username" [ngClass]="{'shrinked-label' : userForm.value.username}" >Username</label>
+        <label for="username" [ngClass]="{'shrinked-label' : userForm.value.username}">Username</label>
       </div>
 
       <div class="form-group">
-        <input formControlName="password" type="password" id="password"
-          [placeholder]="user ? 'Replace old password...' : ''" autocomplete="current-password">
+        <input formControlName="password" [type]="passwordVisible ? 'text' : 'password'" id="password"
+          [placeholder]="user ? 'Replace old password...' : ''" autocomplete="current-password" class="password-field">
+        <button class="btn show-password-btn" type="button" (click)="togglePasswordVisibility()"><i class="icon eye-icon" [ngClass]="{'visible' : passwordVisible}"></i></button>
         <label for="password" [ngClass]="{'shrinked-label' : user || userForm.value.password}">Password</label>
       </div>
 

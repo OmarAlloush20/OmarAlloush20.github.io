@@ -24,6 +24,8 @@ export class UserModalComponent implements OnInit {
 
   userForm: FormGroup;
 
+  passwordVisible = false;
+
   constructor(private fb: FormBuilder, private dialog : MatDialogRef<UserModalComponent>) {
     this.userForm = this.fb.group({
       username: ['', Validators.required],
@@ -48,6 +50,10 @@ export class UserModalComponent implements OnInit {
       this.userForm.controls['userType'].setValue(this.user.userType);
       this.userForm.controls['isActive'].setValue(this.user.isActive);
     }
+  }
+
+  togglePasswordVisibility() {
+    this.passwordVisible = !this.passwordVisible;
   }
 
   onSubmit() {
