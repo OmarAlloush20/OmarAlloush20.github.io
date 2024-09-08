@@ -8,12 +8,12 @@ import {
   Validators,
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-user-modal',
   standalone: true,
-  imports: [FormsModule, ReactiveFormsModule, CommonModule],
+  imports: [FormsModule, ReactiveFormsModule, CommonModule, MatDialogModule],
   templateUrl: './user-modal.component.html',
   styleUrl: './user-modal.component.scss',
 })
@@ -51,8 +51,9 @@ export class UserModalComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(`submitting`)
-    this.dialog.close(this.userForm.value as User)
+    const val = this.userForm.value as User
+    console.log('closing with val');
+    this.dialog.close(val)
   }
 
   cancel() {

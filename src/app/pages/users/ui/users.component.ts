@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { User } from '../models/user.model';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -7,6 +7,8 @@ import { UserModalComponent } from './user-modal/user-modal.component';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { map } from 'rxjs';
 import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialog/confirm-dialog.component';
+import { UsersService } from '../services/users.service';
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-users',
   standalone: true,
@@ -88,34 +90,101 @@ export class UsersComponent {
     },
   ];
 
-  constructor(private dialog : MatDialog) {}
+  loading: boolean = false;
 
-  addUser() {
-      const modalRef = this.dialog.open(UserModalComponent);
-      
-      modalRef.afterClosed().pipe(map((val) => {
-        console.log(val);
-      }))
+  dialog = inject(MatDialog);
+  usersService = inject(UsersService);
+  toastr = inject(ToastrService);
+
+  private _reloadUsers() {}
+
+  openAddUser() {
+    const modalRef = this.dialog.open(UserModalComponent);
+
+    const sub = modalRef.afterClosed().subscribe((user) => {
+      if (user) {
+        this._addUser(user);
+        sub.unsubscribe();
+      }
+    });
   }
 
-  editUser(user: User) {
+  private _addUser(user: User) {
+    this.loading = true;
+    this.loading = false;
+  }
+
+  openEditUser(user: User) {
     const modalRef = this.dialog.open(UserModalComponent);
     modalRef.componentInstance.user = user;
-      
-    modalRef.afterClosed().pipe(map((val) => {
-      console.log(val);
-    }))
+
+    const sub = modalRef.afterClosed().subscribe((editedUser) => {
+      if (editedUser) {
+        this._editUser(editedUser);
+        sub.unsubscribe();
+      }
+    });
   }
 
-  deleteUser(user: User) {
+  private _editUser(user: User) {
+    this.loading = true;
+    this.usersService.editUser(user._id, user).subscribe({
+      next: (val) => {
+        this.loading = false;
+        if (val) {
+          this.toastr.success('User updated');
+        } else {
+          this.toastr.warning("Couldn't update user. Please try again.");
+        }
+      },
+      error: (_) => {
+        this.loading = false;
+        this.toastr.error("Couldn't update user. Please try again.");
+      },
+    });
+  }
+
+  openDeleteUser(user: User) {
     const modalRef = this.dialog.open(ConfirmDialogComponent);
-      
-    modalRef.afterClosed().pipe(map((val) => {
-      console.log(val);
-    }))
+
+    const sub = modalRef.afterClosed().subscribe((confirmed) => {
+      if (confirmed) {
+        this._deleteUser(user);
+        sub.unsubscribe();
+      }
+    });
+  }
+
+  private _deleteUser(user: User) {
+    this.loading = true;
+    this.usersService.deleteUser(user._id).subscribe({
+      next: (val) => {
+        this.loading = false;
+        if (val) {
+          this.toastr.success('User deleted');
+        } else {
+          this.toastr.warning("Couldn't delete user. Please try again.");
+        }
+      },
+      error: (_) => {
+        this.loading = false;
+        this.toastr.error("Couldn't delete user. Please try again.");
+      },
+    });
   }
 
   search(query: string) {
-    console.log(query);
+    this.usersService.fetchUsers(query).subscribe({
+      next: (val) => {
+        this.loading = false;
+        if (!val) {
+          this.toastr.warning("Couldn't get users. Please try again.");
+        }
+      },
+      error: (_) => {
+        this.loading = false;
+        this.toastr.error("Couldn't get users. Please try again.");
+      },
+    });
   }
 }

@@ -4,9 +4,10 @@
     [headers]="tableHeaders"
     [data]="users"
     [cellValueFn]="headerToValue"
-    (onAdd)="addUser()"
-    (onEdit)="editUser($event)"
-    (onDelete)="deleteUser($event)"
+    (onAdd)="openAddUser()"
+    (onEdit)="openEditUser($event)"
+    (onDelete)="openDeleteUser($event)"
     (onSearch)="search($event)"
+    [loading]="loading"
     ></app-data-table>
 </div>
