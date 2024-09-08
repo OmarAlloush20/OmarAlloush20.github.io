@@ -77,7 +77,7 @@ input[type="text"], input[type="password"] {
   }
 
   &::placeholder {
-    color: transparent;
+    color: rgba(125, 125, 125, 0.4);
   }
 }
 
