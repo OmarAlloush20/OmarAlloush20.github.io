@@ -6,6 +6,7 @@ import { DataTableComponent } from '../../../shared/components/data-table/data-t
 import { UserModalComponent } from './user-modal/user-modal.component';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { map } from 'rxjs';
+import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialog/confirm-dialog.component';
 @Component({
   selector: 'app-users',
   standalone: true,
@@ -107,7 +108,7 @@ export class UsersComponent {
   }
 
   deleteUser(user: User) {
-    const modalRef = this.dialog.open(UserModalComponent);
+    const modalRef = this.dialog.open(ConfirmDialogComponent);
       
     modalRef.afterClosed().pipe(map((val) => {
       console.log(val);
