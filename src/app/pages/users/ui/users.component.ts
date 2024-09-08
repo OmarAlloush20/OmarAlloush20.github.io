@@ -5,10 +5,10 @@ import { FormsModule } from '@angular/forms';
 import { DataTableComponent } from '../../../shared/components/data-table/data-table.component';
 import { UserModalComponent } from './user-modal/user-modal.component';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { map } from 'rxjs';
 import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialog/confirm-dialog.component';
 import { UsersService } from '../services/users.service';
 import { ToastrService } from 'ngx-toastr';
+
 @Component({
   selector: 'app-users',
   standalone: true,
@@ -89,6 +89,8 @@ export class UsersComponent {
       isActive: true,
     },
   ];
+
+  private _allUsers : User[] = [];
 
   loading: boolean = false;
 
@@ -173,11 +175,14 @@ export class UsersComponent {
     });
   }
 
-  search(query: string) {
+  search(query : string) {
     this.usersService.fetchUsers(query).subscribe({
       next: (val) => {
         this.loading = false;
-        if (!val) {
+        if(val) {
+          this._updateUsers(val);
+        }
+        else if (!val) {
           this.toastr.warning("Couldn't get users. Please try again.");
         }
       },
@@ -186,5 +191,14 @@ export class UsersComponent {
         this.toastr.error("Couldn't get users. Please try again.");
       },
     });
+  }
+
+  private _updateUsers(users : User[], pageNumber : number = 1) {
+    this._allUsers = users;
+    this.users =  this._allUsers.slice(pageNumber * 10 - 10, pageNumber * 10);
+  }
+
+  onPageNumberChanged(pageNumber : number) {
+    this.users =  this._allUsers.slice(pageNumber * 10 - 10, pageNumber * 10);
   }
 }

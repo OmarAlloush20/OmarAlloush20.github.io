@@ -61,25 +61,26 @@ export class DataTableComponent implements OnInit {
     this.renderer.setStyle(this.popupActions.nativeElement, 'display', 'block');
   }
 
-  @Input('headers') headers: string[] = [];
+  @Input() headers: string[] = [];
 
-  @Input('data') data: any[] = [];
+  @Input() data: any[] = [];
 
-  @Input('cellValueFn') cellValueFn!: CellValueFunction;
+  @Input() cellValueFn!: CellValueFunction;
 
-  @Input('maxPages') maxPages: number = 1;
+  @Input() maxPages: number = 1;
 
-  @Input('onPageChanged') onPageChanged!: (value: number) => any;
+  @Input() loading: boolean = false;
 
-  @Input('loading') loading: boolean = false;
+  @Output() onPageChange: EventEmitter<number> = new EventEmitter<number>();
 
-  @Output('onAdd') onAdd: EventEmitter<any> = new EventEmitter<any>();
+  @Output() onAdd: EventEmitter<any> = new EventEmitter<any>();
 
-  @Output('onEdit') onEdit: EventEmitter<any> = new EventEmitter<any>();
+  @Output() onEdit: EventEmitter<any> = new EventEmitter<any>();
 
-  @Output('onDelete') onDelete: EventEmitter<any> = new EventEmitter<any>();
+  @Output() onDelete: EventEmitter<any> = new EventEmitter<any>();
 
-  @Output('onSearch') onSearch: EventEmitter<any> = new EventEmitter<any>();
+  @Output() onSearchQueryChange: EventEmitter<string> =
+    new EventEmitter<string>();
 
   selectedValue?: any;
 
@@ -108,10 +109,8 @@ export class DataTableComponent implements OnInit {
     }
   }
 
-  search(query: string) {
-    if (query) {
-      this.onSearch.emit(query);
-    }
+  search(query : string) {
+    this.onSearchQueryChange.emit(query);
   }
 
   onPageNumberChange(pageNumber: number) {
@@ -123,6 +122,6 @@ export class DataTableComponent implements OnInit {
       this.currentPage = pageNumber;
     }
 
-    this.onPageChanged(this.currentPage);
+    this.onPageChange.emit(this.currentPage);
   }
 }
