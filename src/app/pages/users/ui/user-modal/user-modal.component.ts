@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, Input } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { User } from '../../models/user.model';
 import {
   FormBuilder,
@@ -8,6 +8,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-user-modal',
@@ -16,27 +17,17 @@ import { CommonModule } from '@angular/common';
   templateUrl: './user-modal.component.html',
   styleUrl: './user-modal.component.scss',
 })
-export class UserModalComponent {
+export class UserModalComponent implements OnInit {
   @Input('user') user?: User;
 
   @Input('title') title: string = 'User';
 
-  // editedUser: Partial<User> = {
-  //   username: '',
-  //   firstName: '',
-  //   lastName: '',
-  //   middleName: '',
-  //   gender: 'male',
-  //   userType: 'employee',
-  //   isActive: true,
-  // };
-
   userForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private cdr : ChangeDetectorRef) {
+  constructor(private fb: FormBuilder, private dialog : MatDialogRef<UserModalComponent>) {
     this.userForm = this.fb.group({
       username: ['', Validators.required],
-      password: ['', Validators.required],
+      password: [''],
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
       middleName: [''],
@@ -46,9 +37,25 @@ export class UserModalComponent {
     });
   }
 
+  ngOnInit(): void {
+    if (this.user) {
+      this.userForm.controls['username'].setValue(this.user.username);
+      this.userForm.controls['firstName'].setValue(this.user.firstName);
+      this.userForm.controls['lastName'].setValue(this.user.lastName);
+      this.userForm.controls['middleName'].setValue(this.user.middleName || '');
+      this.userForm.controls['password'].setValue(this.user.password || '');
+      this.userForm.controls['gender'].setValue(this.user.gender);
+      this.userForm.controls['userType'].setValue(this.user.userType);
+      this.userForm.controls['isActive'].setValue(this.user.isActive);
+    }
+  }
+
   onSubmit() {
-    // Handle form submission
-    console.log('hi')
-    console.log(this.userForm.value);
+    console.log(`submitting`)
+    this.dialog.close(this.userForm.value as User)
+  }
+
+  cancel() {
+    this.dialog.close();
   }
 }

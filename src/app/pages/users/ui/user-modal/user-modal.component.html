@@ -4,13 +4,14 @@
   <form [formGroup]="userForm" class="user-modal-form" (ngSubmit)="onSubmit()">
     <div class="user-modal-fields">
       <div class="form-group">
-        <input formControlName="username" type="text" id="username" required>
-        <label for="username" [ngClass]="{'shrinked-label' : userForm.value.username}">Username</label>
+        <input formControlName="username" type="text" id="username" required autocomplete="username">
+        <label for="username" [ngClass]="{'shrinked-label' : userForm.value.username}" >Username</label>
       </div>
 
       <div class="form-group">
-        <input formControlName="password" type="password" id="password" placeholder="Replace old password...">
-        <label for="password" class="shrinked-label">Password</label>
+        <input formControlName="password" type="password" id="password"
+          [placeholder]="user ? 'Replace old password...' : ''" autocomplete="current-password">
+        <label for="password" [ngClass]="{'shrinked-label' : user || userForm.value.password}">Password</label>
       </div>
 
       <div class="form-group">
@@ -52,7 +53,16 @@
         <label for="isActive" class="tgl-btn">Active</label>
       </div>
 
-      <button class="btn btn-primary" type="submit" [disabled]="!userForm.valid" (click)="onSubmit()">Confirm</button>
+      <div class="action-btns-container">
+        <div class="action-btns">
+          <button class="btn btn-secondary btn-confirm" type="button" (click)="cancel()"><i
+              class="icon ex-icon"></i></button>
+
+          <button class="btn btn-primary btn-confirm" type="submit" [disabled]="!userForm.valid"
+            (click)="onSubmit()">Confirm</button>
+
+        </div>
+      </div>
     </div>
   </form>
 </div>

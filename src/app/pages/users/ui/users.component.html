@@ -4,9 +4,9 @@
     [headers]="tableHeaders"
     [data]="users"
     [cellValueFn]="headerToValue"
-    [onAdd]="addUser"
-    [onEdit]="editUser"
-    [onDelete]="deleteUser"
-    [onSearch]="search"
+    (onAdd)="addUser()"
+    (onEdit)="editUser($event)"
+    (onDelete)="deleteUser($event)"
+    (onSearch)="search($event)"
     ></app-data-table>
 </div>

@@ -1,5 +1,5 @@
-<table>
-    <caption class="filter-bar-container">
+<div class="data-table-container">
+    <div class="filter-bar-container">
         <div class="filter-bar">
             <form (ngSubmit)="search(searchQuery)" class="search-input-container">
                 <input class="search-input" type="text" placeholder="Search..." [(ngModel)]="searchQuery"
@@ -30,33 +30,42 @@
                 </button>
             </div>
         </div>
-    </caption>
+    </div>
 
-    <thead>
-        <tr>
-            <th *ngFor="let header of headers" scope="col">{{header}}</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr class="loading-row" *ngIf="loading">
-            <td><div class="loader"></div></td>
-        </tr>
-        <tr *ngFor="let value of data; index as i" (mousedown)="setSelectedValue($event, value)"
-            [ngClass]="{'selected' : selectedValue === value}">
-            <td *ngFor="let header of headers; index as j" [attr.data-label]="header">{{cellValueFn(header, value) ??
-                '--'}}
-            </td>
+    <!-- LOADER ROW -->
+    <div class="loading-container" *ngIf="loading">
+        <div class="loader"></div>
+    </div>
+    <!-- ADD ROW -->
+    <div class="add-item-container">
+        <button class="btn add-user-btn" (click)="add()"><i class="icon plus-icon"></i><span>Add Item</span></button>
+    </div>
 
-        </tr>
-    </tbody>
-</table>
 
-<div class="popup-actions" #popupActions [ngClass]="{'hidden' : selectedValue === undefined}">
-    <div class="actions-container">
-        <button class="add" (click)="add(selectedValue)"><i class="icon plus-icon"></i></button>
-        <button [disabled]="selectedValue === undefined" class="edit" (click)="edit(selectedValue)"><i
-                class="icon edit-icon"></i></button>
-        <button [disabled]="selectedValue === undefined" class="delete" (click)="delete(selectedValue)"><i
-                class="icon ex-icon"></i></button>
+    <table>
+        <thead>
+            <tr>
+                <th *ngFor="let header of headers" scope="col">{{header}}</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let value of data; index as i" (mousedown)="setSelectedValue($event, value)"
+                [ngClass]="{'selected' : selectedValue === value}">
+                <td *ngFor="let header of headers; index as j" [attr.data-label]="header">{{cellValueFn(header, value)
+                    ??
+                    '--'}}
+                </td>
+
+        </tbody>
+    </table>
+
+    <div class="popup-actions" #popupActions [ngClass]="{'hidden' : selectedValue === undefined}">
+        <div class="actions-container">
+            <!-- <button class="add" (click)="add(selectedValue)"><i class="icon plus-icon"></i></button> -->
+            <button [disabled]="selectedValue === undefined" class="edit" (click)="edit(selectedValue)"><i
+                    class="icon edit-icon"></i></button>
+            <button [disabled]="selectedValue === undefined" class="delete" (click)="delete(selectedValue)"><i
+                    class="icon ex-icon"></i></button>
+        </div>
     </div>
 </div>

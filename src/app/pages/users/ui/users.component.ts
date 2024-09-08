@@ -3,11 +3,19 @@ import { User } from '../models/user.model';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { DataTableComponent } from '../../../shared/components/data-table/data-table.component';
-
+import { UserModalComponent } from './user-modal/user-modal.component';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { map } from 'rxjs';
 @Component({
   selector: 'app-users',
   standalone: true,
-  imports: [CommonModule, FormsModule, DataTableComponent],
+  imports: [
+    CommonModule,
+    FormsModule,
+    DataTableComponent,
+    UserModalComponent,
+    MatDialogModule,
+  ],
   templateUrl: './users.component.html',
   styleUrl: './users.component.scss',
 })
@@ -79,22 +87,31 @@ export class UsersComponent {
     },
   ];
 
-  addUser(user: User) {
-    if (user) {
-      console.log(`adding: ${user.username}`);
-    }
+  constructor(private dialog : MatDialog) {}
+
+  addUser() {
+      const modalRef = this.dialog.open(UserModalComponent);
+      
+      modalRef.afterClosed().pipe(map((val) => {
+        console.log(val);
+      }))
   }
 
   editUser(user: User) {
-    if (user) {
-      console.log(`editting: ${user.username}`);
-    }
+    const modalRef = this.dialog.open(UserModalComponent);
+    modalRef.componentInstance.user = user;
+      
+    modalRef.afterClosed().pipe(map((val) => {
+      console.log(val);
+    }))
   }
 
   deleteUser(user: User) {
-    if (user) {
-      console.log(`deleting: ${user.username}`);
-    }
+    const modalRef = this.dialog.open(UserModalComponent);
+      
+    modalRef.afterClosed().pipe(map((val) => {
+      console.log(val);
+    }))
   }
 
   search(query: string) {

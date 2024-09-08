@@ -28,7 +28,35 @@ h1 {
   gap: 5px;
 }
 
-.btn.btn-primary {
-  margin-top: 20px;
-  max-width: 250px;
+.action-btns-container {
+  margin-top: 20px
+}
+
+.action-btns {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 18px;
+
+  width: 100%;
+  
+  .btn {
+    height: 20px;
+  }
+
+  .btn-primary {
+    flex-grow: 1;
+  }
+
+  .btn-secondary {
+    width: 20px;
+    @extend .center;
+  }
+
+  i {
+    height: 15px;
+    width: 15px;
+    background-color: white;
+  }
 }

@@ -3,8 +3,10 @@ import {
   ElementRef,
   Input,
   OnInit,
+  Output,
   Renderer2,
   ViewChild,
+  EventEmitter,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -44,7 +46,6 @@ export class DataTableComponent implements OnInit {
     // Adjust position if popup would go off-screen
     if (left + popupWidth > window.innerWidth) {
       left = event.clientX - scrollX - popupWidth * 2;
-      
     }
 
     if (top + popupHeight > window.innerHeight) {
@@ -66,19 +67,19 @@ export class DataTableComponent implements OnInit {
 
   @Input('cellValueFn') cellValueFn!: CellValueFunction;
 
-  @Input('onAdd') onAdd!: (value: any) => any;
-
-  @Input('onEdit') onEdit!: (value: any) => any;
-
-  @Input('onDelete') onDelete!: (value: any) => any;
-
-  @Input('onSearch') onSearch!: (value: any) => any;
-
   @Input('maxPages') maxPages: number = 1;
 
   @Input('onPageChanged') onPageChanged!: (value: number) => any;
 
   @Input('loading') loading: boolean = false;
+
+  @Output('onAdd') onAdd: EventEmitter<any> = new EventEmitter<any>();
+
+  @Output('onEdit') onEdit: EventEmitter<any> = new EventEmitter<any>();
+
+  @Output('onDelete') onDelete: EventEmitter<any> = new EventEmitter<any>();
+
+  @Output('onSearch') onSearch: EventEmitter<any> = new EventEmitter<any>();
 
   selectedValue?: any;
 
@@ -91,37 +92,34 @@ export class DataTableComponent implements OnInit {
     this.positionPopup(event);
   }
 
-  add(value?: any) {
-    if (value) {
-      this.onAdd(value);
-    }
+  add() {
+    this.onAdd.emit();
   }
 
   edit(value?: any) {
     if (value) {
-      this.onEdit(value);
+      this.onEdit.emit(value);
     }
   }
 
   delete(value?: any) {
     if (value) {
-      this.onDelete(value);
+      this.onDelete.emit(value);
     }
   }
 
   search(query: string) {
     if (query) {
-      this.onSearch(query);
+      this.onSearch.emit(query);
     }
   }
 
-  onPageNumberChange(pageNumber : number) {
-    if(pageNumber >= this.maxPages) {
+  onPageNumberChange(pageNumber: number) {
+    if (pageNumber >= this.maxPages) {
       this.currentPage = this.maxPages;
     } else if (pageNumber <= 1) {
       this.currentPage = 1;
-    } 
-    else {
+    } else {
       this.currentPage = pageNumber;
     }
 
