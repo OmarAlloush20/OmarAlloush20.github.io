@@ -19,27 +19,38 @@ export class HttpService {
   private httpOptions = {}; // Initial value
 
   constructor(private http: HttpClient, private auth: AuthService) {
-    this.initHttpOptions();
+    this._refreshHttpOptions();
+    this._subscribeToAuthService();
   }
 
-  private initHttpOptions() {
+  private _refreshHttpOptions() {
     this.httpOptions = {
       headers: new HttpHeaders({
-        'Authorization': `Bearer ${this.auth.token}`,
+        Authorization: `Bearer ${this.auth.token}`,
       }),
       observe: 'response' as const,
     };
   }
 
+  private _subscribeToAuthService() {
+    this.auth.authStatus$.subscribe((_) => {
+      if (this.auth.token) {
+        this._refreshHttpOptions();
+      }
+    });
+  }
+
   // GET Method
   get<T>(endpoint: string): Observable<HttpResponse<T>> {
-    return this.http.get<HttpResponse<T>>(`${this.baseUrl}/${endpoint}`, this.httpOptions).pipe(
-      tap((res) => {
-        this._checkIfUnauthorized(res.status);
-        return res;
-      }),
-      catchError(this.handleError)
-    );
+    return this.http
+      .get<HttpResponse<T>>(`${this.baseUrl}/${endpoint}`, this.httpOptions)
+      .pipe(
+        tap((res) => {
+          this._checkIfUnauthorized(res.status);
+          return res;
+        }),
+        catchError(this.handleError)
+      );
   }
 
   // POST Method
