@@ -43,7 +43,8 @@ $input-background-color-autofilled: #202020;
 }
 
 input[type="text"],
-input[type="password"] {
+input[type="password"],
+input[type="email"] {
   width: 100%;
   padding: 0px 12px;
   height: 35px;
