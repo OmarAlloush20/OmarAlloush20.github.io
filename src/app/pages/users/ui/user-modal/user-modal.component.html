@@ -30,6 +30,11 @@
         <label for="middleName" [ngClass]="{'shrinked-label' : userForm.value.middleName}">Middle Name</label>
       </div>
 
+      <div class="form-group">
+        <input formControlName="email" type="email" id="email">
+        <label for="email" [ngClass]="{'shrinked-label' : userForm.value.email}">Email</label>
+      </div>
+
 
       <div class="dropdown-form-group">
         <select formControlName="gender" id="gender" required>
