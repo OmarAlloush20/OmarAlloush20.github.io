@@ -35,7 +35,7 @@ export class UserModalComponent implements OnInit {
       middleName: [''],
       gender: ['', Validators.required],
       userType: ['', Validators.required],
-      isActive: [false],
+      isActive: [true],
     });
   }
 
@@ -58,8 +58,8 @@ export class UserModalComponent implements OnInit {
 
   onSubmit() {
     const val = this.userForm.value as User
-    console.log('closing with val');
-    this.dialog.close(val)
+    
+    this.dialog.close({...val, _id : this.user?._id})
   }
 
   cancel() {

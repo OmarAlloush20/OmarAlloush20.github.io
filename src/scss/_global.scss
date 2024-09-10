@@ -1,3 +1,5 @@
+$focus-border: 1px solid $on-dark-color;
+
 ////////////
 /// Text ///
 ////////////
@@ -22,7 +24,7 @@ span {
 /// ////////
 
 input:focus {
-  border: 1px solid $on-dark-color;
+  border: $focus-border;
 }
 
 $input-background-color: #252525be;
@@ -128,13 +130,17 @@ select {
   border: none;
   outline: none;
   transition: 500ms;
-  appearance: none; /* Remove default select arrow */
-  -webkit-appearance: none; /* For Safari */
+  // appearance: none; /* Remove default select arrow */
+  // -webkit-appearance: none; /* For Safari */
+
+  &:focus {
+    border: $focus-border;
+  }
 }
 
-select::-ms-expand {
-  display: none; /* Hide the default arrow on IE and Edge */
-}
+// select::-ms-expand {
+//   display: none; /* Hide the default arrow on IE and Edge */
+// }
 
 .form-group.dropdown::after {
   content: "\25BC"; /* Down arrow */

@@ -15,7 +15,10 @@ export class UsersService {
     const endpoint = `${this._endpoint}${query ? `?query=${query}` : ''}`;
     return this.http.get(endpoint).pipe(
       map((val) => (val.body as any).data as User[]),
-      catchError((_) => of(undefined))
+      catchError((err) => {
+        console.log(err);
+        return of(undefined);
+      })
     );
   }
 
@@ -27,8 +30,8 @@ export class UsersService {
     );
   }
 
-  editUser(userId: string, updatedUser: User) {
-    const endpoint = `${this._endpoint}/${userId}`;
+  editUser(updatedUser: User) {
+    const endpoint = `${this._endpoint}`;
     return this.http.update(endpoint, updatedUser).pipe(
       map((val) => (val.body as any).data as User),
       catchError((_) => of(undefined))

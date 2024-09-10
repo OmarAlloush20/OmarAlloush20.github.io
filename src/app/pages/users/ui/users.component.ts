@@ -1,6 +1,12 @@
-import { Component, inject } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  inject,
+  OnInit,
+  PLATFORM_ID,
+} from '@angular/core';
 import { User } from '../models/user.model';
-import { CommonModule } from '@angular/common';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { DataTableComponent } from '../../../shared/components/data-table/data-table.component';
 import { UserModalComponent } from './user-modal/user-modal.component';
@@ -8,6 +14,7 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialog/confirm-dialog.component';
 import { UsersService } from '../services/users.service';
 import { ToastrService } from 'ngx-toastr';
+import { AuthService } from '../../../shared/services/auth/auth.service';
 
 @Component({
   selector: 'app-users',
@@ -22,7 +29,7 @@ import { ToastrService } from 'ngx-toastr';
   templateUrl: './users.component.html',
   styleUrl: './users.component.scss',
 })
-export class UsersComponent {
+export class UsersComponent implements OnInit {
   tableHeaders: string[] = [
     'First Name',
     'Last Name',
@@ -60,45 +67,49 @@ export class UsersComponent {
     return undefined;
   };
 
-  users: User[] = [
-    {
-      _id: '1234567890',
-      firstName: 'Shehadeh',
-      lastName: 'Mohamed',
-      gender: 'male',
-      username: 'shehadeh',
-      userType: 'employee',
-      isActive: true,
-    },
-    {
-      _id: '123456789',
-      firstName: 'Omar',
-      lastName: 'Mohamed',
-      gender: 'male',
-      username: 'omar',
-      userType: 'admin',
-      isActive: false,
-    },
-    {
-      _id: '12345678',
-      firstName: 'Hesham',
-      lastName: 'Mohamed',
-      gender: 'male',
-      username: 'hesham',
-      userType: 'owner',
-      isActive: true,
-    },
-  ];
+  users: User[] = [];
 
-  private _allUsers : User[] = [];
+  private _allUsers: User[] = [];
 
   loading: boolean = false;
 
   dialog = inject(MatDialog);
   usersService = inject(UsersService);
   toastr = inject(ToastrService);
+  cdr = inject(ChangeDetectorRef);
+  platformId = inject(PLATFORM_ID);
+  auth = inject(AuthService);
 
-  private _reloadUsers() {}
+  ngOnInit(): void {
+    if (isPlatformBrowser(this.platformId)) this._reloadUsers();
+  }
+
+  private _reloadUsers() {
+    this.loading = true;
+    const toastr = this.toastr;
+    this.usersService.fetchUsers().subscribe({
+      next: (users) => {
+        if (users === undefined) {
+          toastr.error("Couldn't get users. Please try again.", undefined, {
+            closeButton: true,
+            timeOut: 5000,
+          });
+        } else {
+          this._updateUsers(users);
+        }
+        this.loading = false;
+      },
+      error: (err) => {
+        this.loading = false;
+        toastr.warning("Couldn't get users. Please try again.");
+      },
+    });
+  }
+
+  private _updateUsers(users: User[], pageNumber: number = 1) {
+    this._allUsers = users;
+    this.users = this._allUsers.slice(pageNumber * 10 - 10, pageNumber * 10);
+  }
 
   openAddUser() {
     const modalRef = this.dialog.open(UserModalComponent);
@@ -106,7 +117,6 @@ export class UsersComponent {
     const sub = modalRef.afterClosed().subscribe((user) => {
       if (user) {
         this._addUser(user);
-        sub.unsubscribe();
       }
     });
   }
@@ -120,21 +130,35 @@ export class UsersComponent {
     const modalRef = this.dialog.open(UserModalComponent);
     modalRef.componentInstance.user = user;
 
-    const sub = modalRef.afterClosed().subscribe((editedUser) => {
-      if (editedUser) {
+    const sub = modalRef.afterClosed().subscribe((editedUser : User) => {
+      if (editedUser && this._isEditAllowed(editedUser)) {
         this._editUser(editedUser);
         sub.unsubscribe();
       }
     });
   }
 
+  private _isEditAllowed(editedUser : User) {
+    if(editedUser.userType === 'owner' && ! editedUser.isActive) {
+      this.toastr.warning("You cannot deactivate the owner")
+      return false
+    } else if (this.auth.user?.userType === 'admin' && editedUser.userType === 'admin' && editedUser._id !== this.auth.user?._id){
+      this.toastr.warning("You cannot modify the info of another admin")
+      return false
+    }
+
+    return true;
+    
+  }
+
   private _editUser(user: User) {
     this.loading = true;
-    this.usersService.editUser(user._id, user).subscribe({
+    this.usersService.editUser(user).subscribe({
       next: (val) => {
         this.loading = false;
         if (val) {
           this.toastr.success('User updated');
+          this._reloadUsers();
         } else {
           this.toastr.warning("Couldn't update user. Please try again.");
         }
@@ -175,14 +199,13 @@ export class UsersComponent {
     });
   }
 
-  search(query : string) {
+  search(query: string) {
     this.usersService.fetchUsers(query).subscribe({
       next: (val) => {
         this.loading = false;
-        if(val) {
+        if (val) {
           this._updateUsers(val);
-        }
-        else if (!val) {
+        } else if (!val) {
           this.toastr.warning("Couldn't get users. Please try again.");
         }
       },
@@ -193,12 +216,7 @@ export class UsersComponent {
     });
   }
 
-  private _updateUsers(users : User[], pageNumber : number = 1) {
-    this._allUsers = users;
-    this.users =  this._allUsers.slice(pageNumber * 10 - 10, pageNumber * 10);
-  }
-
-  onPageNumberChanged(pageNumber : number) {
-    this.users =  this._allUsers.slice(pageNumber * 10 - 10, pageNumber * 10);
+  onPageNumberChanged(pageNumber: number) {
+    this.users = this._allUsers.slice(pageNumber * 10 - 10, pageNumber * 10);
   }
 }
