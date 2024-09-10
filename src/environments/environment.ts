@@ -1,4 +1,4 @@
 export const environment = {
-    baseUrl : 'locahost:8000/api',
+    baseUrl : 'http://localhost:8000/api',
     localEncKey: "tfstrgkey"
 };
