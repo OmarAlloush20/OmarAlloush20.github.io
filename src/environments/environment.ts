@@ -1,4 +1,4 @@
 export const environment = {
-    baseUrl : 'http://localhost:8000/api',
+    baseUrl : 'https://grad-backend-53y7.onrender.com/api',
     localEncKey: "tfstrgkey"
 };
