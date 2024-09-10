@@ -1,8 +1,9 @@
-import { afterRender, Injectable } from '@angular/core';
+import { afterRender, inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { EncryptionService } from '../encryption/encryption.service';
 import { User } from '../../../pages/users/models/user.model';
+import { ToastrService } from 'ngx-toastr';
 
 const _tokenLocalStorageKey = '__a__';
 const _userLocalStorageKey = '__u__';
@@ -13,6 +14,8 @@ export type AuthStatus = 'undetermined' | 'inauthenticated' | 'authenticated';
   providedIn: 'root',
 })
 export class AuthService {
+  private toastr = inject(ToastrService)
+
   private _token$ = new BehaviorSubject<string>('');
 
   public get token(): string {
@@ -29,6 +32,10 @@ export class AuthService {
 
   public get user$(): Observable<User | undefined> {
     return this._user$.asObservable();
+  }
+
+  public get user(): User | undefined {
+    return this._user$.value;
   }
 
   constructor(private enc: EncryptionService, private router: Router) {
@@ -101,5 +108,6 @@ export class AuthService {
     this._token$.next('');
     this._user$.next(undefined);
     this._authStatus$.next('inauthenticated');
+    this.toastr.error("You don't have permission to access the required resource.", "Access Revoked")
   }
 }

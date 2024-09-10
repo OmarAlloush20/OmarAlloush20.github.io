@@ -19,10 +19,11 @@ export class HttpService {
   private httpOptions = {}; // Initial value
 
   constructor(private http: HttpClient, private auth: AuthService) {
-    this.initHttpOptions();
+    this._refreshHttpOptions();
+    this._subscribeToAuthService();
   }
 
-  private initHttpOptions() {
+  private _refreshHttpOptions() {
     this.httpOptions = {
       headers: new HttpHeaders({
         Authorization: `Bearer ${this.auth.token}`,
@@ -31,12 +32,25 @@ export class HttpService {
     };
   }
 
+  private _subscribeToAuthService() {
+    this.auth.authStatus$.subscribe((_) => {
+      if (this.auth.token) {
+        this._refreshHttpOptions();
+      }
+    });
+  }
+
   // GET Method
   get<T>(endpoint: string): Observable<HttpResponse<T>> {
-    return this.http.get<HttpResponse<T>>(`${this.baseUrl}/${endpoint}`).pipe(
-      tap((res) => this._checkIfUnauthorized(res.status)),
-      catchError(this.handleError)
-    );
+    return this.http
+      .get<HttpResponse<T>>(`${this.baseUrl}/${endpoint}`, this.httpOptions)
+      .pipe(
+        tap((res) => {
+          this._checkIfUnauthorized(res.status);
+          return res;
+        }),
+        catchError(this.handleError)
+      );
   }
 
   // POST Method
@@ -68,9 +82,12 @@ export class HttpService {
   }
 
   // DELETE Method
-  delete<T>(endpoint: string): Observable<HttpResponse<T>> {
+  delete<T>(endpoint: string, body?: any): Observable<HttpResponse<T>> {
     return this.http
-      .delete<HttpResponse<T>>(`${this.baseUrl}/${endpoint}`, this.httpOptions)
+      .delete<HttpResponse<T>>(`${this.baseUrl}/${endpoint}`, {
+        ...this.httpOptions,
+        body: body,
+      })
       .pipe(
         tap((res) => this._checkIfUnauthorized(res.status)),
         catchError(this.handleError)
@@ -102,7 +119,9 @@ export class HttpService {
         `Backend returned code ${error.status}, body was: ${error.error}`
       );
     }
-    return throwError(() => new Error('Something bad happened; please try again later.'));
+    return throwError(
+      () => new Error('Something bad happened; please try again later.')
+    );
   }
 
   private _checkIfUnauthorized(statusCode: number) {

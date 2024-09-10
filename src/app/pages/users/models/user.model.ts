@@ -5,6 +5,7 @@ export interface User {
     lastName: string;
     middleName?: string;
     password? : string;
+    email: string;
     gender: "male" | "female";
     userType: "admin" | "employee" | "owner";
     isActive : boolean;

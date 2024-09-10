@@ -38,7 +38,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     private usernamesStorage: UsernamesStorageService,
     private fb: FormBuilder,
     private toastr: ToastrService,
-    private router : Router
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -65,13 +65,14 @@ export class LoginComponent implements OnInit, OnDestroy {
       if (this.loginForm.valid) {
         const loginSubscription = this.loginService
           .login(this.loginForm.value)
-          .subscribe((res) => this.processLoginResult(res));
+          .subscribe((res) => this._handleLoginResult(res));
         this.subscriptions.push(loginSubscription);
       }
     }
   }
 
-  processLoginResult(result?: LoginResult) {
+  private _handleLoginResult(result: string) {
+    console.log(result);
     switch (result) {
       case 'success':
         this._onLoginSuccess();
@@ -79,33 +80,25 @@ export class LoginComponent implements OnInit, OnDestroy {
       case 'wrong-credentials':
         this._onLoginWrongCredentials();
         break;
-
-      case 'unknown':
-      case 'internal-server-error':
-        this._onLoginError();
+      case 'failed':
+        this._onLoginFail();
         break;
     }
-    this.logginIn = false;
   }
 
   private _onLoginSuccess() {
     this.toastr.success('Logged in successfully');
-    this.router.navigate(['main'])
+    this.router.navigate(['main']);
+  }
+
+  private _onLoginFail() {
+    this.toastr.error('Could not log you in.');
+    this.logginIn = false;
   }
 
   private _onLoginWrongCredentials() {
     this.toastr.warning('Wrong credentials', undefined, {
       timeOut: 7000,
     });
-  }
-
-  private _onLoginError() {
-    this.toastr.error(
-      'An error occurred. Please make sure you have an internet connection and try again.',
-      undefined,
-      {
-        timeOut: 8000,
-      }
-    );
   }
 }
