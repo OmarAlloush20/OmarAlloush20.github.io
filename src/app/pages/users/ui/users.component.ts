@@ -15,6 +15,7 @@ import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialo
 import { UsersService } from '../services/users.service';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from '../../../shared/services/auth/auth.service';
+import { DataTableSearchInfo } from '../../../shared/components/data-table/data-table.model';
 
 @Component({
   selector: 'app-users',
@@ -69,16 +70,18 @@ export class UsersComponent implements OnInit {
 
   users: User[] = [];
 
+  private _query = '';
+
   private _allUsers: User[] = [];
 
   loading: boolean = false;
 
-  dialog = inject(MatDialog);
-  usersService = inject(UsersService);
-  toastr = inject(ToastrService);
-  cdr = inject(ChangeDetectorRef);
-  platformId = inject(PLATFORM_ID);
-  auth = inject(AuthService);
+  private dialog = inject(MatDialog);
+  private usersService = inject(UsersService);
+  private toastr = inject(ToastrService);
+  private platformId = inject(PLATFORM_ID);
+  private auth = inject(AuthService);
+  private cdr = inject(ChangeDetectorRef);
 
   ngOnInit(): void {
     if (isPlatformBrowser(this.platformId)) this._reloadUsers();
@@ -108,7 +111,10 @@ export class UsersComponent implements OnInit {
 
   private _updateUsers(users: User[], pageNumber: number = 1) {
     this._allUsers = users;
-    this.users = this._allUsers.slice(pageNumber * 10 - 10, pageNumber * 10);
+    this.onSearchInfoChanged({
+      query: this._query,
+      pageNumber: pageNumber,
+    });
   }
 
   openAddUser() {
@@ -123,6 +129,45 @@ export class UsersComponent implements OnInit {
 
   private _addUser(user: User) {
     this.loading = true;
+    this.usersService.addUser(user).subscribe({
+      next: (user) => {
+        if (user) {
+          this.toastr.success('User added successfully.');
+          this._reloadUsers();
+        } else {
+          this.toastr.error("Couldn't add user. Please try again.");
+        }
+      },
+      error: (err) => {
+        this.toastr.error("Couldn't add user. Please try again.");
+      },
+    });
+    this.loading = false;
+  }
+
+  private _canAddUser(addedUser: User) {
+    const sessionUser = this.auth.user;
+    if (sessionUser?.userType === 'owner') return true;
+    if (sessionUser?.userType === 'admin' && addedUser.userType === 'employee')
+      return true;
+    else {
+      this.toastr.info('You are not allowed to add users of this type.');
+      return false;
+    }
+  }
+
+  async onSearchInfoChanged(info: DataTableSearchInfo) {
+    this.loading = true;
+    const { query, pageNumber } = info;
+    this._query = query;
+    const newUsers = this._allUsers.filter((user) => {
+      return (
+        user.username.toLowerCase().includes(query.toLowerCase()) ||
+        user.firstName.toLowerCase().includes(query.toLowerCase()) ||
+        user.lastName.toLowerCase().includes(query.toLowerCase())
+      );
+    });
+    this.users = newUsers.splice(pageNumber * 10 - 10, pageNumber * 10);
     this.loading = false;
   }
 
@@ -130,7 +175,7 @@ export class UsersComponent implements OnInit {
     const modalRef = this.dialog.open(UserModalComponent);
     modalRef.componentInstance.user = user;
 
-    const sub = modalRef.afterClosed().subscribe((editedUser : User) => {
+    const sub = modalRef.afterClosed().subscribe((editedUser: User) => {
       if (editedUser && this._isEditAllowed(editedUser)) {
         this._editUser(editedUser);
         sub.unsubscribe();
@@ -138,17 +183,20 @@ export class UsersComponent implements OnInit {
     });
   }
 
-  private _isEditAllowed(editedUser : User) {
-    if(editedUser.userType === 'owner' && ! editedUser.isActive) {
-      this.toastr.warning("You cannot deactivate the owner")
-      return false
-    } else if (this.auth.user?.userType === 'admin' && editedUser.userType === 'admin' && editedUser._id !== this.auth.user?._id){
-      this.toastr.warning("You cannot modify the info of another admin")
-      return false
+  private _isEditAllowed(editedUser: User) {
+    if (editedUser.userType === 'owner' && !editedUser.isActive) {
+      this.toastr.warning('You cannot deactivate the owner');
+      return false;
+    } else if (
+      this.auth.user?.userType === 'admin' &&
+      editedUser.userType === 'admin' &&
+      editedUser._id !== this.auth.user?._id
+    ) {
+      this.toastr.warning('You cannot modify the info of another admin');
+      return false;
     }
 
     return true;
-    
   }
 
   private _editUser(user: User) {
@@ -172,51 +220,49 @@ export class UsersComponent implements OnInit {
 
   openDeleteUser(user: User) {
     const modalRef = this.dialog.open(ConfirmDialogComponent);
-
-    const sub = modalRef.afterClosed().subscribe((confirmed) => {
+    modalRef.afterClosed().subscribe((confirmed) => {
       if (confirmed) {
         this._deleteUser(user);
-        sub.unsubscribe();
       }
     });
   }
 
   private _deleteUser(user: User) {
     this.loading = true;
-    this.usersService.deleteUser(user._id).subscribe({
-      next: (val) => {
-        this.loading = false;
-        if (val) {
-          this.toastr.success('User deleted');
-        } else {
-          this.toastr.warning("Couldn't delete user. Please try again.");
-        }
-      },
-      error: (_) => {
-        this.loading = false;
-        this.toastr.error("Couldn't delete user. Please try again.");
-      },
-    });
+    console.log(user);
+    if (this._isDeleteAllowed(user)) {
+      this.usersService.deleteUser(user).subscribe({
+        next: (val) => {
+          this.loading = false;
+          if (val) {
+            this.toastr.success('User deleted');
+          } else {
+            this.toastr.warning("Couldn't delete user. Please try again.");
+          }
+          this._reloadUsers();
+        },
+        error: (_) => {
+          this.loading = false;
+          this.toastr.error("Couldn't delete user. Please try again.");
+        },
+      });
+    }
   }
 
-  search(query: string) {
-    this.usersService.fetchUsers(query).subscribe({
-      next: (val) => {
-        this.loading = false;
-        if (val) {
-          this._updateUsers(val);
-        } else if (!val) {
-          this.toastr.warning("Couldn't get users. Please try again.");
-        }
-      },
-      error: (_) => {
-        this.loading = false;
-        this.toastr.error("Couldn't get users. Please try again.");
-      },
-    });
-  }
-
-  onPageNumberChanged(pageNumber: number) {
-    this.users = this._allUsers.slice(pageNumber * 10 - 10, pageNumber * 10);
+  private _isDeleteAllowed(user: User) {
+    const sessionUser = this.auth.user;
+    if (sessionUser?.userType === 'owner') return true;
+    if (user.userType === 'owner') {
+      this.toastr.warning('You cannot delete the owner');
+      return false;
+    }
+    if (sessionUser?.userType === 'employee') {
+      return this.auth.invalidate();
+    }
+    if (sessionUser?.userType === 'admin' && user.userType === 'admin') {
+      this.toastr.warning('You cannot delete another admin');
+      return false;
+    }
+    return true;
   }
 }

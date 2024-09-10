@@ -7,8 +7,9 @@
     (onAdd)="openAddUser()"
     (onEdit)="openEditUser($event)"
     (onDelete)="openDeleteUser($event)"
-    (onSearchQueryChange)="search($event)"
-    (onPageChange)="onPageNumberChanged($event)"
+    (onSearchInfoChange)="onSearchInfoChanged($event)"
     [loading]="loading"
     ></app-data-table>
+    <!-- (onPageChange)="onPageNumberChanged($event)" -->
+
 </div>

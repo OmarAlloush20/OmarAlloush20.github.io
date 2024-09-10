@@ -7,12 +7,13 @@ import {
   Renderer2,
   ViewChild,
   EventEmitter,
+  ChangeDetectorRef,
+  inject,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MainMenuScrollService } from '../../../pages/main-menu/services/main-menu-scroll.service';
-
-type CellValueFunction = (header: string, value: any) => string | undefined;
+import { CellValueFunction, DataTableSearchInfo } from './data-table.model';
 
 @Component({
   selector: 'app-data-table',
@@ -71,16 +72,14 @@ export class DataTableComponent implements OnInit {
 
   @Input() loading: boolean = false;
 
-  @Output() onPageChange: EventEmitter<number> = new EventEmitter<number>();
-
   @Output() onAdd: EventEmitter<any> = new EventEmitter<any>();
 
   @Output() onEdit: EventEmitter<any> = new EventEmitter<any>();
 
   @Output() onDelete: EventEmitter<any> = new EventEmitter<any>();
 
-  @Output() onSearchQueryChange: EventEmitter<string> =
-    new EventEmitter<string>();
+  @Output() onSearchInfoChange: EventEmitter<DataTableSearchInfo> =
+    new EventEmitter<DataTableSearchInfo>();
 
   selectedValue?: any;
 
@@ -109,19 +108,26 @@ export class DataTableComponent implements OnInit {
     }
   }
 
-  search(query : string) {
-    this.onSearchQueryChange.emit(query);
+  search(query: string) {
+    this.searchQuery = query;
+    this.onSearchInfoChange.emit({
+      query: this.searchQuery,
+      pageNumber: this.currentPage,
+    });
   }
 
   onPageNumberChange(pageNumber: number) {
     if (pageNumber >= this.maxPages) {
       this.currentPage = this.maxPages;
-    } else if (pageNumber <= 1) {
+    } else if (pageNumber < 2) {
       this.currentPage = 1;
     } else {
       this.currentPage = pageNumber;
     }
 
-    this.onPageChange.emit(this.currentPage);
+    this.onSearchInfoChange.emit({
+      query: this.searchQuery,
+      pageNumber: this.currentPage,
+    });
   }
 }

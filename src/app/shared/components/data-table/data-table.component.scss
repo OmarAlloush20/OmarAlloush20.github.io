@@ -216,22 +216,18 @@ $filter-bar-height: 40px;
       }
 
       .search-btn {
-        height: 100%;
-        width: 50px;
-
-        @extend .center;
-
+        margin: 6px;
+        padding: 3px;
+        
         i {
           height: 15px;
           width: 15px;
-          background-color: white;
-          transition: 200ms;
+
         }
 
         &:hover {
-          i {
-            scale: 1.4;
-          }
+            scale: 1.2;
+
         }
       }
     }
