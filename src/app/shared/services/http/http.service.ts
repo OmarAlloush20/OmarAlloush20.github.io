@@ -82,9 +82,12 @@ export class HttpService {
   }
 
   // DELETE Method
-  delete<T>(endpoint: string): Observable<HttpResponse<T>> {
+  delete<T>(endpoint: string, body?: any): Observable<HttpResponse<T>> {
     return this.http
-      .delete<HttpResponse<T>>(`${this.baseUrl}/${endpoint}`, this.httpOptions)
+      .delete<HttpResponse<T>>(`${this.baseUrl}/${endpoint}`, {
+        ...this.httpOptions,
+        body: body,
+      })
       .pipe(
         tap((res) => this._checkIfUnauthorized(res.status)),
         catchError(this.handleError)

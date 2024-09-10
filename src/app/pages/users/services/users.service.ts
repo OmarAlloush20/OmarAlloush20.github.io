@@ -38,9 +38,13 @@ export class UsersService {
     );
   }
 
-  deleteUser(userId: number) {
-    const endpoint = `${this._endpoint}/${userId}`;
-    return this.http.delete(endpoint).pipe(
+  deleteUser(user : User) {
+    const endpoint = `${this._endpoint}`;
+    const body = {
+      objectId: user._id,
+      isDeleted: true,
+    }
+    return this.http.delete(endpoint, body).pipe(
       map((val) => val.status >= HttpStatusCode.Ok && val.status < 300),
       catchError((_) => of(false))
     );
