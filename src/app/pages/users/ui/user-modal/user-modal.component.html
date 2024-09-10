@@ -11,7 +11,7 @@
       <div class="form-group">
         <input formControlName="password" [type]="passwordVisible ? 'text' : 'password'" id="password"
           [placeholder]="user ? 'Replace old password...' : ''" autocomplete="current-password" class="password-field">
-        <button class="btn show-password-btn" type="button" (click)="togglePasswordVisibility()"><i class="icon eye-icon" [ngClass]="{'visible' : passwordVisible}"></i></button>
+        <button class="btn btn-icon show-password-btn" type="button" (click)="togglePasswordVisibility()" [ngClass]="{'visible' : passwordVisible}"><i class="icon eye-icon"></i></button>
         <label for="password" [ngClass]="{'shrinked-label' : user || userForm.value.password}">Password</label>
       </div>
 

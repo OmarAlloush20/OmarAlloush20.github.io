@@ -21,6 +21,10 @@ span {
 /// Input //
 /// ////////
 
+input:focus {
+  border: 1px solid $on-dark-color;
+}
+
 $input-background-color: #252525be;
 $input-background-color-autofilled: #202020;
 // Used when the label should be top
@@ -44,7 +48,7 @@ input[type="password"] {
   margin: 10px 0px;
   background-color: $input-background-color;
   color: $on-dark-secondary-color;
-  border: none;
+  // border: none;
   outline: none;
   transition: 500ms;
 
@@ -87,24 +91,20 @@ input[type="password"] {
 input[type="text"].password-field,
 input[type="password"].password-field {
   padding-right: 40px;
-  ~ button.show-password-btn {
+  
+  ~ button.btn-icon {
     position: absolute;
     right: 10px;
-    top: 15px;
-    margin: 0;
-    padding: 0;
-    @extend .center;
+    top: 25%;
+    border: none;
 
     i {
       margin-top: 5px;
-      background-color: white;
-      height: 24px;
-      width: 24px;
-      transition: 500ms;
 
-      &.visible {
-        background-color: $on-dark-color;
-      }
+    }
+
+    &.visible {
+      background-color: transparentize($on-dark-color, $amount: 0.7);
     }
   }
 }
@@ -294,6 +294,29 @@ $disabled-btn-color: #454140;
     &:hover {
       background-color: #a3e7d833;
     }
+  }
+
+  &.btn-icon {
+    border-radius: 50%;
+    height: 24px;
+    width: 24px;
+    padding: 2px;
+    @extend .center;
+
+    i {
+      height: 18px;
+      width: 18px;
+      background-color: white;
+    }
+
+    &:focus {
+      border: 1px solid $on-dark-color !important;
+    }
+
+    &:hover {
+      background-color: transparentize($on-dark-color, 0.9);
+    }
+    
   }
 }
 
