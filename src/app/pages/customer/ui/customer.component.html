@@ -1,0 +1,13 @@
+<div class="customers-table-container">
+    <h1>Customers</h1>
+    <app-data-table
+    [headers]="tableHeaders"
+    [data]="customers"
+    [cellValueFn]="headerToValue"
+    (onAdd)="openAddCustomer()"
+    (onEdit)="openEditCustomer($event)"
+    (onDelete)="openDeleteCustomer($event)"
+    (onSearchInfoChange)="onSearchInfoChanged($event)"
+    [loading]="loading"
+    ></app-data-table>
+</div>

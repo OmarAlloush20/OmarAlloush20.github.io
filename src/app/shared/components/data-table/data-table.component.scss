@@ -240,6 +240,15 @@ $filter-bar-height: 40px;
   }
 }
 
+.no-data-container {
+  margin-top: 20px;
+
+  p {
+    font-size: 1.4rem;
+    text-align: center;
+  }
+}
+
 table {
   width: 100%;
   border: 2px solid #ccc;
