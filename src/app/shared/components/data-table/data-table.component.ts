@@ -6,9 +6,7 @@ import {
   Output,
   Renderer2,
   ViewChild,
-  EventEmitter,
-  ChangeDetectorRef,
-  inject,
+  EventEmitter
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';

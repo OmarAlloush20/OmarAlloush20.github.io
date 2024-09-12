@@ -365,6 +365,26 @@ $scrollbar-track-color: transparent;
   }
 }
 
+/////////////////////////////
+/// Data Table container ///
+////////////////////////////
+
+.data-table-container {
+  padding: 20px;
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: start;
+
+  h1 {
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+  }
+}
+
 ////
 /// App data modal
 ///
