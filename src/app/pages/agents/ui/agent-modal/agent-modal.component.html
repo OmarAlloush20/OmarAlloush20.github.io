@@ -12,7 +12,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="form-group" [ngClass]="{'invalid' : shouldDisplayErrorContainer('contactPersonName')}">
                 <input formControlName="contactPersonName" type="text" id="contactPersonName" required>
                 <label for="contactPersonName" [ngClass]="{'shrinked-label' : form.value.contactPersonName}">
@@ -24,17 +24,18 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="form-group" [ngClass]="{'invalid' : shouldDisplayErrorContainer('contactPhoneNumber')}">
                 <input formControlName="contactPhoneNumber" type="tel" id="contactPhoneNumber" required>
-                <label for="contactPhoneNumber" [ngClass]="{'shrinked-label' : form.value.contactPhoneNumber}">Contact Phone</label>
+                <label for="contactPhoneNumber" [ngClass]="{'shrinked-label' : form.value.contactPhoneNumber}">Contact
+                    Phone</label>
                 <div class="error-messages-container">
                     <div class="error-message" *ngIf="shouldDisplayErrorMessage('contactPhoneNumber', 'required')">
                         * Contact phone is required
                     </div>
                 </div>
             </div>
-            
+
             <div class="form-group" [ngClass]="{'invalid' : shouldDisplayErrorContainer('email')}">
                 <input formControlName="email" type="email" id="email" required>
                 <label for="email" [ngClass]="{'shrinked-label' : form.value.email}">Email</label>
@@ -47,7 +48,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="dropdown-form-group" [ngClass]="{'invalid' : shouldDisplayErrorContainer('agentType')}">
                 <select formControlName="agentType" id="agentType" required>
                     <option value="hotel">Hotel</option>
@@ -63,7 +64,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="form-group" [ngClass]="{'invalid' : shouldDisplayErrorContainer('address')}">
                 <input formControlName="address" type="text" id="address">
                 <label for="address" [ngClass]="{'shrinked-label' : form.value.address}">Address (Optional)</label>
@@ -73,6 +74,16 @@
                     </div>
                 </div>
             </div>
-                    </div>
+        </div>
+
+        <div class="action-btns-container">
+            <div class="action-btns">
+                <button class="btn btn-secondary btn-confirm" type="button" (click)="cancel()"><i
+                        class="icon ex-icon"></i></button>
+
+                <button class="btn btn-primary btn-confirm" type="submit" [disabled]="!form.valid"
+                    (click)="onSubmit()">Confirm</button>
+            </div>
+        </div>
     </form>
 </div>
