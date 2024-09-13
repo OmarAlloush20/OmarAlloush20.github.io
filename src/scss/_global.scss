@@ -40,6 +40,30 @@ $input-background-color-autofilled: #202020;
   position: relative;
   transition: 500ms;
   margin-bottom: 5px;
+
+  .error-messages-container {
+    display: none;
+
+    .error-message {
+      color: $error-color;
+      font-size: 0.85rem;
+    }
+
+    color: $error-color;
+    font-size: 0.9rem;
+  }
+
+  &.invalid {
+    margin-bottom: 15px;
+
+    input {
+      border: 1px solid $error-color;
+    }
+
+    .error-messages-container {
+      display: block;
+    }
+  }
 }
 
 input[type="text"],
@@ -97,7 +121,7 @@ input[type="password"].password-field {
   ~ button.btn-icon {
     position: absolute;
     right: 10px;
-    top: 25%;
+    top: 13px;
     border: none;
 
     i {
@@ -284,6 +308,11 @@ $disabled-btn-color: #454140;
       &:active {
         background-color: rgb(254, 167, 123);
       }
+
+      &:focus {
+        border: 1px solid $on-dark-color;
+        box-shadow: 0 0 0 1px $dark-primary inset
+      }
     }
 
     &.disabled {
@@ -385,7 +414,7 @@ $scrollbar-track-color: transparent;
 
   h1 {
     margin-bottom: 20px;
-    font-size: 2.0rem;
+    font-size: 2rem;
     text-align: center;
   }
 }

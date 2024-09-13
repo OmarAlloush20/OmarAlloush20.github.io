@@ -18,26 +18,43 @@ import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
   styleUrl: './user-modal.component.scss',
 })
 export class UserModalComponent implements OnInit {
-  @Input('user') user?: User;
+  @Input() user?: User;
 
-  @Input('title') title: string = 'User';
+  @Input() title: string = 'User';
 
   userForm: FormGroup;
 
   passwordVisible = false;
 
-  constructor(private fb: FormBuilder, private dialog : MatDialogRef<UserModalComponent>) {
+  constructor(
+    private fb: FormBuilder,
+    private dialog: MatDialogRef<UserModalComponent>
+  ) {
     this.userForm = this.fb.group({
-      username: ['username', Validators.required],
-      password: ['123456789'],
-      firstName: ['firstname', Validators.required],
-      lastName: ['lastname', Validators.required],
-      middleName: ['middlename'],
-      email: ['hesham@travelflow.com', Validators.required, ],
-      gender: ['male', Validators.required],
-      userType: ['employee', Validators.required],
+      username: ['', [Validators.required, Validators.minLength(4)]],
+      password: ['', [Validators.required, Validators.minLength(4)],],
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
+      middleName: [''],
+      email: ['', [Validators.required, Validators.email]],
+      gender: ['', Validators.required],
+      userType: ['', Validators.required],
       isActive: [true],
     });
+  }
+
+  shouldDisplayErrorMessage(controlName: string, errorName: string): boolean {
+    return (
+      this.userForm.controls[controlName].hasError(errorName) &&
+      this.userForm.controls[controlName].touched
+    );
+  }
+
+  shouldDisplayErrorContainer(controlName: string): boolean {
+    return (
+      this.userForm.controls[controlName].invalid &&
+      this.userForm.controls[controlName].touched
+    );
   }
 
   ngOnInit(): void {
@@ -47,6 +64,8 @@ export class UserModalComponent implements OnInit {
       this.userForm.controls['lastName'].setValue(this.user.lastName);
       this.userForm.controls['middleName'].setValue(this.user.middleName || '');
       this.userForm.controls['password'].setValue(this.user.password || '');
+      this.userForm.controls['password'].setValidators([]);
+      this.userForm.controls['gender'].setValue(this.user.gender);
       this.userForm.controls['gender'].setValue(this.user.gender);
       this.userForm.controls['email'].setValue(this.user.email);
       this.userForm.controls['userType'].setValue(this.user.userType);
@@ -59,9 +78,8 @@ export class UserModalComponent implements OnInit {
   }
 
   onSubmit() {
-    const val = this.userForm.value as User
-    
-    this.dialog.close({...val, _id : this.user?._id})
+    const val = this.userForm.value as User;
+    this.dialog.close({ ...val, _id: this.user?._id });
   }
 
   cancel() {

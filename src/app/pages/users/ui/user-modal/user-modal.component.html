@@ -3,57 +3,114 @@
 
   <form [formGroup]="userForm" class="user-modal-form" (ngSubmit)="onSubmit()">
     <div class="user-modal-fields">
-      <div class="form-group">
+
+      <div class="form-group" [ngClass]="{'invalid' : shouldDisplayErrorContainer('username')}">
         <input formControlName="username" type="text" id="username" required autocomplete="username">
         <label for="username" [ngClass]="{'shrinked-label' : userForm.value.username}">Username</label>
+
+        <div class="error-messages-container">
+          <div class="error-message" *ngIf="shouldDisplayErrorMessage('username', 'required')">
+            * Username is required
+          </div>
+          <div class="error-message" *ngIf="shouldDisplayErrorMessage('username', 'minlength')">
+            * Username must be at least 4 characters long
+          </div>
+        </div>
       </div>
 
-      <div class="form-group">
-        <input formControlName="password" [type]="passwordVisible ? 'text' : 'password'" id="password"
-          [placeholder]="user ? 'Replace old password...' : ''" autocomplete="current-password" class="password-field">
-        <button class="btn btn-icon show-password-btn" type="button" (click)="togglePasswordVisibility()" [ngClass]="{'visible' : passwordVisible}"><i class="icon eye-icon"></i></button>
+      <div [ngClass]="{'invalid': shouldDisplayErrorContainer('password')}" class="form-group">
+        <input formControlName="password" id="password" autocomplete="current-password" class="password-field"
+          [type]="passwordVisible ? 'text' : 'password'" [placeholder]="user ? 'Replace old password...' : ''">
+
+        <button class="btn btn-icon show-password-btn" type="button" (click)="togglePasswordVisibility()"
+          [ngClass]="{'visible' : passwordVisible}"><i class="icon eye-icon"></i></button>
         <label for="password" [ngClass]="{'shrinked-label' : user || userForm.value.password}">Password</label>
+
+
+        <div class="error-messages-container">
+          <div class="error-message" *ngIf="shouldDisplayErrorMessage('password', 'required')">
+            * Password is required
+          </div>
+          <div class="error-message" *ngIf="shouldDisplayErrorMessage('password', 'minlength')">
+            * Password must be at least 4 characters long
+          </div>
+        </div>
       </div>
 
-      <div class="form-group">
+      <div class="form-group" [ngClass]="{'invalid': shouldDisplayErrorContainer('firstName')}">
         <input formControlName="firstName" type="text" id="firstName" required>
         <label for="firstName" [ngClass]="{'shrinked-label' : userForm.value.firstName}">First Name</label>
+
+        <div class="error-messages-container">
+          <div class="error-message" *ngIf="shouldDisplayErrorMessage('firstName', 'required')">
+            * First Name is required
+          </div>
+        </div>
       </div>
 
-      <div class="form-group">
+      <div class="form-group" [ngClass]="{'invalid': shouldDisplayErrorContainer('lastName')}">
         <input formControlName="lastName" type="text" id="lastName" required>
         <label for="lastName" [ngClass]="{'shrinked-label' : userForm.value.lastName}">Last Name</label>
+
+        
+        <div class="error-messages-container">
+          <div class="error-message" *ngIf="shouldDisplayErrorMessage('lastName', 'required')">
+            * Last Name is required
+          </div>
+        </div>
       </div>
 
-      <div class="form-group">
+      <div class="form-group" [ngClass]="{'invalid': shouldDisplayErrorContainer('middleName')}">
         <input formControlName="middleName" type="text" id="middleName">
-        <label for="middleName" [ngClass]="{'shrinked-label' : userForm.value.middleName}">Middle Name</label>
+        <label for="middleName" [ngClass]="{'shrinked-label' : userForm.value.middleName}">Middle Name (Optional)</label>
       </div>
 
-      <div class="form-group">
+      <div class="form-group" [ngClass]="{'invalid': shouldDisplayErrorContainer('email')}">
         <input formControlName="email" type="email" id="email">
         <label for="email" [ngClass]="{'shrinked-label' : userForm.value.email}">Email</label>
+
+        <div class="error-messages-container">
+          <div class="error-message" *ngIf="shouldDisplayErrorMessage('email', 'required')">
+            * Email is required
+          </div>
+          <div class="error-message" *ngIf="shouldDisplayErrorMessage('email', 'email')">
+            * Invalid email address
+          </div>
+        </div>
       </div>
 
 
-      <div class="dropdown-form-group">
+      <div class="dropdown-form-group" [ngClass]="{'invalid': shouldDisplayErrorContainer('gender')}">
         <select formControlName="gender" id="gender" required>
           <option value="male">Male</option>
           <option value="female">Female</option>
         </select>
         <label for="gender" [ngClass]="{'shrinked-label' : userForm.value.gender}">Gender</label>
+
+        <div class="error-messages-container">
+          <div class="error-message" *ngIf="shouldDisplayErrorMessage('gender', 'required')">
+            * Gender is required
+          </div>
+        </div>
       </div>
 
-      <div class="dropdown-form-group">
+      <div class="dropdown-form-group" [ngClass]="{'invalid': shouldDisplayErrorContainer('userType')}">
         <select formControlName="userType" id="userType" required>
           <option value="admin">Admin</option>
           <option value="employee">Employee</option>
           <option value="owner">Owner</option>
         </select>
         <label for="userType" [ngClass]="{'shrinked-label' : userForm.value.userType}">User Type</label>
+
+        <div class="error-messages-container">
+          <div class="error-message" *ngIf="shouldDisplayErrorMessage('userType', 'required')">
+            * User Type is required
+          </div>
+        </div>
       </div>
 
-      <div class="tgl-form-group" (click)="userForm.controls['isActive'].setValue(! userForm.value.isActive)">
+      <div class="tgl-form-group" [ngClass]="{'invalid': shouldDisplayErrorContainer('isActive')}"
+        (click)="userForm.controls['isActive'].setValue(! userForm.value.isActive)">
         <input formControlName="isActive" class="tgl tgl-ios" type="checkbox" id="isActive">
         <span class="tgl-dot"></span>
         <label for="isActive" class="tgl-btn">Active</label>
