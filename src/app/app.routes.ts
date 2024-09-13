@@ -6,8 +6,7 @@ import { UsersComponent } from './pages/users/ui/users.component';
 import { CustomerComponent } from './pages/customer/ui/customer.component';
 import { AgentsComponent } from './pages/agents/ui/agents.component';
 import { FinancialsComponent } from './pages/financials/ui/financials.component';
-import path from 'path';
-import { PaymentVoucherComponent } from './pages/financials/ui/payment-voucher/payment-voucher.component';
+import { PaymentVouchersComponent } from './pages/financials/ui/payment-voucher/payment-voucher.component';
 import { ReceiptVoucherComponent } from './pages/financials/ui/receipt-voucher/receipt-voucher.component';
 
 export const routes: Routes = [
@@ -28,7 +27,7 @@ export const routes: Routes = [
         component: FinancialsComponent,
         children: [
           { path: '', redirectTo: 'paymentVoucher', pathMatch:'full' },
-          { path: 'paymentVoucher', component: PaymentVoucherComponent },
+          { path: 'paymentVoucher', component: PaymentVouchersComponent },
           { path: 'receiptVoucher', component: ReceiptVoucherComponent },
         ],
       },
