@@ -9,6 +9,7 @@ import {
 } from '@angular/forms';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { Agent } from '../../models/agent.model';
+import { FormComponent } from '../../../../shared/components/interfaces/form-component.interface';
 
 @Component({
   selector: 'app-agent-modal',
@@ -17,18 +18,19 @@ import { Agent } from '../../models/agent.model';
   templateUrl: './agent-modal.component.html',
   styleUrl: './agent-modal.component.scss',
 })
-export class AgentModalComponent {
+export class AgentModalComponent extends FormComponent {
   @Input() agent?: Agent;
 
   @Input() title: string = 'Agent';
 
-  agentForm: FormGroup;
+  form: FormGroup;
 
   constructor(
     private fb: FormBuilder,
     private dialog: MatDialogRef<AgentModalComponent>
   ) {
-    this.agentForm = this.fb.group({
+    super();
+    this.form = this.fb.group({
       name: [this.agent?.name ?? '', Validators.required],
       agentType: [this.agent?.agentType ?? '', Validators.required],
       contactPersonName: [
@@ -46,22 +48,22 @@ export class AgentModalComponent {
 
   ngOnInit(): void {
     if (this.agent) {
-      this.agentForm.controls['name'].setValue(this.agent.name);
-      this.agentForm.controls['agentType'].setValue(this.agent.agentType);
-      this.agentForm.controls['contactPersonName'].setValue(
+      this.form.controls['name'].setValue(this.agent.name);
+      this.form.controls['agentType'].setValue(this.agent.agentType);
+      this.form.controls['contactPersonName'].setValue(
         this.agent.contactPersonName
       );
-      this.agentForm.controls['contactPhoneNumber'].setValue(
+      this.form.controls['contactPhoneNumber'].setValue(
         this.agent.contactPhoneNumber
       );
-      this.agentForm.controls['email'].setValue(this.agent.email);
-      this.agentForm.controls['address'].setValue(this.agent.address);
+      this.form.controls['email'].setValue(this.agent.email);
+      this.form.controls['address'].setValue(this.agent.address);
     }
   }
 
   onSubmit() {
-    if (this.agentForm.valid) {
-      const val = this.agentForm.value as Agent;
+    if (this.form.valid) {
+      const val = this.form.value as Agent;
       this.dialog.close({ ...val, _id: this.agent?._id });
     }
   }

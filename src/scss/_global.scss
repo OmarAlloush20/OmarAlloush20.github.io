@@ -325,9 +325,14 @@ $disabled-btn-color: #454140;
     border: solid 1px $on-dark-color;
     padding: 6px;
 
+    &:focus {
+      background-color: #a3e7d855;
+    }
+    
     &:hover {
       background-color: #a3e7d833;
     }
+
   }
 
   &.btn-icon {

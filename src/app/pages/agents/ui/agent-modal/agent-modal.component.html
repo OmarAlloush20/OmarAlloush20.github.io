@@ -1,32 +1,54 @@
 <div class="app-data-modal-container">
     <h1>{{title}}</h1>
 
-    <form [formGroup]="agentForm" class="app-data-modal-form" (ngSubmit)="onSubmit()">
+    <form [formGroup]="form" class="app-data-modal-form" (ngSubmit)="onSubmit()">
         <div class="app-data-modal-fields">
-
-            <div class="form-group">
+            <div class="form-group" [ngClass]="{'invalid' : shouldDisplayErrorContainer('name')}">
                 <input formControlName="name" type="text" id="name" required>
-                <label for="name" [ngClass]="{'shrinked-label' : agentForm.value.name}">Agent Name</label>
+                <label for="name" [ngClass]="{'shrinked-label' : form.value.name}">Agent Name</label>
+                <div class="error-messages-container">
+                    <div class="error-message" *ngIf="shouldDisplayErrorMessage('name', 'required')">
+                        * Agent name is required
+                    </div>
+                </div>
             </div>
-
-            <div class="form-group">
+            
+            <div class="form-group" [ngClass]="{'invalid' : shouldDisplayErrorContainer('contactPersonName')}">
                 <input formControlName="contactPersonName" type="text" id="contactPersonName" required>
-                <label for="contactPersonName" [ngClass]="{'shrinked-label' : agentForm.value.contactPersonName}">
-                    Contact Person Name</label>
+                <label for="contactPersonName" [ngClass]="{'shrinked-label' : form.value.contactPersonName}">
+                    Contact Person Name
+                </label>
+                <div class="error-messages-container">
+                    <div class="error-message" *ngIf="shouldDisplayErrorMessage('contactPersonName', 'required')">
+                        * Contact person name is required
+                    </div>
+                </div>
             </div>
-
-            <div class="form-group">
+            
+            <div class="form-group" [ngClass]="{'invalid' : shouldDisplayErrorContainer('contactPhoneNumber')}">
                 <input formControlName="contactPhoneNumber" type="tel" id="contactPhoneNumber" required>
-                <label for="contactPhoneNumber"
-                    [ngClass]="{'shrinked-label' : agentForm.value.contactPhoneNumber}">Contact Phone</label>
+                <label for="contactPhoneNumber" [ngClass]="{'shrinked-label' : form.value.contactPhoneNumber}">Contact Phone</label>
+                <div class="error-messages-container">
+                    <div class="error-message" *ngIf="shouldDisplayErrorMessage('contactPhoneNumber', 'required')">
+                        * Contact phone is required
+                    </div>
+                </div>
             </div>
-
-            <div class="form-group">
+            
+            <div class="form-group" [ngClass]="{'invalid' : shouldDisplayErrorContainer('email')}">
                 <input formControlName="email" type="email" id="email" required>
-                <label for="email" [ngClass]="{'shrinked-label' : agentForm.value.email}">Email</label>
+                <label for="email" [ngClass]="{'shrinked-label' : form.value.email}">Email</label>
+                <div class="error-messages-container">
+                    <div class="error-message" *ngIf="shouldDisplayErrorMessage('email', 'required')">
+                        * Email is required
+                    </div>
+                    <div class="error-message" *ngIf="shouldDisplayErrorMessage('email', 'email')">
+                        * Email format is invalid
+                    </div>
+                </div>
             </div>
-
-            <div class="dropdown-form-group">
+            
+            <div class="dropdown-form-group" [ngClass]="{'invalid' : shouldDisplayErrorContainer('agentType')}">
                 <select formControlName="agentType" id="agentType" required>
                     <option value="hotel">Hotel</option>
                     <option value="airline">Airline</option>
@@ -34,24 +56,23 @@
                     <option value="tour">Tour</option>
                     <option value="visa">Visa</option>
                 </select>
-                <label for="agentType" [ngClass]="{'shrinked-label' : agentForm.value.agentType}">Agent Type</label>
-            </div>
-
-            <div class="form-group">
-                <input formControlName="address" type="text" id="address">
-                <label for="address" [ngClass]="{'shrinked-label' : agentForm.value.address}">Address (Optional)</label>
-            </div>
-
-            <div class="action-btns-container">
-                <div class="action-btns">
-                    <button class="btn btn-secondary btn-confirm" type="button" (click)="cancel()">
-                        <i class="icon ex-icon"></i>
-                    </button>
-
-                    <button class="btn btn-primary btn-confirm" type="submit"
-                        (click)="onSubmit()">Confirm</button>
+                <label for="agentType" [ngClass]="{'shrinked-label' : form.value.agentType}">Agent Type</label>
+                <div class="error-messages-container">
+                    <div class="error-message" *ngIf="shouldDisplayErrorMessage('agentType', 'required')">
+                        * Agent type is required
+                    </div>
                 </div>
             </div>
-        </div>
+            
+            <div class="form-group" [ngClass]="{'invalid' : shouldDisplayErrorContainer('address')}">
+                <input formControlName="address" type="text" id="address">
+                <label for="address" [ngClass]="{'shrinked-label' : form.value.address}">Address (Optional)</label>
+                <div class="error-messages-container">
+                    <div class="error-message" *ngIf="shouldDisplayErrorMessage('address', 'required')">
+                        * Address is required
+                    </div>
+                </div>
+            </div>
+                    </div>
     </form>
 </div>

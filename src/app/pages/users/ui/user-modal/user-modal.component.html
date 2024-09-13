@@ -1,12 +1,12 @@
-<div class="user-modal-container">
+<div class="app-data-modal-container">
   <h1>{{title}}</h1>
 
-  <form [formGroup]="userForm" class="user-modal-form" (ngSubmit)="onSubmit()">
-    <div class="user-modal-fields">
+  <form [formGroup]="form" class="app-data-modal-form" (ngSubmit)="onSubmit()">
+    <div class="app-data-modal-fields">
 
       <div class="form-group" [ngClass]="{'invalid' : shouldDisplayErrorContainer('username')}">
         <input formControlName="username" type="text" id="username" required autocomplete="username">
-        <label for="username" [ngClass]="{'shrinked-label' : userForm.value.username}">Username</label>
+        <label for="username" [ngClass]="{'shrinked-label' : form.value.username}">Username</label>
 
         <div class="error-messages-container">
           <div class="error-message" *ngIf="shouldDisplayErrorMessage('username', 'required')">
@@ -24,7 +24,7 @@
 
         <button class="btn btn-icon show-password-btn" type="button" (click)="togglePasswordVisibility()"
           [ngClass]="{'visible' : passwordVisible}"><i class="icon eye-icon"></i></button>
-        <label for="password" [ngClass]="{'shrinked-label' : user || userForm.value.password}">Password</label>
+        <label for="password" [ngClass]="{'shrinked-label' : user || form.value.password}">Password</label>
 
 
         <div class="error-messages-container">
@@ -39,7 +39,7 @@
 
       <div class="form-group" [ngClass]="{'invalid': shouldDisplayErrorContainer('firstName')}">
         <input formControlName="firstName" type="text" id="firstName" required>
-        <label for="firstName" [ngClass]="{'shrinked-label' : userForm.value.firstName}">First Name</label>
+        <label for="firstName" [ngClass]="{'shrinked-label' : form.value.firstName}">First Name</label>
 
         <div class="error-messages-container">
           <div class="error-message" *ngIf="shouldDisplayErrorMessage('firstName', 'required')">
@@ -50,7 +50,7 @@
 
       <div class="form-group" [ngClass]="{'invalid': shouldDisplayErrorContainer('lastName')}">
         <input formControlName="lastName" type="text" id="lastName" required>
-        <label for="lastName" [ngClass]="{'shrinked-label' : userForm.value.lastName}">Last Name</label>
+        <label for="lastName" [ngClass]="{'shrinked-label' : form.value.lastName}">Last Name</label>
 
         
         <div class="error-messages-container">
@@ -62,12 +62,12 @@
 
       <div class="form-group" [ngClass]="{'invalid': shouldDisplayErrorContainer('middleName')}">
         <input formControlName="middleName" type="text" id="middleName">
-        <label for="middleName" [ngClass]="{'shrinked-label' : userForm.value.middleName}">Middle Name (Optional)</label>
+        <label for="middleName" [ngClass]="{'shrinked-label' : form.value.middleName}">Middle Name (Optional)</label>
       </div>
 
       <div class="form-group" [ngClass]="{'invalid': shouldDisplayErrorContainer('email')}">
         <input formControlName="email" type="email" id="email">
-        <label for="email" [ngClass]="{'shrinked-label' : userForm.value.email}">Email</label>
+        <label for="email" [ngClass]="{'shrinked-label' : form.value.email}">Email</label>
 
         <div class="error-messages-container">
           <div class="error-message" *ngIf="shouldDisplayErrorMessage('email', 'required')">
@@ -85,7 +85,7 @@
           <option value="male">Male</option>
           <option value="female">Female</option>
         </select>
-        <label for="gender" [ngClass]="{'shrinked-label' : userForm.value.gender}">Gender</label>
+        <label for="gender" [ngClass]="{'shrinked-label' : form.value.gender}">Gender</label>
 
         <div class="error-messages-container">
           <div class="error-message" *ngIf="shouldDisplayErrorMessage('gender', 'required')">
@@ -100,7 +100,7 @@
           <option value="employee">Employee</option>
           <option value="owner">Owner</option>
         </select>
-        <label for="userType" [ngClass]="{'shrinked-label' : userForm.value.userType}">User Type</label>
+        <label for="userType" [ngClass]="{'shrinked-label' : form.value.userType}">User Type</label>
 
         <div class="error-messages-container">
           <div class="error-message" *ngIf="shouldDisplayErrorMessage('userType', 'required')">
@@ -110,7 +110,7 @@
       </div>
 
       <div class="tgl-form-group" [ngClass]="{'invalid': shouldDisplayErrorContainer('isActive')}"
-        (click)="userForm.controls['isActive'].setValue(! userForm.value.isActive)">
+        (click)="form.controls['isActive'].setValue(! form.value.isActive)">
         <input formControlName="isActive" class="tgl tgl-ios" type="checkbox" id="isActive">
         <span class="tgl-dot"></span>
         <label for="isActive" class="tgl-btn">Active</label>
@@ -121,7 +121,7 @@
           <button class="btn btn-secondary btn-confirm" type="button" (click)="cancel()"><i
               class="icon ex-icon"></i></button>
 
-          <button class="btn btn-primary btn-confirm" type="submit" [disabled]="!userForm.valid"
+          <button class="btn btn-primary btn-confirm" type="submit" [disabled]="!form.valid"
             (click)="onSubmit()">Confirm</button>
 
         </div>

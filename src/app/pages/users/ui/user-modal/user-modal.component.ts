@@ -9,6 +9,7 @@ import {
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { FormComponent } from '../../../../shared/components/interfaces/form-component.interface';
 
 @Component({
   selector: 'app-user-modal',
@@ -17,12 +18,12 @@ import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
   templateUrl: './user-modal.component.html',
   styleUrl: './user-modal.component.scss',
 })
-export class UserModalComponent implements OnInit {
+export class UserModalComponent extends FormComponent implements OnInit {
   @Input() user?: User;
 
   @Input() title: string = 'User';
 
-  userForm: FormGroup;
+  form: FormGroup;
 
   passwordVisible = false;
 
@@ -30,7 +31,8 @@ export class UserModalComponent implements OnInit {
     private fb: FormBuilder,
     private dialog: MatDialogRef<UserModalComponent>
   ) {
-    this.userForm = this.fb.group({
+    super();
+    this.form = this.fb.group({
       username: ['', [Validators.required, Validators.minLength(4)]],
       password: ['', [Validators.required, Validators.minLength(4)],],
       firstName: ['', Validators.required],
@@ -43,33 +45,19 @@ export class UserModalComponent implements OnInit {
     });
   }
 
-  shouldDisplayErrorMessage(controlName: string, errorName: string): boolean {
-    return (
-      this.userForm.controls[controlName].hasError(errorName) &&
-      this.userForm.controls[controlName].touched
-    );
-  }
-
-  shouldDisplayErrorContainer(controlName: string): boolean {
-    return (
-      this.userForm.controls[controlName].invalid &&
-      this.userForm.controls[controlName].touched
-    );
-  }
-
   ngOnInit(): void {
     if (this.user) {
-      this.userForm.controls['username'].setValue(this.user.username);
-      this.userForm.controls['firstName'].setValue(this.user.firstName);
-      this.userForm.controls['lastName'].setValue(this.user.lastName);
-      this.userForm.controls['middleName'].setValue(this.user.middleName || '');
-      this.userForm.controls['password'].setValue(this.user.password || '');
-      this.userForm.controls['password'].setValidators([]);
-      this.userForm.controls['gender'].setValue(this.user.gender);
-      this.userForm.controls['gender'].setValue(this.user.gender);
-      this.userForm.controls['email'].setValue(this.user.email);
-      this.userForm.controls['userType'].setValue(this.user.userType);
-      this.userForm.controls['isActive'].setValue(this.user.isActive);
+      this.form.controls['username'].setValue(this.user.username);
+      this.form.controls['firstName'].setValue(this.user.firstName);
+      this.form.controls['lastName'].setValue(this.user.lastName);
+      this.form.controls['middleName'].setValue(this.user.middleName || '');
+      this.form.controls['password'].setValue(this.user.password || '');
+      this.form.controls['password'].setValidators([]);
+      this.form.controls['gender'].setValue(this.user.gender);
+      this.form.controls['gender'].setValue(this.user.gender);
+      this.form.controls['email'].setValue(this.user.email);
+      this.form.controls['userType'].setValue(this.user.userType);
+      this.form.controls['isActive'].setValue(this.user.isActive);
     }
   }
 
@@ -78,7 +66,7 @@ export class UserModalComponent implements OnInit {
   }
 
   onSubmit() {
-    const val = this.userForm.value as User;
+    const val = this.form.value as User;
     this.dialog.close({ ...val, _id: this.user?._id });
   }
 
