@@ -187,6 +187,7 @@ $filter-bar-height: 40px;
   border-radius: 30px;
   margin-bottom: 15px;
   padding: 6px;
+  min-width: 350px;
 
   .filter-bar {
     display: flex;
@@ -237,6 +238,15 @@ $filter-bar-height: 40px;
       width: 1px;
       background-color: rgba(255, 255, 255, 0.645);
     }
+  }
+}
+
+.no-data-container {
+  margin-top: 20px;
+
+  p {
+    font-size: 1.4rem;
+    text-align: center;
   }
 }
 

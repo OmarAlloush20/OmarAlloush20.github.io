@@ -1,15 +1,13 @@
 <div class="data-table-container">
-    <h1>Users</h1>
+    <h1>Customers</h1>
     <app-data-table
     [headers]="tableHeaders"
-    [data]="users"
+    [data]="customers"
     [cellValueFn]="headerToValue"
-    (onAdd)="openAddUser()"
-    (onEdit)="openEditUser($event)"
-    (onDelete)="openDeleteUser($event)"
+    (onAdd)="openAddCustomer()"
+    (onEdit)="openEditCustomer($event)"
+    (onDelete)="openDeleteCustomer($event)"
     (onSearchInfoChange)="onSearchInfoChanged($event)"
     [loading]="loading"
     ></app-data-table>
-    <!-- (onPageChange)="onPageNumberChanged($event)" -->
-
 </div>

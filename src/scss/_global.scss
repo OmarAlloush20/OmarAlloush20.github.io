@@ -44,7 +44,8 @@ $input-background-color-autofilled: #202020;
 
 input[type="text"],
 input[type="password"],
-input[type="email"] {
+input[type="email"],
+input[type="tel"] {
   width: 100%;
   padding: 0px 12px;
   height: 35px;
@@ -64,8 +65,6 @@ input[type="email"] {
     transition: 200ms;
     pointer-events: none;
   }
-
-  
 
   &:focus {
     // &:valid {
@@ -94,7 +93,7 @@ input[type="email"] {
 input[type="text"].password-field,
 input[type="password"].password-field {
   padding-right: 40px;
-  
+
   ~ button.btn-icon {
     position: absolute;
     right: 10px;
@@ -103,7 +102,6 @@ input[type="password"].password-field {
 
     i {
       margin-top: 5px;
-
     }
 
     &.visible {
@@ -323,7 +321,6 @@ $disabled-btn-color: #454140;
     &:hover {
       background-color: transparentize($on-dark-color, 0.9);
     }
-    
   }
 }
 
@@ -365,5 +362,95 @@ $scrollbar-track-color: transparent;
   }
   100% {
     transform: rotate(360deg);
+  }
+}
+
+/////////////////////////////
+/// Data Table container ///
+////////////////////////////
+
+.data-table-container {
+  padding: 20px;
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: start;
+
+  i {
+    background-color: $primary-color;
+  }
+
+  h1 {
+    margin-bottom: 20px;
+    font-size: 2.0rem;
+    text-align: center;
+  }
+}
+
+////
+/// App data modal
+///
+
+.app-data-modal-container {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 10px;
+
+  padding: 15px;
+  max-height: calc(100vh - 40px);
+  margin: 10px 0px 0px 30px;
+  overflow: auto;
+
+  h1 {
+    font-size: 1.6rem;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .app-data-modal-fields {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: stretch;
+
+    width: 250px;
+    gap: 5px;
+  }
+
+  .action-btns-container {
+    margin-top: 20px;
+  }
+
+  .action-btns {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 18px;
+
+    width: 100%;
+
+    .btn {
+      height: 20px;
+    }
+
+    .btn-primary {
+      flex-grow: 1;
+    }
+
+    .btn-secondary {
+      width: 20px;
+      @extend .center;
+    }
+
+    i {
+      height: 15px;
+      width: 15px;
+      background-color: white;
+    }
   }
 }
