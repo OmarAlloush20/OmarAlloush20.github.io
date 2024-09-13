@@ -13,6 +13,10 @@ h6 {
   color: $primary-color;
 }
 
+h1 {
+  font-size: 2.2rem;
+}
+
 p,
 div,
 span {
@@ -133,6 +137,62 @@ input[type="password"].password-field {
     }
   }
 }
+
+////////////////////
+/// Toggle group ///
+////////////////////
+
+.radio-group-container {
+  display: flex;
+  border-radius: 15px;
+  border: 1.5px solid white;
+  width: fit-content;
+  transition: 300ms;
+
+  .radio-option {
+    padding: 10px 30px;
+    background-color: $dark-secondary;
+    transition: 300ms;
+
+    &:first-child {
+      border-radius: 15px 0px 0px 15px;
+    }
+
+    &:last-child {
+      border-radius: 0px 15px 15px 0px;
+    }
+
+    &:hover {
+      background-color: lighten($dark-secondary, 5%);
+    }
+
+    &:has(input[type="radio"]:checked) {
+      background-color: darken($dark-primary, 2%);
+
+      &:hover {
+        background-color: lighten($dark-primary, 2%);
+      }
+    }
+
+    input[type="radio"] {
+      -webkit-appearance: none;
+      appearance: none;
+      background-color: #fff;
+      margin: 0;
+      transition: 300ms;
+
+      &::before,
+      &::after {
+        display: none;
+      }
+    }
+
+    label {
+      font-size: 1.3rem;
+    }
+  }
+}
+
 //////////////
 /// Select ///
 //////////////
@@ -311,7 +371,7 @@ $disabled-btn-color: #454140;
 
       &:focus {
         border: 1px solid $on-dark-color;
-        box-shadow: 0 0 0 1px $dark-primary inset
+        box-shadow: 0 0 0 1px $dark-primary inset;
       }
     }
 
@@ -328,11 +388,10 @@ $disabled-btn-color: #454140;
     &:focus {
       background-color: #a3e7d855;
     }
-    
+
     &:hover {
       background-color: #a3e7d833;
     }
-
   }
 
   &.btn-icon {
@@ -414,12 +473,13 @@ $scrollbar-track-color: transparent;
   justify-content: start;
 
   i {
+    height: 30px;
+    width: 30px;
     background-color: $primary-color;
   }
 
   h1 {
     margin-bottom: 20px;
-    font-size: 2rem;
     text-align: center;
   }
 }
@@ -440,7 +500,6 @@ $scrollbar-track-color: transparent;
   overflow: auto;
 
   h1 {
-    font-size: 1.6rem;
     text-align: center;
     margin-bottom: 20px;
   }
@@ -486,5 +545,35 @@ $scrollbar-track-color: transparent;
       width: 15px;
       background-color: white;
     }
+  }
+}
+
+///////////////////////////
+/// Component container ///
+///////////////////////////
+
+.component-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+
+  padding: 20px;
+}
+
+.title {
+  display: flex;
+  align-items: baseline;
+  gap: 15px;
+
+  i {
+    height: 27px;
+    width: 27px;
+    background-color: $primary-color;
+  }
+
+  h1 {
+    margin-bottom: 20px;
+    text-align: center;
   }
 }
