@@ -4,6 +4,7 @@ import { MainMenuComponent } from './pages/main-menu/ui/main-menu/main-menu.comp
 import { authGuard } from './shared/guards/auth.guard';
 import { UsersComponent } from './pages/users/ui/users.component';
 import { CustomerComponent } from './pages/customer/ui/customer.component';
+import { AgentsComponent } from './pages/agents/ui/agents.component';
 
 export const routes: Routes = [
   {
@@ -17,6 +18,7 @@ export const routes: Routes = [
     children: [
         {path: 'users', component: UsersComponent},
         {path: 'customers', component: CustomerComponent},
+        {path: 'agents', component: AgentsComponent},
         // {path: '',}
     ]
   },

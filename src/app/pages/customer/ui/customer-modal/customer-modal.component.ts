@@ -18,8 +18,6 @@ export class CustomerModalComponent implements OnInit {
 
   customerForm: FormGroup;
 
-  passwordVisible = false;
-
   constructor(private fb: FormBuilder, private dialog : MatDialogRef<CustomerModalComponent>) {
     this.customerForm = this.fb.group({
       firstname: [this.customer?.firstname ?? '', Validators.required],

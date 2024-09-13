@@ -1,0 +1,57 @@
+<div class="app-data-modal-container">
+    <h1>{{title}}</h1>
+
+    <form [formGroup]="agentForm" class="app-data-modal-form" (ngSubmit)="onSubmit()">
+        <div class="app-data-modal-fields">
+
+            <div class="form-group">
+                <input formControlName="name" type="text" id="name" required>
+                <label for="name" [ngClass]="{'shrinked-label' : agentForm.value.name}">Agent Name</label>
+            </div>
+
+            <div class="form-group">
+                <input formControlName="contactPersonName" type="text" id="contactPersonName" required>
+                <label for="contactPersonName" [ngClass]="{'shrinked-label' : agentForm.value.contactPersonName}">
+                    Contact Person Name</label>
+            </div>
+
+            <div class="form-group">
+                <input formControlName="contactPhoneNumber" type="tel" id="contactPhoneNumber" required>
+                <label for="contactPhoneNumber"
+                    [ngClass]="{'shrinked-label' : agentForm.value.contactPhoneNumber}">Contact Phone</label>
+            </div>
+
+            <div class="form-group">
+                <input formControlName="email" type="email" id="email" required>
+                <label for="email" [ngClass]="{'shrinked-label' : agentForm.value.email}">Email</label>
+            </div>
+
+            <div class="dropdown-form-group">
+                <select formControlName="agentType" id="agentType" required>
+                    <option value="hotel">Hotel</option>
+                    <option value="airline">Airline</option>
+                    <option value="transportation">Transportation</option>
+                    <option value="tour">Tour</option>
+                    <option value="visa">Visa</option>
+                </select>
+                <label for="agentType" [ngClass]="{'shrinked-label' : agentForm.value.agentType}">Agent Type</label>
+            </div>
+
+            <div class="form-group">
+                <input formControlName="address" type="text" id="address">
+                <label for="address" [ngClass]="{'shrinked-label' : agentForm.value.address}">Address (Optional)</label>
+            </div>
+
+            <div class="action-btns-container">
+                <div class="action-btns">
+                    <button class="btn btn-secondary btn-confirm" type="button" (click)="cancel()">
+                        <i class="icon ex-icon"></i>
+                    </button>
+
+                    <button class="btn btn-primary btn-confirm" type="submit"
+                        (click)="onSubmit()">Confirm</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,13 @@
+<div class="data-table-container">
+    <h1>Agents</h1>
+    <app-data-table
+    [headers]="tableHeaders"
+    [data]="agents"
+    [cellValueFn]="headerToValue"
+    (onAdd)="openAddAgent()"
+    (onEdit)="openEditAgent($event)"
+    (onDelete)="openDeleteAgent($event)"
+    (onSearchInfoChange)="onSearchInfoChanged($event)"
+    [loading]="loading"
+    ></app-data-table>
+</div>

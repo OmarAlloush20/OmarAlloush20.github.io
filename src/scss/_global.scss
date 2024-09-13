@@ -379,9 +379,14 @@ $scrollbar-track-color: transparent;
   align-items: stretch;
   justify-content: start;
 
+  i {
+    background-color: $primary-color;
+  }
+
   h1 {
     margin-bottom: 20px;
-    font-size: 1.5rem;
+    font-size: 2.0rem;
+    text-align: center;
   }
 }
 
