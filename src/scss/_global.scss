@@ -17,6 +17,10 @@ h1 {
   font-size: 2.2rem;
 }
 
+h2 {
+  font-size: 1.8rem;
+}
+
 p,
 div,
 span {
@@ -124,6 +128,23 @@ input[type="number"] {
     background-color: lighten($input-background-color, 5%);
   }
 }
+
+.input-btn {
+  display: flex;
+  align-items: center;
+}
+
+input[type="date"] {
+  color-scheme: dark;
+}
+
+// input[type="date"]:not(.has-value)::-webkit-datetime-edit {
+//   color: transparent;
+// }
+
+// input[type="date"]:focus:not(.has-value)::-webkit-datetime-edit {
+//   color: transparent;
+// }
 
 input[type="text"].with-icon-btn,
 input[type="password"].with-icon-btn {
@@ -561,7 +582,7 @@ $scrollbar-track-color: transparent;
 }
 
 //////////////////////
-/// selector lists ///
+/// Selector Lists ///
 //////////////////////
 
 .selector-list-container {
@@ -576,7 +597,7 @@ $scrollbar-track-color: transparent;
 
     .selector-list-item {
       cursor: pointer;
-      
+
       .selector-list-content {
         padding: 10px 10px;
         transition: 200ms;

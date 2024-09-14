@@ -1,13 +1,27 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  inject,
+  Input,
+  OnInit,
+} from '@angular/core';
 import { PaymentVoucher } from '../../models/payment-voucher.model';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialogRef } from '@angular/material/dialog';
+import {
+  FormBuilder,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { FormComponent } from '../../../../shared/components/interfaces/form-component.interface';
+import { CommonModule } from '@angular/common';
+import { AgentSelectorComponent } from '../../../../shared/components/selectors/agent-selector/agent-selector.component';
 
 @Component({
   selector: 'app-payment-voucher-modal',
   standalone: true,
-  imports: [],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule],
   templateUrl: './payment-voucher-modal.component.html',
   styleUrl: './payment-voucher-modal.component.scss',
 })
@@ -20,26 +34,38 @@ export class PaymentVoucherModalComponent
 
   form: FormGroup;
 
+  cdr = inject(ChangeDetectorRef);
+
   constructor(
     private fb: FormBuilder,
-    private dialog: MatDialogRef<PaymentVoucherModalComponent>
+    private dialogRef: MatDialogRef<PaymentVoucherModalComponent>,
+    private dialog: MatDialog
   ) {
     super();
     this.form = this.fb.group({
-      agent: ['', Validators.required],
-      date: [new Date(), Validators.required],
+      agent: [undefined, Validators.required],
+      date: [undefined, Validators.required],
       paymentMethod: ['', Validators.required],
-      description: ['', Validators.required],
+      description: [''],
       bankName: [''],
-      chequeDueDate: [''],
-      amount: [0, [Validators.required, Validators.min(0)]],
+      chequeDueDate: [undefined],
+      amount: [undefined, [Validators.required, Validators.min(0)]],
+    });
+  }
+
+  selectAgent() {
+    const ref = this.dialog.open(AgentSelectorComponent);
+    ref.afterClosed().subscribe((val) => {
+      if (val) {
+        this.form.controls['agent'].setValue(val);
+      }
     });
   }
 
   ngOnInit(): void {
     if (this.voucher) {
       this.form.patchValue({
-        agent: { name: this.voucher.agent.name },
+        agent: this.voucher.agent,
         date: new Date(this.voucher.date),
         paymentMethod: this.voucher.paymentMethod,
         description: this.voucher.description,
@@ -49,17 +75,19 @@ export class PaymentVoucherModalComponent
           : undefined,
         amount: this.voucher.amount,
       });
+      this.cdr.detectChanges();
     }
   }
 
   onSubmit() {
     if (this.form.valid) {
       const val = this.form.value as PaymentVoucher;
-      this.dialog.close({ ...val, _id: this.voucher?._id });
+      console.log(JSON.stringify(val));
+      this.dialogRef.close({ ...val, _id: this.voucher?._id });
     }
   }
 
   cancel() {
-    this.dialog.close();
+    this.dialogRef.close();
   }
 }

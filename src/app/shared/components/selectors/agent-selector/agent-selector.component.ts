@@ -45,6 +45,7 @@ export class AgentSelectorComponent implements OnChanges, OnInit{
   }
 
   selectAgent(agent : Agent) {
+    console.log('agent', JSON.stringify(agent))
     this.modalRef.close(agent);
   }
 }

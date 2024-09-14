@@ -25,7 +25,11 @@ export class PaymentVoucherService {
 
   addPaymentVoucher(paymentVoucher: PaymentVoucher): Observable<PaymentVoucher | undefined> {
     const endpoint = `${this._endpoint}`;
-    return this.http.post(endpoint, paymentVoucher).pipe(
+    const body = {
+      ... paymentVoucher,
+      agent: paymentVoucher.agent._id
+    }
+    return this.http.post(endpoint, body).pipe(
       map((val) => (val.body as any).data as PaymentVoucher),
       catchError((_) => of(undefined))
     );
@@ -33,7 +37,12 @@ export class PaymentVoucherService {
 
   editPaymentVoucher(updatedPaymentVoucher: PaymentVoucher): Observable<PaymentVoucher | undefined> {
     const endpoint = `${this._endpoint}`;
-    return this.http.update(endpoint, updatedPaymentVoucher).pipe(
+    const body = {
+      ... updatedPaymentVoucher,
+      agent: updatedPaymentVoucher.agent._id
+    }
+    console.log(body);
+    return this.http.update(endpoint, body).pipe(
       map((val) => (val.body as any).data as PaymentVoucher),
       catchError((_) => of(undefined))
     );
