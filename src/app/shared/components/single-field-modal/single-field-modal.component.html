@@ -1,0 +1,22 @@
+<div class="app-data-modal-container">
+    <h1>{{title}}</h1>
+
+    <div class="app-data-modal-form">
+        <div class="app-data-modal-fields">
+
+            <div class="form-group">
+                <input id="inputField" type="text" [(ngModel)]="value">
+                <label for="inputField" [ngClass]="{'shrinked-label' : value}">{{fieldLabel}}</label>
+            </div>
+            <div class="action-btns-container">
+                <div class="action-btns">
+                    <button class="btn btn-secondary btn-confirm" type="button" (click)="cancel()"><i
+                            class="icon ex-icon"></i></button>
+
+                    <button class="btn btn-primary btn-confirm" type="submit" (click)="onSubmit()">Confirm</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
