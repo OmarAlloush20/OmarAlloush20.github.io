@@ -68,8 +68,19 @@
     -webkit-mask-image: url("/assets/icons/location.svg");
     mask-image: url("/assets/icons/location.svg");
   }
+
   &.receipt-icon {
     -webkit-mask-image: url("/assets/icons/receipt.svg");
     mask-image: url("/assets/icons/receipt.svg");
+  }
+
+  &.misc-icon {
+    -webkit-mask-image: url("/assets/icons/misc.svg");
+    mask-image: url("/assets/icons/misc.svg");
+  }
+
+  &.travel-flow-icon {
+    -webkit-mask-image: url("/assets/icons/travel-flow-simple.svg");
+    mask-image: url("/assets/icons/travel-flow-simple.svg");
   }
 }

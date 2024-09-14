@@ -1,6 +1,9 @@
 <nav class="sidebar" [ngClass]="{'expanded' : isExpanded}">
     <div class="nav-header">
-        <p class="nav-header-title">TravelFlow</p>
+        <div class="nav-header-title">
+            <i class="icon travel-flow-icon nav-header-icon"></i>
+            <div class="nav-header-text">TravelFlow</div>
+        </div>
         <button (click)="toggleExpanded()" class="hamburger">
             <span class="hamburger-line1"></span>
             <span class="hamburger-line2"></span>
@@ -46,6 +49,13 @@
                 <a [routerLink]="['/main/financials']">
                     <div class="item-icon icon receipt-icon"></div>
                     <label>Financials</label>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a [routerLink]="['/main/misc']">
+                    <div class="item-icon icon misc-icon"></div>
+                    <label>Hotels and others</label>
                 </a>
             </li>
             <div class="highlight"></div>

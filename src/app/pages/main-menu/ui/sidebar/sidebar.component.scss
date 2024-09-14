@@ -53,11 +53,22 @@ nav {
 
     .nav-header-title {
       color: $on-navbar-background;
-      font-size: 2rem;
-
+      font-size: 1.5rem;
+      display: flex;
+      gap: 5px;
       opacity: 0;
       width: 0px;
       transition: 200ms;
+
+      .nav-header-text {
+        color: black;
+      }
+
+      i {
+        background-color: black;
+        height: 30px;
+        width: 30px;
+      }
     }
 
     .hamburger {
