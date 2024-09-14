@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { LoginService } from '../../services/login.service';
 import { UsernamesStorageService } from '../../services/usernames-storage.service';
 import { CredentialsModel } from '../../models/credentials.model';
@@ -35,8 +35,11 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   passwordVisible = false;
 
+  cdr = inject(ChangeDetectorRef)
+
   togglePasswordVisibility() {
     this.passwordVisible = !this.passwordVisible;
+    this.cdr.detectChanges();
   }
 
   constructor(
