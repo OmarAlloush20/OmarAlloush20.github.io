@@ -33,6 +33,12 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   subscriptions: Subscription[] = [];
 
+  passwordVisible = false;
+
+  togglePasswordVisibility() {
+    this.passwordVisible = !this.passwordVisible;
+  }
+
   constructor(
     private loginService: LoginService,
     private usernamesStorage: UsernamesStorageService,
@@ -43,8 +49,8 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.loginForm = this.fb.group({
-      username: ['', [Validators.required]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
+      username: ['hesham', [Validators.required]],
+      password: ['123456789', [Validators.required, Validators.minLength(6)]],
     });
   }
 

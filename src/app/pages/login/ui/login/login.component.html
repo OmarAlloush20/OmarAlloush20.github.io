@@ -8,14 +8,15 @@
       <h2>Login</h2>
 
       <div class="form-group">
-        <input type="text" id="username" formControlName="username" class="form-control" required>
+        <input type="text" id="username" formControlName="username" class="form-control"  required>
         <label for="username" [ngClass]="{'shrinked-label' : loginForm.value.username}">Username</label>
-
       </div>
 
       <div class="form-group">
-        <input type="password" id="password" formControlName="password" class="form-control" required>
+        <input [type]="passwordVisible ? 'text' : 'password'" id="password" formControlName="password" class="with-icon-btn form-control" required>
         <label for="password" [ngClass]="{'shrinked-label' : loginForm.value.password}">Password</label>
+        <button class="btn btn-icon show-password-btn" type="button" (click)="togglePasswordVisibility()"
+        [ngClass]="{'visible' : passwordVisible}"><i class="icon eye-icon"></i></button>
       </div>
 
       <button type="submit" class="btn btn-primary login-btn" [ngClass]="{ 'disabled': logginIn }">
