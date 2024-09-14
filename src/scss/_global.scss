@@ -405,7 +405,7 @@ $disabled-btn-color: #454140;
       }
     }
 
-    &.disabled {
+    &.disabled, &:disabled {
       background-color: $disabled-btn-color;
     }
   }
@@ -437,12 +437,19 @@ $disabled-btn-color: #454140;
       background-color: white;
     }
 
-    &:focus {
+    &:focus:not(:disabled) {
       border: 1px solid $on-dark-color !important;
     }
 
-    &:hover {
+    &:hover:not(:disabled) {
       background-color: transparentize($on-dark-color, 0.9);
+    }
+
+    &:disabled {
+      cursor: auto;
+      i {
+        background-color: $disabled-btn-color;
+      }
     }
   }
 }

@@ -1,0 +1,42 @@
+<div class="component-container">
+    <div class="title">
+        <i class="icon receipt-icon"></i>
+        <h1>Trips</h1>
+    </div>
+
+    <div class="component-content">
+        <div class="filter-bar-container">
+            <div class="filter-bar">
+                <div class="form-group">
+                    <div class="input-btn customer-selection-btn" (click)="selectCustomer()" id="customer-btn">
+                        {{customer?.firstname ?? ''}} {{customer?.lastname ?? ''}}</div>
+                    <label for="customer-btn" [ngClass]="{'shrinked-label' : customer !== undefined}">Customer</label>
+                </div>
+
+                <div class="form-group">
+                    <input type="date" id="startDate" [(ngModel)]="startDate">
+                    <label for="startDate" class="shrinked-label">Start Date</label>
+                </div>
+
+                <div class="form-group">
+                    <input type="date" id="startDate" [(ngModel)]="endDate">
+                    <label for="endDate" class="shrinked-label">End Date</label>
+                </div>
+
+            </div>
+        </div>
+
+        <button class="btn btn-secondary filter-btn" (click)="applyFilter()">Filter</button>
+    </div>
+
+    <app-data-table
+    [data]="trips"
+    [headers]="tableHeaders"
+    [cellValueFn]="headerToValue"
+    (onAdd)="openAddTrip()"
+    (onEdit)="openEditTrip($event)"
+    (onDelete)="openDeleteTrip($event)"
+    (onSearchInfoChange)="onSearchInfoChanged($event)"
+    [hideSearchBar]="true"
+    [loading]="loading"/>
+</div>
