@@ -1,0 +1,19 @@
+<div class="component-container">
+    <div class="title">
+        <i class="icon receipt-icon"></i>
+        <h1>Financials</h1>
+    </div>
+    <div class="radio-group-container">
+
+        <a class="radio-option" [routerLink]="['/main/financials/paymentVoucher']" (click)="selectedPage = 'payment'">
+            <input type="radio" name="payment" id="paymentRadio" [checked]="selectedPage === 'payment'">
+            <label for="paymentRadio">Payment</label>
+        </a>
+        
+        <a class="radio-option" [routerLink]="['/main/financials/receiptVoucher']" (click)="selectedPage = 'receipt'">
+            <input type="radio" name="receipt" id="receiptRadio" [checked]="selectedPage === 'receipt'">
+            <label for="receiptRadio">Receipt</label>
+        </a>
+    </div>
+    <router-outlet></router-outlet>
+</div>

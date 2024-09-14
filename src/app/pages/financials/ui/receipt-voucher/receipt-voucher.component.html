@@ -1,0 +1,3 @@
+<app-data-table [headers]="tableHeaders" [data]="vouchers" [cellValueFn]="headerToValue" (onAdd)="openAddVoucher()"
+    (onEdit)="openEditVoucher($event)" (onDelete)="openDeleteVoucher($event)"
+    (onSearchInfoChange)="onSearchInfoChanged($event)" [loading]="loading"></app-data-table>

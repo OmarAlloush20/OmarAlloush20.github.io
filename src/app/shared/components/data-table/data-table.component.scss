@@ -12,6 +12,10 @@ $disable-icon-color: #ffbf00;
 
 $filter-bar-height: 40px;
 
+.data-table-container {
+  max-width: 900px;
+}
+
 .pagination-container {
   display: flex;
   justify-content: center;

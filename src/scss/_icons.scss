@@ -64,8 +64,14 @@
     mask-image: url("/assets/icons/eye.svg");
   }
 
+<<<<<<< HEAD
   &.location-icon {
     -webkit-mask-image: url("/assets/icons/location.svg");
     mask-image: url("/assets/icons/location.svg");
+=======
+  &.receipt-icon {
+    -webkit-mask-image: url("/assets/icons/receipt.svg");
+    mask-image: url("/assets/icons/receipt.svg");
+>>>>>>> development
   }
 }

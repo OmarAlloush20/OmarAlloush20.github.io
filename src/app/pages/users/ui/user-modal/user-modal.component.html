@@ -19,7 +19,7 @@
       </div>
 
       <div [ngClass]="{'invalid': shouldDisplayErrorContainer('password')}" class="form-group">
-        <input formControlName="password" id="password" autocomplete="current-password" class="password-field"
+        <input formControlName="password" id="password" autocomplete="current-password" class="with-icon-btn"
           [type]="passwordVisible ? 'text' : 'password'" [placeholder]="user ? 'Replace old password...' : ''">
 
         <button class="btn btn-icon show-password-btn" type="button" (click)="togglePasswordVisibility()"
