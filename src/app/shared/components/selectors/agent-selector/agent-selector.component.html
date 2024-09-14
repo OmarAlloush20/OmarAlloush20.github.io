@@ -1,0 +1,20 @@
+<div class="app-data-modal-container">
+    <h2>Search Agent</h2>
+    <form class="app-data-modal-form" (ngSubmit)="onSearch(searchQuery)">
+        <div class="form-group">
+            <input id="searchField" class="search-field with-icon-btn" type="text" [(ngModel)]="searchQuery" name="searchAgentInput">
+
+            <button class="btn btn-icon" type="submit"><i class="icon magnifying-glass-icon"></i></button>
+            <label [ngClass]="{'shrinked-label': searchQuery}" for="searchField">Search</label>
+        </div>
+    </form>
+
+    <div class="selector-list-container">
+        <ul class="selector-list">
+            <li class="selector-list-item" *ngFor="let agent of searchedAgents" (click)="selectAgent(agent)">
+                <div class="selector-list-content">{{agent.name}}</div>
+                <hr>
+            </li>
+        </ul>
+    </div>
+</div>

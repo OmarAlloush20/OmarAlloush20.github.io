@@ -1,0 +1,83 @@
+<div class="app-data-modal-container">
+    <h1>{{title}}</h1>
+
+    <form [formGroup]="form" class="app-data-modal-form" (ngSubmit)="onSubmit()">
+        <div class="app-data-modal-fields">
+            <div class="form-group" [ngClass]="{'invalid' : shouldDisplayErrorContainer('agent')}" >
+                <div (click)="selectAgent()" class="input-btn agent-selection-btn" id="agent-btn">{{form.value['agent']?.name ?? ''}}</div>
+                <label for="agent-btn" [ngClass]="{'shrinked-label' : form.value.agent}">Agent</label>
+                <div class="error-messages-container">
+                    <div class="error-message" *ngIf="shouldDisplayErrorMessage('agent', 'required')">
+                        * Agent is required
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group" [ngClass]="{'invalid' : shouldDisplayErrorContainer('date')}">
+                <input formControlName="date" type="date" id="date" required placeholder="">
+                <label for="date" class="shrinked-label">Date</label>
+                <div class="error-messages-container">
+                    <div class="error-message" *ngIf="shouldDisplayErrorMessage('date', 'required')">
+                        * Date is required
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group dropdown-form-group" [ngClass]="{'invalid' : shouldDisplayErrorContainer('paymentMethod')}">
+                <select formControlName="paymentMethod" id="paymentMethod" required>
+                    <option value="cash">Cash</option>
+                    <option value="bankTransfer">Bank Transfer</option>
+                    <option value="cheque">Cheque</option>
+                    <!-- Add more options as needed -->
+                </select>
+                <label for="paymentMethod" [ngClass]="{'shrinked-label' : form.value.paymentMethod}">Payment
+                    Method</label>
+                <div class="error-messages-container">
+                    <div class="error-message" *ngIf="shouldDisplayErrorMessage('paymentMethod', 'required')">
+                        * Payment method is required
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <input formControlName="description" type="text" id="description">
+                <label for="description" [ngClass]="{'shrinked-label' : form.value.description}">Description</label>
+            </div>
+
+            <div class="form-group">
+                <input formControlName="bankName" type="text" id="bankName">
+                <label for="bankName" [ngClass]="{'shrinked-label' : form.value.bankName}">Bank Name</label>
+            </div>
+
+            <div class="form-group">
+                <input formControlName="chequeDueDate" type="date" id="chequeDueDate">
+                <label for="chequeDueDate" class="shrinked-label">Cheque Due
+                    Date</label>
+            </div>
+
+            <div class="form-group" [ngClass]="{'invalid' : shouldDisplayErrorContainer('amount')}">
+                <input formControlName="amount" type="number" id="amount" required min="0">
+                <label for="amount" [ngClass]="{'shrinked-label' : form.value.amount}">Amount</label>
+                <div class="error-messages-container">
+                    <div class="error-message" *ngIf="shouldDisplayErrorMessage('amount', 'required')">
+                        * Amount is required
+                    </div>
+                    <div class="error-message" *ngIf="shouldDisplayErrorMessage('amount', 'min')">
+                        * Amount must be greater than or equal to 0
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="action-btns-container">
+            <div class="action-btns">
+                <button class="btn btn-secondary btn-confirm" type="button" (click)="cancel()"><i
+                        class="icon ex-icon"></i></button>
+
+                <button class="btn btn-primary btn-confirm" type="submit"
+                    (click)="onSubmit()">Confirm</button>
+
+            </div>
+        </div>
+    </form>
+</div>

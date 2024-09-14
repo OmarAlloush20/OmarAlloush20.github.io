@@ -60,8 +60,7 @@ export class AgentsComponent {
   private agentsService = inject(AgentsService);
   private toastr = inject(ToastrService);
   private platformId = inject(PLATFORM_ID);
-  private auth = inject(AuthService);
-
+  
   ngOnInit(): void {
     if (isPlatformBrowser(this.platformId)) this._reloadAgents();
   }

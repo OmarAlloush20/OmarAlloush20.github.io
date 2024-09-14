@@ -63,4 +63,9 @@
     -webkit-mask-image: url("/assets/icons/eye.svg");
     mask-image: url("/assets/icons/eye.svg");
   }
+
+  &.receipt-icon {
+    -webkit-mask-image: url("/assets/icons/receipt.svg");
+    mask-image: url("/assets/icons/receipt.svg");
+  }
 }
