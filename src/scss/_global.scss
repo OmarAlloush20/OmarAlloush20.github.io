@@ -75,6 +75,7 @@ $input-background-color-autofilled: #202020;
 }
 
 .input-btn,
+.input-like,
 input[type="text"],
 input[type="password"],
 input[type="email"],
@@ -129,7 +130,7 @@ input[type="number"] {
   }
 }
 
-.input-btn {
+.input-btn, .input-like {
   display: flex;
   align-items: center;
 }

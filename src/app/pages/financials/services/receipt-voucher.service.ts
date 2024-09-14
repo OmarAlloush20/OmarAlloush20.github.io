@@ -8,7 +8,7 @@ import { ReceiptVoucher } from '../models/receipt-voucher.model';
   providedIn: 'root',
 })
 export class ReceiptVoucherService {
-  private _endpoint = 'receipt-voucher';
+  private _endpoint = 'receiptVoucher';
 
   constructor(private http: HttpService) {}
 
@@ -25,7 +25,11 @@ export class ReceiptVoucherService {
 
   addReceiptVoucher(receiptVoucher: ReceiptVoucher): Observable<ReceiptVoucher | undefined> {
     const endpoint = `${this._endpoint}`;
-    return this.http.post(endpoint, receiptVoucher).pipe(
+    const body = {
+      ...receiptVoucher,
+      customer: receiptVoucher.customer._id
+    }
+    return this.http.post(endpoint, body).pipe(
       map((val) => (val.body as any).data as ReceiptVoucher),
       catchError((_) => of(undefined))
     );
@@ -33,7 +37,11 @@ export class ReceiptVoucherService {
 
   editReceiptVoucher(updatedReceiptVoucher: ReceiptVoucher): Observable<ReceiptVoucher | undefined> {
     const endpoint = `${this._endpoint}`;
-    return this.http.update(endpoint, updatedReceiptVoucher).pipe(
+    const body = {
+      ...updatedReceiptVoucher,
+      customer: updatedReceiptVoucher.customer._id
+    }
+    return this.http.update(endpoint, body).pipe(
       map((val) => (val.body as any).data as ReceiptVoucher),
       catchError((_) => of(undefined))
     );
