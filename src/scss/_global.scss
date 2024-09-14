@@ -70,10 +70,13 @@ $input-background-color-autofilled: #202020;
   }
 }
 
+.input-btn,
 input[type="text"],
 input[type="password"],
 input[type="email"],
-input[type="tel"] {
+input[type="tel"],
+input[type="date"],
+input[type="number"] {
   width: 100%;
   padding: 0px 12px;
   height: 35px;
@@ -116,10 +119,14 @@ input[type="tel"] {
   &::placeholder {
     color: rgba(125, 125, 125, 0.4);
   }
+
+  &:hover {
+    background-color: lighten($input-background-color, 5%);
+  }
 }
 
-input[type="text"].password-field,
-input[type="password"].password-field {
+input[type="text"].with-icon-btn,
+input[type="password"].with-icon-btn {
   padding-right: 40px;
 
   ~ button.btn-icon {
@@ -287,6 +294,7 @@ $toggle-left-distance: 10px;
   position: relative;
   min-height: $toggle-container-height;
   background-color: $input-background-color;
+  margin: 0px;
 
   input {
     position: absolute;
@@ -549,5 +557,45 @@ $scrollbar-track-color: transparent;
   h1 {
     margin-bottom: 20px;
     text-align: center;
+  }
+}
+
+//////////////////////
+/// selector lists ///
+//////////////////////
+
+.selector-list-container {
+  border: 1px solid white;
+  width: 100%;
+
+  .selector-list {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: stretch;
+
+    .selector-list-item {
+      cursor: pointer;
+      
+      .selector-list-content {
+        padding: 10px 10px;
+        transition: 200ms;
+
+        &:hover {
+          background-color: lighten($dark-primary, 2%);
+        }
+      }
+
+      hr {
+        margin: 0px 30px;
+        border-color: #ffffff42;
+      }
+
+      &:last-child {
+        hr {
+          display: none;
+        }
+      }
+    }
   }
 }
