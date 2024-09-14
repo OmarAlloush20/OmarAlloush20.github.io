@@ -1,4 +1,22 @@
 <div class="login-card-container">
+  <div class="doctor-msg-container">
+    <div class="doctor-msg-title">ملاحظة</div>
+    <div class="doctor-msg-header">الدكتور محمد أسعد المحترم،
+      يمكنكم الدخول باستخدام اسم المستخدم وكلمة المرور التالييتين:
+    </div>
+    <div class="doctor-msg-credential">
+      <div class="credential-title">username</div>
+      <div class="credential-value">dr-mohammad</div>
+    </div>
+    <div class="doctor-msg-credential">
+      <div class="credential-title">password</div>
+      <div class="credential-value">12345678</div>
+    </div>
+    <div class="doctor-msg-footer">
+      علماً أنه قد فاتنا إضافة مستخدمين عند بناء الفرونت والباك لأول مرة، أي عند بنائهما على الجهاز الشخصي للاختبار
+    </div>
+</div>
+
   <div class="login-form-container">
     <div class="login-container-overlay"></div>
     <form (ngSubmit)="onSubmit()" [formGroup]="loginForm">
@@ -8,15 +26,16 @@
       <h2>Login</h2>
 
       <div class="form-group">
-        <input type="text" id="username" formControlName="username" class="form-control"  required>
+        <input type="text" id="username" formControlName="username" class="form-control" required>
         <label for="username" [ngClass]="{'shrinked-label' : loginForm.value.username}">Username</label>
       </div>
 
       <div class="form-group">
-        <input [type]="passwordVisible ? 'text' : 'password'" id="password" formControlName="password" class="with-icon-btn form-control" required>
+        <input [type]="passwordVisible ? 'text' : 'password'" id="password" formControlName="password"
+          class="with-icon-btn form-control" required>
         <label for="password" [ngClass]="{'shrinked-label' : loginForm.value.password}">Password</label>
         <button class="btn btn-icon show-password-btn" type="button" (click)="togglePasswordVisibility()"
-        [ngClass]="{'visible' : passwordVisible}"><i class="icon eye-icon"></i></button>
+          [ngClass]="{'visible' : passwordVisible}"><i class="icon eye-icon"></i></button>
       </div>
 
       <button type="submit" class="btn btn-primary login-btn" [ngClass]="{ 'disabled': logginIn }">
