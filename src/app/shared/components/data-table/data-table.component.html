@@ -1,5 +1,5 @@
 <div class="data-table-container">
-    <div class="filter-bar-container">
+    <div class="filter-bar-container" [ngStyle]="{'display' : hideSearchBar ? 'none' : 'block'}">
         <div class="filter-bar">
             <form (ngSubmit)="search(searchQuery)" class="search-input-container">
                 <input class="search-input" type="text" placeholder="Search..." [(ngModel)]="searchQuery"

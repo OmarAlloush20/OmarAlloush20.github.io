@@ -1,0 +1,43 @@
+<div class="app-data-modal-container">
+    <h1>{{title}}</h1>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+            <input formControlName="customerTrip" type="text" id="customerTrip" required>
+            <label for="customerTrip" [ngClass]="{'shrinked-label': form.value.customerTrip}">Customer Name</label>
+        </div>
+
+        <div class="dropdown-form-group">
+            <select formControlName="tripType" id="tripType" required>
+                <option value="umrah">Umrah</option>
+                <option value="hajj">Hajj</option>
+                <option value="tourist">Tourist</option>
+                <option value="services">Services</option>
+            </select>
+            <label for="tripType" [ngClass]="{'shrinked-label': form.value.tripType}">Trip Type</label>
+        </div>
+
+        <div class="form-group">
+            <input formControlName="startDate" type="date" id="startDate" required>
+            <label for="startDate" [ngClass]="{'shrinked-label': form.value.startDate}">Start Date</label>
+        </div>
+
+        <div class="form-group">
+            <input formControlName="endDate" type="date" id="endDate" required>
+            <label for="endDate" [ngClass]="{'shrinked-label': form.value.endDate}">End Date</label>
+        </div>
+
+        <div class="form-group">
+            <input formControlName="totalAmount" type="number" id="totalAmount" required>
+            <label for="totalAmount" [ngClass]="{'shrinked-label': form.value.totalAmount}">Total Amount</label>
+        </div>
+
+        <div class="action-btns-container">
+            <div class="action-btns">
+                <button class="btn btn-secondary btn-confirm" type="button" (click)="cancel()">
+                    <i class="icon ex-icon"></i>
+                </button>
+                <button class="btn btn-primary btn-confirm" type="submit">Confirm</button>
+            </div>
+        </div>
+    </form>
+</div>

@@ -60,6 +60,8 @@ export class DataTableComponent implements OnInit {
     this.renderer.setStyle(this.popupActions.nativeElement, 'display', 'block');
   }
 
+  @Input() hideSearchBar = false;
+
   @Input() headers: string[] = [];
 
   @Input() data: any[] = [];
