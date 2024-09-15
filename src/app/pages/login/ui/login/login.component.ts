@@ -1,4 +1,10 @@
-import { ChangeDetectorRef, Component, inject, OnDestroy, OnInit } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  inject,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import { LoginService } from '../../services/login.service';
 import { UsernamesStorageService } from '../../services/usernames-storage.service';
 import { CredentialsModel } from '../../models/credentials.model';
@@ -35,7 +41,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   passwordVisible = false;
 
-  cdr = inject(ChangeDetectorRef)
+  cdr = inject(ChangeDetectorRef);
 
   togglePasswordVisibility() {
     this.passwordVisible = !this.passwordVisible;
@@ -109,5 +115,14 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.toastr.warning('Wrong credentials', undefined, {
       timeOut: 7000,
     });
+  }
+
+  //////////////////////////////
+  messageHidden = false;
+
+  toggleMessageHidden() {
+    console.log(this.messageHidden);
+    this.messageHidden = !this.messageHidden;
+    this.cdr.detectChanges();
   }
 }

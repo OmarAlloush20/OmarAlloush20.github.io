@@ -1,7 +1,9 @@
 <div class="login-card-container">
-  <div class="doctor-msg-container">
+  <div class="doctor-msg-container" [ngClass]="{'hidden' : messageHidden}">
     <div class="doctor-msg-title">ملاحظة</div>
-    <div class="doctor-msg-header">الدكتور محمد أسعد المحترم،
+    <div class="doctor-msg-header"><i>الدكتور محمد أسعد المحترم:</i>
+      <br>
+      <br>
       يمكنكم الدخول باستخدام اسم المستخدم وكلمة المرور التالييتين:
     </div>
     <div class="doctor-msg-credential">
@@ -12,9 +14,10 @@
       <div class="credential-title">password</div>
       <div class="credential-value">12345678</div>
     </div>
-    <div class="doctor-msg-footer">
+    <!-- <div class="doctor-msg-footer">
       علماً أنه قد فاتنا إضافة مستخدمين عند بناء الفرونت والباك لأول مرة، أي عند بنائهما على الجهاز الشخصي للاختبار
-    </div>
+    </div> -->
+    <button class="btn hide-msg-btn" (click)="toggleMessageHidden()" >{{messageHidden ? "إظهار ملاحظة" : "إخفاء الملاحظة"}}</button>
 </div>
 
   <div class="login-form-container">

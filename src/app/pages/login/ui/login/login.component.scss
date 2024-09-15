@@ -10,27 +10,61 @@
 .doctor-msg-container {
   max-width: 500px;
   position: fixed;
-  padding: 20px;
   background-color: $dark-primary;
   border-radius: 10px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   z-index: 99;
   direction: rtl;
   width: 250px;
+  top: 0px;
+  left: 0px;
+  transition: 200ms;
+
+  &:hover {
+    left: 10px;
+  }
+
+  &.hidden {
+    top: -210px;
+  }
+
+  *:not(.hide-msg-btn) {
+    transition: 200ms;
+    &:hover {
+      scale: 1.05;
+    }
+  }
+}
+
+.hide-msg-btn {
+  width: calc(100% - 20px);
+  text-align: center;
+  padding: 10px;
+  transition: 200ms;
+  border-radius: 0px 0px 10px 10px;
+  background-color: darken($color: $primary-light-color, $amount: 30%);
+  color: $dark-primary;
+
+  &:hover {
+    background-color: darken($color: $primary-light-color, $amount: 10%);
+  }
 }
 
 .doctor-msg-title {
   font-weight: bold;
-  font-size: 18px;
+  font-size: 1.6rem;
   color: $primary-color;
   text-align: center;
   margin-bottom: 15px;
+  padding-top: 20px;
 }
 
 .doctor-msg-header {
   font-size: 16px;
   color: white;
-  margin-bottom: 20px;
+  // margin-bottom: 20px;
+  padding: 10px;
+  
 }
 
 .doctor-msg-credential {
@@ -38,7 +72,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 10px;
+  // margin-bottom: 10px;
+  padding: 10px;
 }
 
 .credential-title {
