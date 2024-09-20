@@ -8,12 +8,12 @@ import { City } from '../models/location.model';
   providedIn: 'root'
 })
 export class CityService {
-  private _endpoint = 'cities';
+  private _endpoint = 'city';
 
   constructor(private http: HttpService) {}
 
   fetchCities(countryId : string): Observable<City[] | undefined> {
-    const endpoint = `${this._endpoint}?countryId=${countryId}`;
+    const endpoint = `${this._endpoint}?country=${countryId}`;
     return this.http.get(endpoint).pipe(
       map((val) => (val.body as any).data as City[]),
       catchError((err) => {

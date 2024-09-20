@@ -13,6 +13,12 @@
   justify-content: space-around;
 }
 
+.location-section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
 .divider {
   width: calc(100% - 20px);
   height: 1px;

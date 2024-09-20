@@ -8,7 +8,7 @@ import { HttpService } from '../../../shared/services/http/http.service';
   providedIn: 'root'
 })
 export class CountryService {
-  private _endpoint = 'countries';
+  private _endpoint = 'country';
 
   constructor(private http: HttpService) {}
 

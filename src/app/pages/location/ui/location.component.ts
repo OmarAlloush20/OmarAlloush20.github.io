@@ -10,6 +10,7 @@ import { AirportService } from '../services/airport.service';
 import { ToastrService } from 'ngx-toastr';
 import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialog/confirm-dialog.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CityModalComponent } from './city-modal/city-modal.component';
 
 @Component({
   selector: 'app-location',
@@ -19,11 +20,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   styleUrl: './location.component.scss',
 })
 export class LocationComponent implements OnInit {
-  countries: Country[] = [
-    {name: 'UAE'},
-    {name: 'Syria'},
-    {name: 'Oman'},
-  ];
+  countries: Country[] = [{ name: 'UAE' }, { name: 'Syria' }, { name: 'Oman' }];
 
   selectedCountry?: Country = undefined;
 
@@ -43,22 +40,14 @@ export class LocationComponent implements OnInit {
 
   loading = false;
 
-  ////
+  //// Component
+
   dialog = inject(MatDialog);
 
   toastr = inject(ToastrService);
 
   ngOnInit(): void {
-    // this.fetchCountries();
-  }
-
-  onCountryChanged() {
-    console.log(this.selectedCountry?.name)
-    this.fetchCities();
-  }
-
-  onCityChanged() {
-    this.fetchAirports();
+    this.fetchCountries();
   }
 
   fetchCountries() {
@@ -75,9 +64,9 @@ export class LocationComponent implements OnInit {
     const modalRef = this.dialog.open(SingleFieldModalComponent);
     modalRef.componentInstance.title = 'Add Country';
     modalRef.componentInstance.fieldLabel = 'Country name';
-    const sub = modalRef.afterClosed().subscribe((result) => {
+    modalRef.afterClosed().subscribe((result) => {
       if (result) {
-        this._addCountry(result);
+        this._addCountry({name: result});
       }
     });
   }
@@ -159,6 +148,15 @@ export class LocationComponent implements OnInit {
     });
   }
 
+  onCountryChanged() {
+    console.log(this.selectedCountry?.name);
+    this.fetchCities();
+  }
+
+  onCityChanged() {
+    this.fetchAirports();
+  }
+
   fetchCities() {
     if (!this.selectedCountry) return;
 
@@ -175,20 +173,19 @@ export class LocationComponent implements OnInit {
   openAddCity() {
     if (!this.selectedCountry) return;
 
-    const modalRef = this.dialog.open(SingleFieldModalComponent);
+    const modalRef = this.dialog.open(CityModalComponent);
     modalRef.componentInstance.title = 'Add City';
-    modalRef.componentInstance.fieldLabel = 'City name';
+    modalRef.componentInstance.city = {country: this.selectedCountry}
 
-    const sub = modalRef.afterClosed().subscribe((result) => {
+    modalRef.afterClosed().subscribe((result) => {
       if (result) {
         this._addCity(result);
       }
     });
   }
 
-  private _addCity(cityName: string) {
+  private _addCity(city: City) {
     this.loading = true;
-    const city: City = { name: cityName, country: this.selectedCountry?._id };
     this.cityService.addCity(city).subscribe({
       next: (city) => {
         if (city) {
@@ -295,6 +292,7 @@ export class LocationComponent implements OnInit {
     const airport: Airport = {
       name: airportName,
       city: this.selectedCity?._id,
+      airportCode: ''
     };
     this.airportService.addAirport(airport).subscribe({
       next: (airport) => {

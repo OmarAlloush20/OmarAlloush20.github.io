@@ -28,7 +28,7 @@ export abstract class FormComponent {
   }
 
   onSubmit() {
-    if (this.value && this.form.valid) {
+    if (this.form.valid) {
       this.modalRef.close({
         ...this.value,
         ...this.form.value,

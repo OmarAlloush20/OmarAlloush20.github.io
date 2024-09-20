@@ -6,13 +6,13 @@ export interface Country {
 export interface City {
     _id? : any;
     name: string;
-    country: string;
-    // gmtOffset: number;
+    country?: Country;
+    gmtOffset: number;
 }
 
 export interface Airport {
     _id? : any;
     name: string;
-    // airportCode: string;
+    airportCode: string;
     city: string;
   }
