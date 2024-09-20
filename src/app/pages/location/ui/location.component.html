@@ -74,7 +74,7 @@
       <!-- airport dropdown -->
       <div class="dropdown-form-group">
         <select [(ngModel)]="selectedAirport">
-          <option *ngFor="let airport of airports" [ngValue]="airport">{{airport.name}}</option>
+          <option *ngFor="let airport of airports" [ngValue]="airport">{{airport.name}} - {{airport.airportCode}}</option>
         </select>
         <label [ngClass]="{'shrinked-label' : selectedAirport}" for="airport">Airport</label>
       </div>

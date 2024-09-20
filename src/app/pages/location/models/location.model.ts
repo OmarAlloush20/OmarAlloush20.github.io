@@ -14,5 +14,5 @@ export interface Airport {
     _id? : any;
     name: string;
     airportCode: string;
-    city: string;
+    city: City;
   }

@@ -11,6 +11,7 @@ import { ToastrService } from 'ngx-toastr';
 import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialog/confirm-dialog.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CityModalComponent } from './city-modal/city-modal.component';
+import { AirportModalComponent } from './airport-modal/airport-modal.component';
 
 @Component({
   selector: 'app-location',
@@ -274,27 +275,22 @@ export class LocationComponent implements OnInit {
   openAddAirport() {
     if (!this.selectedCity) return;
 
-    const modalRef = this.dialog.open(SingleFieldModalComponent);
+    const modalRef = this.dialog.open(AirportModalComponent);
     modalRef.componentInstance.title = 'Add Airport';
-    modalRef.componentInstance.fieldLabel = 'Airport name';
+    modalRef.componentInstance.airport = {city: this.selectedCity}
 
-    const sub = modalRef.afterClosed().subscribe((result) => {
+    modalRef.afterClosed().subscribe((result) => {
       if (result) {
         this._addAirport(result);
       }
     });
   }
 
-  private _addAirport(airportName: string) {
+  private _addAirport(airport: Airport) {
     this.loading = true;
-    const airport: Airport = {
-      name: airportName,
-      city: this.selectedCity?._id,
-      airportCode: '',
-    };
     this.airportService.addAirport(airport).subscribe({
       next: (airport) => {
-        if (airport) {
+      if (airport) {
           this.toastr.success('Airport added successfully.');
           this.fetchAirports();
         } else {
@@ -312,22 +308,20 @@ export class LocationComponent implements OnInit {
   editAirport(airport?: Airport) {
     if (!airport || !this.selectedCity) return;
 
-    const modalRef = this.dialog.open(SingleFieldModalComponent);
+    const modalRef = this.dialog.open(AirportModalComponent);
     modalRef.componentInstance.title = 'Edit Airport';
-    modalRef.componentInstance.fieldLabel = 'Airport name';
-    modalRef.componentInstance.value = airport.name;
+    modalRef.componentInstance.airport = this.selectedAirport;
 
-    const sub = modalRef.afterClosed().subscribe((result) => {
-      if (result && result !== airport.name) {
-        this._editAirport(airport, result);
+    modalRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this._editAirport(result);
       }
     });
   }
 
-  private _editAirport(airport: Airport, newName: string) {
+  private _editAirport(airport: Airport) {
     this.loading = true;
-    const updatedAirport: Airport = { ...airport, name: newName };
-    this.airportService.updateAirport(updatedAirport).subscribe({
+    this.airportService.updateAirport(airport).subscribe({
       next: (updatedAirport) => {
         if (updatedAirport) {
           this.toastr.success('Airport updated successfully.');

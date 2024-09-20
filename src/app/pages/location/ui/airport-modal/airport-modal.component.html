@@ -1,0 +1,40 @@
+<div class="app-data-modal-container">
+    <h1>{{title}}</h1>
+
+    <form [formGroup]="form" class="app-data-modal-form">
+        <div class="app-data-modal-fields">
+
+            <div class="form-group" [ngClass]="{'invalid' : shouldDisplayErrorContainer('name')}">
+                <input formControlName="name" type="text" id="name" autocomplete="off">
+                <label for="name" [ngClass]="{'shrinked-label' : form.value.name}">Airport Name</label>
+
+                <div class="error-messages-container" *ngIf="shouldDisplayErrorContainer('name')">
+                    <div class="error-message" >
+                        * Airport name is required
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group" [ngClass]="{'invalid' : shouldDisplayErrorContainer('airportCode')}">
+                <input formControlName="airportCode" type="text" id="airportCode">
+                <label for="airportCode" [ngClass]="{'shrinked-label' : form.value.airportCode}">IATA Code</label>
+
+                <div class="error-messages-container" *ngIf="shouldDisplayErrorContainer('airportCode')">
+                    <div class="error-message">
+                        * IATA code consists of only 3 characters
+                    </div>
+                </div>
+            </div>
+
+            <div class="action-btns-container">
+                <div class="action-btns">
+                    <button class="btn btn-secondary btn-confirm" type="button" (click)="cancel()"><i
+                            class="icon ex-icon"></i></button>
+
+                    <button class="btn btn-primary btn-confirm" type="submit" (click)="onSubmit()">Confirm</button>
+
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

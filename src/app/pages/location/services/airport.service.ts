@@ -25,7 +25,8 @@ export class AirportService {
 
   addAirport(airport: Airport): Observable<Airport | undefined> {
     const endpoint = `${this._endpoint}`;
-    const body = { ...airport };
+    const body = { ...airport, city: airport.city._id };
+    console.log(JSON.stringify(body))
     return this.http.post(endpoint, body).pipe(
       map((val) => val.body as Airport),
       catchError((_) => of(undefined))
@@ -33,8 +34,8 @@ export class AirportService {
   }
 
   updateAirport(updatedAirport: Airport): Observable<Airport | undefined> {
-    const endpoint = `${this._endpoint}/${updatedAirport.name.toLowerCase()}`;
-    const body = { ...updatedAirport };
+    const endpoint = `${this._endpoint}`;
+    const body = { ...updatedAirport, city: updatedAirport.city._id };
     return this.http.update(endpoint, body).pipe(
       map((val) => val.body as Airport),
       catchError((_) => of(undefined))
@@ -42,7 +43,7 @@ export class AirportService {
   }
 
   deleteAirport(airport: Airport): Observable<boolean> {
-    const endpoint = `${this._endpoint}/${airport.name.toLowerCase()}`;
+    const endpoint = `${this._endpoint}`;
     const body = {
       objectId: airport._id,
       isDeleted: true,
