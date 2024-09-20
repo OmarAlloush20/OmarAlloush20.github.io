@@ -25,7 +25,7 @@ export class CityService {
 
   addCity(city: City): Observable<City | undefined> {
     const endpoint = `${this._endpoint}`;
-    const body = { ...city };
+    const body = city
     return this.http.post(endpoint, body).pipe(
       map((val) => val.body as City),
       catchError((_) => of(undefined))
@@ -33,8 +33,9 @@ export class CityService {
   }
 
   updateCity(updatedCity: City): Observable<City | undefined> {
-    const endpoint = `${this._endpoint}/${updatedCity.name.toLowerCase()}`;
-    const body = { ...updatedCity };
+    const endpoint = `${this._endpoint}`;
+    const body = {...updatedCity, country: updatedCity.country?._id};
+    console.log(JSON.stringify(body))
     return this.http.update(endpoint, body).pipe(
       map((val) => val.body as City),
       catchError((_) => of(undefined))
@@ -42,7 +43,7 @@ export class CityService {
   }
 
   deleteCity(city: City): Observable<boolean> {
-    const endpoint = `${this._endpoint}/${city.name.toLowerCase()}`;
+    const endpoint = `${this._endpoint}`;
     const body = {
       objectId: city._id,
       isDeleted: true,

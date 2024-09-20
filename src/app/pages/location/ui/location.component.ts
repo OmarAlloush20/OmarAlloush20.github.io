@@ -66,7 +66,7 @@ export class LocationComponent implements OnInit {
     modalRef.componentInstance.fieldLabel = 'Country name';
     modalRef.afterClosed().subscribe((result) => {
       if (result) {
-        this._addCountry({name: result});
+        this._addCountry({ name: result });
       }
     });
   }
@@ -175,7 +175,7 @@ export class LocationComponent implements OnInit {
 
     const modalRef = this.dialog.open(CityModalComponent);
     modalRef.componentInstance.title = 'Add City';
-    modalRef.componentInstance.city = {country: this.selectedCountry}
+    modalRef.componentInstance.city = { country: this.selectedCountry };
 
     modalRef.afterClosed().subscribe((result) => {
       if (result) {
@@ -206,22 +206,20 @@ export class LocationComponent implements OnInit {
   editCity(city?: City) {
     if (!city || !this.selectedCountry) return;
 
-    const modalRef = this.dialog.open(SingleFieldModalComponent);
-    modalRef.componentInstance.title = 'Edit City';
-    modalRef.componentInstance.fieldLabel = 'City name';
-    modalRef.componentInstance.value = city.name;
+    const modalRef = this.dialog.open(CityModalComponent);
+    modalRef.componentInstance.title = 'Add City';
+    modalRef.componentInstance.city = this.selectedCity;
 
-    const sub = modalRef.afterClosed().subscribe((result) => {
-      if (result && result !== city.name) {
-        this._editCity(city, result);
+    modalRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this._editCity(result);
       }
     });
   }
 
-  private _editCity(city: City, newName: string) {
+  private _editCity(city: City) {
     this.loading = true;
-    const updatedCity: City = { ...city, name: newName };
-    this.cityService.updateCity(updatedCity).subscribe({
+    this.cityService.updateCity(city).subscribe({
       next: (updatedCity) => {
         if (updatedCity) {
           this.toastr.success('City updated successfully.');
@@ -292,7 +290,7 @@ export class LocationComponent implements OnInit {
     const airport: Airport = {
       name: airportName,
       city: this.selectedCity?._id,
-      airportCode: ''
+      airportCode: '',
     };
     this.airportService.addAirport(airport).subscribe({
       next: (airport) => {

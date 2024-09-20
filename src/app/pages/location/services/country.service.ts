@@ -33,7 +33,7 @@ export class CountryService {
   }
 
   updateCountry(updatedCountry: Country): Observable<Country | undefined> {
-    const endpoint = `${this._endpoint}/${updatedCountry.name.toLowerCase()}`;
+    const endpoint = `${this._endpoint}`;
     const body = { ...updatedCountry };
     return this.http.update(endpoint, body).pipe(
       map((val) => val.body as Country),
@@ -42,7 +42,7 @@ export class CountryService {
   }
 
   deleteCountry(country: Country): Observable<boolean> {
-    const endpoint = `${this._endpoint}/${country.name.toLowerCase()}`;
+    const endpoint = `${this._endpoint}`;
     const body = {
       objectId: country._id,
       isDeleted: true,
