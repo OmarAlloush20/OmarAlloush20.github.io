@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -19,18 +19,25 @@ import { FormComponent } from '../../../../shared/components/interfaces/form-com
   styleUrl: './agent-modal.component.scss',
 })
 export class AgentModalComponent extends FormComponent {
+  // Overrides
+
+  override form: FormGroup;
+
+  override get value() {
+    return this.agent;
+  }
+
+  protected override modalRef = inject(MatDialogRef<AgentModalComponent>);
+
+  // component
+
   @Input() agent?: Agent;
 
   @Input() title: string = 'Agent';
 
-  form: FormGroup;
-
-  constructor(
-    private fb: FormBuilder,
-    private dialog: MatDialogRef<AgentModalComponent>
-  ) {
+  constructor(fb: FormBuilder) {
     super();
-    this.form = this.fb.group({
+    this.form = fb.group({
       name: [this.agent?.name ?? '', Validators.required],
       agentType: [this.agent?.agentType ?? '', Validators.required],
       contactPersonName: [
@@ -59,16 +66,5 @@ export class AgentModalComponent extends FormComponent {
       this.form.controls['email'].setValue(this.agent.email);
       this.form.controls['address'].setValue(this.agent.address);
     }
-  }
-
-  onSubmit() {
-    if (this.form.valid) {
-      const val = this.form.value as Agent;
-      this.dialog.close({ ...val, _id: this.agent?._id });
-    }
-  }
-
-  cancel() {
-    this.dialog.close();
   }
 }

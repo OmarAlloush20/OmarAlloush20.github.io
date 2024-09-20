@@ -1,4 +1,10 @@
-import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  inject,
+  Input,
+  OnInit,
+} from '@angular/core';
 import { User } from '../../models/user.model';
 import {
   FormBuilder,
@@ -19,22 +25,28 @@ import { FormComponent } from '../../../../shared/components/interfaces/form-com
   styleUrl: './user-modal.component.scss',
 })
 export class UserModalComponent extends FormComponent implements OnInit {
+  // Overrides
+  override get value() {
+    return this.user;
+  }
+
+  form: FormGroup;
+
+  protected override modalRef = inject(MatDialogRef<UserModalComponent>);
+
+  // Component
+
   @Input() user?: User;
 
   @Input() title: string = 'User';
 
-  form: FormGroup;
-
   passwordVisible = false;
 
-  constructor(
-    private fb: FormBuilder,
-    private dialog: MatDialogRef<UserModalComponent>
-  ) {
+  constructor(fb: FormBuilder) {
     super();
-    this.form = this.fb.group({
+    this.form = fb.group({
       username: ['', [Validators.required, Validators.minLength(4)]],
-      password: ['', [Validators.required, Validators.minLength(4)],],
+      password: ['', [Validators.required, Validators.minLength(4)]],
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
       middleName: [''],
@@ -46,31 +58,22 @@ export class UserModalComponent extends FormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (this.user) {
-      this.form.controls['username'].setValue(this.user.username);
-      this.form.controls['firstName'].setValue(this.user.firstName);
-      this.form.controls['lastName'].setValue(this.user.lastName);
-      this.form.controls['middleName'].setValue(this.user.middleName || '');
-      this.form.controls['password'].setValue(this.user.password || '');
+    if (this.value) {
+      this.form.controls['username'].setValue(this.value.username);
+      this.form.controls['firstName'].setValue(this.value.firstName);
+      this.form.controls['lastName'].setValue(this.value.lastName);
+      this.form.controls['middleName'].setValue(this.value.middleName || '');
+      this.form.controls['password'].setValue(this.value.password || '');
       this.form.controls['password'].setValidators([]);
-      this.form.controls['gender'].setValue(this.user.gender);
-      this.form.controls['gender'].setValue(this.user.gender);
-      this.form.controls['email'].setValue(this.user.email);
-      this.form.controls['userType'].setValue(this.user.userType);
-      this.form.controls['isActive'].setValue(this.user.isActive);
+      this.form.controls['gender'].setValue(this.value.gender);
+      this.form.controls['gender'].setValue(this.value.gender);
+      this.form.controls['email'].setValue(this.value.email);
+      this.form.controls['userType'].setValue(this.value.userType);
+      this.form.controls['isActive'].setValue(this.value.isActive);
     }
   }
 
   togglePasswordVisibility() {
     this.passwordVisible = !this.passwordVisible;
-  }
-
-  onSubmit() {
-    const val = this.form.value as User;
-    this.dialog.close({ ...val, _id: this.user?._id });
-  }
-
-  cancel() {
-    this.dialog.close();
   }
 }

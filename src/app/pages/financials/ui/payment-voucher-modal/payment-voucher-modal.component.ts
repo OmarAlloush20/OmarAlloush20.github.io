@@ -29,20 +29,26 @@ export class PaymentVoucherModalComponent
   extends FormComponent
   implements OnInit
 {
-  @Input() voucher?: PaymentVoucher;
-  @Input() title: string = 'Payment Voucher';
+  // Overrides
+
+  override get value() {
+    return this.voucher;
+  }
 
   form: FormGroup;
 
+  modalRef = inject(MatDialogRef<PaymentVoucherModalComponent>);
+
+  // Component
+  @Input() voucher?: PaymentVoucher;
+
+  @Input() title: string = 'Payment Voucher';
+
   cdr = inject(ChangeDetectorRef);
 
-  constructor(
-    private fb: FormBuilder,
-    private dialogRef: MatDialogRef<PaymentVoucherModalComponent>,
-    private dialog: MatDialog
-  ) {
+  constructor(fb: FormBuilder, private dialog: MatDialog) {
     super();
-    this.form = this.fb.group({
+    this.form = fb.group({
       agent: [undefined, Validators.required],
       date: [undefined, Validators.required],
       paymentMethod: ['', Validators.required],
@@ -79,15 +85,4 @@ export class PaymentVoucherModalComponent
     }
   }
 
-  onSubmit() {
-    if (this.form.valid) {
-      const val = this.form.value as PaymentVoucher;
-      console.log(JSON.stringify(val));
-      this.dialogRef.close({ ...val, _id: this.voucher?._id });
-    }
-  }
-
-  cancel() {
-    this.dialogRef.close();
-  }
 }

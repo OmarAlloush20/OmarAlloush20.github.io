@@ -30,15 +30,33 @@ export class ReceiptVoucherModalComponent
   extends FormComponent
   implements OnInit
 {
-  @Input() voucher?: ReceiptVoucher;
-  @Input() title: string = 'Receipt Voucher';
+  // Overrides
+
+  override get value() {
+    return this.voucher;
+  }
 
   form: FormGroup;
 
+  modalRef = inject(MatDialogRef<ReceiptVoucherModalComponent>);
+
+  override get appendedValues() {
+    return { remainingAmount: this.remainingAmount };
+  }
+
+  // Component
+
+  @Input() voucher?: ReceiptVoucher;
+
+  @Input() title: string = 'Receipt Voucher';
+
   cdr = inject(ChangeDetectorRef);
 
-  get remainingAmount() :number {
-    return (this.form.controls['totalAmount'].value ?? 0) - (this.form.controls['amountPaid'].value ?? 0)
+  get remainingAmount(): number {
+    return (
+      (this.form.controls['totalAmount'].value ?? 0) -
+      (this.form.controls['amountPaid'].value ?? 0)
+    );
   }
 
   constructor(
@@ -80,21 +98,5 @@ export class ReceiptVoucherModalComponent
       });
       this.cdr.detectChanges();
     }
-  }
-
-  onSubmit() {
-    if (this.form.valid) {
-      const result = {
-        ... this.form.value,
-        remainingAmount: this.remainingAmount,
-        _id: this.voucher?._id
-      } as ReceiptVoucher;
-      console.log(JSON.stringify(result));
-      this.dialogRef.close(result);
-    }
-  }
-
-  cancel() {
-    this.dialogRef.close();
   }
 }

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, inject, Input, OnInit } from '@angular/core';
 import { Customer } from '../../models/customer.model';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
@@ -13,15 +13,24 @@ import { FormComponent } from '../../../../shared/components/interfaces/form-com
   styleUrl: './customer-modal.component.scss'
 })
 export class CustomerModalComponent extends FormComponent implements OnInit  {
-  @Input('customer') customer?: Customer;
+  // Overrides
+  override form: FormGroup;
+
+  override get value() {
+    return this.customer;
+  }
+
+  protected override modalRef = inject(MatDialogRef<CustomerModalComponent>);
+
+  // Component
+  
+  @Input() customer?: Customer;
 
   @Input() title: string = 'Customer';
 
-  form: FormGroup;
-
-  constructor(private fb: FormBuilder, private dialog : MatDialogRef<CustomerModalComponent>) {
+  constructor(fb: FormBuilder) {
     super();
-    this.form = this.fb.group({
+    this.form = fb.group({
       firstname: [this.customer?.firstname ?? '', Validators.required],
       lastname: [this.customer?.lastname ?? '', Validators.required],
       middlename: [this.customer?.middlename ?? ''],
@@ -43,15 +52,4 @@ export class CustomerModalComponent extends FormComponent implements OnInit  {
       this.form.controls['phone2'].setValue(this.customer.phone2);
     }
   }
-
-  onSubmit() {
-    const val = this.form.value as Customer
-    
-    this.dialog.close({...val, _id : this.customer?._id})
-  }
-
-  cancel() {
-    this.dialog.close();
-  }
-
 }
