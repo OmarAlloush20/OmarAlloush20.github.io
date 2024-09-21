@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Agent } from '../../../../pages/agents/models/agent.model';
-import { AgentsService } from '../../../../pages/agents/services/agents.service';
+import { Agent } from '../../../../features/agents/models/agent.model';
+import { AgentsService } from '../../../../features/agents/services/agents.service';
 import { ToastrService } from 'ngx-toastr';
 import { MatDialogRef } from '@angular/material/dialog';
 

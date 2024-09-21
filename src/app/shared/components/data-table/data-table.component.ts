@@ -10,7 +10,7 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { MainMenuScrollService } from '../../../pages/main-menu/services/main-menu-scroll.service';
+import { MainMenuScrollService } from '../../../features/main-menu/services/main-menu-scroll.service';
 import { CellValueFunction, DataTableSearchInfo } from './data-table.model';
 
 @Component({

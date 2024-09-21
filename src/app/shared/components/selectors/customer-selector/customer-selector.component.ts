@@ -1,6 +1,6 @@
 import { Component, inject, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { Customer } from '../../../../pages/customer/models/customer.model';
-import { CustomersService } from '../../../../pages/customer/services/customer.service';
+import { Customer } from '../../../../features/customer/models/customer.model';
+import { CustomersService } from '../../../../features/customer/services/customer.service';
 import { ToastrService } from 'ngx-toastr';
 import { MatDialogRef } from '@angular/material/dialog';
 import { CommonModule } from '@angular/common';
