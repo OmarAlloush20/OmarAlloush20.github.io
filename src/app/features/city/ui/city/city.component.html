@@ -1,1 +1,21 @@
-<p>city works!</p>
+<h2>Cities</h2>
+
+<!-- City actions -->
+<div class="actions-container input-like">
+    <div class="actions">
+        <button class="btn btn-icon" (click)="openAddCity()" [disabled]="country === undefined"><i
+                class="icon plus-icon"></i></button>
+        <button class="btn btn-icon" [disabled]="_selectedCity === undefined" (click)="editCity(_selectedCity)"><i
+                class="icon edit-icon"></i></button>
+        <button class="btn btn-icon" [disabled]="_selectedCity === undefined" (click)="deleteCity(_selectedCity)"><i
+                class="icon ex-icon"></i></button>
+    </div>
+</div>
+
+<!-- city dropdown -->
+<div class="dropdown-form-group">
+    <select [(ngModel)]="_selectedCity" (ngModelChange)="onSelectedCityChanged()">
+        <option *ngFor="let city of _loadedCities" [ngValue]="city">{{city.name}}</option>
+    </select>
+    <label [ngClass]="{'shrinked-label' : _selectedCity}" for="city">City</label>
+</div>
