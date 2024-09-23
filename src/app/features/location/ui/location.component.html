@@ -6,78 +6,23 @@
 
   <div class="location-container">
     <div class="location-section country-section">
-      <h2>Countries</h2>
-
-      <!-- Country actions -->
-      <div class="actions-container input-like">
-        <div class="actions">
-          <button class="btn btn-icon" (click)="openAddCountry()"><i class="icon plus-icon"></i></button>
-          <button class="btn btn-icon" [disabled]="selectedCountry === undefined"
-            (click)="editCountry(selectedCountry)"><i class="icon edit-icon"></i></button>
-          <button class="btn btn-icon" [disabled]="selectedCountry === undefined"
-            (click)="deleteCountry(selectedCountry)"><i class="icon ex-icon"></i></button>
-        </div>
-      </div>
-
-      <!-- Country dropdown -->
-      <div class="dropdown-form-group">
-        <select [(ngModel)]="selectedCountry" (ngModelChange)="onCountryChanged()">
-          <option *ngFor="let country of countries" [ngValue]="country">{{country.name}}</option>
-        </select>
-        <label [ngClass]="{'shrinked-label' : selectedCountry}" for="country">Country</label>
-      </div>
+      <app-country (onCountriesFetched)="onCountriesFetched($event)"
+        (onCountryChanged)="onCountryChanged($event)"></app-country>
     </div>
 
     <div class="divider"></div>
 
 
     <div class="location-section city-section">
-    <h2>Cities</h2>
-
-      <!-- City actions -->
-      <div class="actions-container input-like">
-        <div class="actions">
-          <button class="btn btn-icon" (click)="openAddCity()" [disabled]="selectedCountry === undefined"><i class="icon plus-icon"></i></button>
-          <button class="btn btn-icon" [disabled]="selectedCity === undefined" (click)="editCity(selectedCity)"><i
-              class="icon edit-icon"></i></button>
-          <button class="btn btn-icon" [disabled]="selectedCity === undefined" (click)="deleteCity(selectedCity)"><i
-              class="icon ex-icon"></i></button>
-        </div>
-      </div>
-
-      <!-- city dropdown -->
-      <div class="dropdown-form-group">
-        <select [(ngModel)]="selectedCity" (ngModelChange)="onCityChanged()">
-          <option *ngFor="let city of cities" [ngValue]="city">{{city.name}}</option>
-        </select>
-        <label [ngClass]="{'shrinked-label' : selectedCity}" for="city">City</label>
-      </div>
+      <app-city [country]="selectedCountry" (onCitiesFetched)="onCitiesFetched($event)"
+        (onCityChanged)="onCityChanged($event)"></app-city>
     </div>
 
     <div class="divider"></div>
 
 
     <div class="location-section airport-section">
-      <h2>Airports</h2>
-
-      <!-- Airport actions -->
-      <div class="actions-container input-like">
-        <div class="actions">
-          <button class="btn btn-icon" (click)="openAddAirport()" [disabled]="selectedCity === undefined"><i class="icon plus-icon"></i></button>
-          <button class="btn btn-icon" [disabled]="selectedAirport === undefined"
-            (click)="editAirport(selectedAirport)"><i class="icon edit-icon"></i></button>
-          <button class="btn btn-icon" [disabled]="selectedAirport === undefined"
-            (click)="deleteAirport(selectedAirport)"><i class="icon ex-icon"></i></button>
-        </div>
-      </div>
-
-      <!-- airport dropdown -->
-      <div class="dropdown-form-group">
-        <select [(ngModel)]="selectedAirport">
-          <option *ngFor="let airport of airports" [ngValue]="airport">{{airport.name}} - {{airport.airportCode}}</option>
-        </select>
-        <label [ngClass]="{'shrinked-label' : selectedAirport}" for="airport">Airport</label>
-      </div>
+      <app-airport [city]="selectedCity" (onAirportsFetched)="onAirportsFetched($event)" (onAirportChanged)="onAirportChanged($event)"></app-airport>
     </div>
 
   </div>
