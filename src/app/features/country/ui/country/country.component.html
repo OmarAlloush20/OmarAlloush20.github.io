@@ -1,9 +1,9 @@
-<div class="countries-container">
+<div class="location-component-container">
     <h2>Countries</h2>
 
     <!-- Country actions -->
     <div class="actions-container input-like">
-        <div class="actions">
+        <div class="crud-actions">
             <button class="btn btn-icon" (click)="openAddCountry()"><i class="icon plus-icon"></i></button>
             <button class="btn btn-icon" [disabled]="_selectedCountry === undefined"
                 (click)="editCountry(_selectedCountry)"><i class="icon edit-icon"></i></button>
@@ -14,7 +14,7 @@
 
     <!-- Country dropdown -->
     <div class="dropdown-form-group">
-        <select [(ngModel)]="_selectedCountry" (ngModelChange)="onSelectedCountryChanged()">
+        <select [(ngModel)]="_selectedCountry" [disabled]="loading" (ngModelChange)="onSelectedCountryChanged()">
             <option *ngFor="let country of _countries" [ngValue]="country">{{country.name}}</option>
         </select>
         <label [ngClass]="{'shrinked-label' : _selectedCountry}" for="country">Country</label>

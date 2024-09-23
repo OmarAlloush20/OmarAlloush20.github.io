@@ -24,7 +24,6 @@ import { CityModalComponent } from '../city-modal/city-modal.component';
   styleUrl: './city.component.scss',
 })
 export class CityComponent implements OnInit {
-
   // Injectables
 
   dialog = inject(MatDialog);
@@ -41,12 +40,14 @@ export class CityComponent implements OnInit {
 
   @Input() set country(country: Country | undefined) {
     this._country = country;
-    country ? this.fetchCities() : this.onCitiesFetched.emit([]);
+    this.fetchCities();
   }
 
   // Instance variables
 
   private _country?: Country;
+
+  get country() {return this._country};
 
   _selectedCity?: City;
 
@@ -55,7 +56,14 @@ export class CityComponent implements OnInit {
   loading: boolean = false;
 
   ngOnInit(): void {
-    this.onCitiesFetched.subscribe((cities) => (this._loadedCities = cities));
+    this.onCityChanged.subscribe((city) => {
+      this._selectedCity = city;
+    });
+    this.onCitiesFetched.subscribe((cities) => {
+      this._loadedCities = cities;
+      this.onCityChanged.emit(undefined);
+    });
+
     this.fetchCities();
   }
 
@@ -64,13 +72,16 @@ export class CityComponent implements OnInit {
   }
 
   fetchCities() {
-    if (this._country) {
-      this.cityService.fetchCities(this._country).subscribe((cities) => {
-        if (cities) {
-          this.onCitiesFetched.emit(cities);
-        }
-      });
-    }
+    if (!this._country) return this.onCitiesFetched.emit([]);
+
+    this.loading = true;
+
+    this.cityService.fetchCities(this._country).subscribe((cities) => {
+      if (cities) {
+        this.onCitiesFetched.emit(cities);
+      }
+      this.loading = false;
+    });
   }
 
   openAddCity() {
@@ -97,13 +108,13 @@ export class CityComponent implements OnInit {
         } else {
           this.toastr.error("Couldn't add city. Please try again.");
         }
+        this.loading = false;
       },
       error: (err) => {
         this.toastr.error("Couldn't add city. Please try again.");
+        this.loading = false;
       },
     });
-    this.loading = false;
-    this.fetchCities();
   }
 
   editCity(city?: City) {
@@ -153,9 +164,11 @@ export class CityComponent implements OnInit {
             } else {
               this.toastr.error("Couldn't delete city. Please try again.");
             }
+            this.loading = false;
           },
           error: (err) => {
             this.toastr.error("Couldn't delete city. Please try again.");
+            this.loading = false;
           },
         });
       }

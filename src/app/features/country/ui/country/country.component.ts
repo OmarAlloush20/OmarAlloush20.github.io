@@ -25,7 +25,7 @@ export class CountryComponent implements OnInit {
 
   // I/O
 
-  @Output() onCountryChanged = new EventEmitter<Country | undefined>;
+  @Output() onCountryChanged = new EventEmitter<Country | undefined>();
 
   @Output() onCountriesFetched = new EventEmitter<Country[]>();
 
@@ -33,24 +33,33 @@ export class CountryComponent implements OnInit {
 
   loading: boolean = false;
 
-  _selectedCountry? : Country;
+  _selectedCountry?: Country;
 
   _countries: Country[] = [];
 
   ngOnInit(): void {
-    this.onCountriesFetched.subscribe((countries) => (this._countries = countries));
+    this.onCountryChanged.subscribe((country) => {
+      this._selectedCountry = country;
+    });
+    this.onCountriesFetched.subscribe((countries) => {
+      this._countries = countries;
+      this.onCountryChanged.emit(undefined);
+    });
     this.fetchCountries();
   }
 
   onSelectedCountryChanged() {
-    this.onCountryChanged.emit()
+    console.log(this._selectedCountry);
+    this.onCountryChanged.emit(this._selectedCountry);
   }
 
   fetchCountries() {
+    this.loading = true;
     this.countryService.fetchCountries().subscribe((countries) => {
       if (countries) {
         this.onCountriesFetched.emit(countries);
       }
+      this.loading = false;
     });
   }
 
@@ -75,13 +84,13 @@ export class CountryComponent implements OnInit {
         } else {
           this.toastr.error("Couldn't add country. Please try again.");
         }
+        this.loading = false;
       },
       error: (err) => {
         this.toastr.error("Couldn't add country. Please try again.");
+        this.loading = false;
       },
     });
-    this.loading = false;
-    this.fetchCountries();
   }
 
   editCountry(country?: Country) {
@@ -133,9 +142,11 @@ export class CountryComponent implements OnInit {
             } else {
               this.toastr.error("Couldn't delete country. Please try again.");
             }
+            this.loading = false;
           },
           error: (err) => {
             this.toastr.error("Couldn't delete country. Please try again.");
+            this.loading = false;
           },
         });
       }

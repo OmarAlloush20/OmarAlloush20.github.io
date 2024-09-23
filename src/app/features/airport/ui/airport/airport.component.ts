@@ -40,6 +40,10 @@ export class AirportComponent {
 
   private _city?: City;
 
+  get city() {
+    return this._city;
+  }
+
   _selectedAirport?: Airport;
 
   _loadedAirports: Airport[] = [];
@@ -64,10 +68,14 @@ export class AirportComponent {
   fetchAirports() {
     if (!this._city) return this.onAirportsFetched.emit([]);
 
+    this.loading = true;
+
     this.airportService.fetchAirports(this._city).subscribe((airports) => {
       if (airports) {
         this.onAirportsFetched.emit(airports);
       }
+
+      this.loading = false;
     });
   }
 

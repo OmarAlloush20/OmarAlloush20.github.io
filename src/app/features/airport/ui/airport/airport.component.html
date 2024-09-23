@@ -15,7 +15,7 @@
 
     <!-- Airport dropdown -->
     <div class="dropdown-form-group">
-        <select id="airport" [(ngModel)]="_selectedAirport" (ngModelChange)="onSelectedAirportChanged()">
+        <select id="airport" [disabled]="loading" [(ngModel)]="_selectedAirport" (ngModelChange)="onSelectedAirportChanged()">
             <option *ngFor="let airport of _loadedAirports" [ngValue]="airport">{{airport.name}}</option>
         </select>
         <label [ngClass]="{'shrinked-label' : _selectedAirport}" for="airport">Airport</label>
