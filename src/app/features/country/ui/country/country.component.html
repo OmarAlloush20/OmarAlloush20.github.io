@@ -14,7 +14,11 @@
 
     <!-- Country dropdown -->
     <div class="dropdown-form-group">
-        <select [(ngModel)]="_selectedCountry" [disabled]="loading" (ngModelChange)="onSelectedCountryChanged()">
+        <select 
+        [(ngModel)]="_selectedCountry" 
+        [disabled]="loading" 
+        (ngModelChange)="onSelectedCountryChanged()"
+        [ngClass]="{'loading' : loading}">
             <option *ngFor="let country of _countries" [ngValue]="country">{{country.name}}</option>
         </select>
         <label [ngClass]="{'shrinked-label' : _selectedCountry}" for="country">Country</label>

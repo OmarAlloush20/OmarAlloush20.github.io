@@ -22,7 +22,17 @@
 
 
     <div class="location-section airport-section">
-      <app-airport [city]="selectedCity" (onAirportsFetched)="onAirportsFetched($event)" (onAirportChanged)="onAirportChanged($event)"></app-airport>
+      <app-airport [city]="selectedCity" (onAirportsFetched)="onAirportsFetched($event)"
+        (onAirportChanged)="onAirportChanged($event)"></app-airport>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="location-section airport-section">
+      <app-hotel [city]="selectedCity" (onHotelsFetched)="onHotelsFetched($event)"
+      (onHotelChanged)="onHotelChanged($event)">
+
+      </app-hotel>
     </div>
 
   </div>

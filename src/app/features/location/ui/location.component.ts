@@ -11,11 +11,13 @@ import { Country } from '../../country/models/country.model';
 import { City } from '../../city/models/city.model';
 import { Airport } from '../../airport/models/airport.model';
 import { AirportComponent } from "../../airport/ui/airport/airport.component";
+import { HotelComponent } from "../../hotel/ui/hotel/hotel.component";
+import { Hotel } from '../../hotel/models/hotel.model';
 
 @Component({
   selector: 'app-location',
   standalone: true,
-  imports: [CommonModule, RouterModule, FormsModule, ReactiveFormsModule, CountryComponent, CityComponent, AirportComponent],
+  imports: [CommonModule, RouterModule, FormsModule, ReactiveFormsModule, CountryComponent, CityComponent, AirportComponent, HotelComponent],
   templateUrl: './location.component.html',
   styleUrl: './location.component.scss',
 })
@@ -27,6 +29,8 @@ export class LocationComponent {
   selectedCity? : City;
 
   selectedAirport? : Airport;
+
+  selectedHotel? : Hotel;
 
   onCountriesFetched(countries? : Country[]) {
     this.selectedCountry = undefined;
@@ -53,5 +57,13 @@ export class LocationComponent {
 
   onAirportChanged(airport? : Airport) {
     this.selectedAirport = airport;
+  }
+
+  onHotelsFetched(hotels : Hotel[]) {
+    this.selectedHotel = undefined;
+  }
+
+  onHotelChanged(hotel? : Hotel) {
+    this.selectedHotel = hotel;
   }
 }

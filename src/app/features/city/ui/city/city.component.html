@@ -15,9 +15,17 @@
 
     <!-- city dropdown -->
     <div class="dropdown-form-group">
-        <select id="city" [(ngModel)]="_selectedCity" [disabled]="loading" (ngModelChange)="onSelectedCityChanged()">
+        <select 
+        id="city"
+        [(ngModel)]="_selectedCity"
+        [disabled]="loading || ! country"
+        (ngModelChange)="onSelectedCityChanged()"
+        [ngClass]="{'loading': loading}">
             <option *ngFor="let city of _loadedCities" [ngValue]="city">{{city.name}}</option>
         </select>
         <label [ngClass]="{'shrinked-label' : _selectedCity}" for="city">City</label>
+        <div class="loading-container">
+            <div class="loader"></div>
+        </div>
     </div>
 </div>

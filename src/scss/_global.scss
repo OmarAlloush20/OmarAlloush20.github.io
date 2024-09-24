@@ -103,6 +103,18 @@ input[type="number"] {
     pointer-events: none;
   }
 
+  ~ .loading-container {
+    position: absolute;
+    display: none;
+    top: 18px;
+    right: 20px;
+    
+    .loader {
+      height: 18px;
+      width: 18px;
+    }
+  }
+
   &:focus {
     color: white;
     ~ label {
@@ -134,6 +146,12 @@ input[type="number"] {
 
     ~ label {
       color: darken($on-dark-color, 50%) !important;
+    }
+  }
+
+  &.loading {
+    ~ .loading-container {
+      display: block;
     }
   }
 }
