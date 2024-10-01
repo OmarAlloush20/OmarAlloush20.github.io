@@ -22,5 +22,8 @@
             <option *ngFor="let country of _countries" [ngValue]="country">{{country.name}}</option>
         </select>
         <label [ngClass]="{'shrinked-label' : _selectedCountry}" for="country">Country</label>
+        <div class="loading-container">
+            <div class="loader"></div>
+        </div>
     </div>
 </div>

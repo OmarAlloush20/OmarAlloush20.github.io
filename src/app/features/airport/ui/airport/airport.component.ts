@@ -70,12 +70,16 @@ export class AirportComponent {
 
     this.loading = true;
 
-    this.airportService.fetchAirports(this._city).subscribe((airports) => {
-      if (airports) {
-        this.onAirportsFetched.emit(airports);
+    this.airportService.fetchAirports(this._city).subscribe({
+      next: (airports) => {
+        if (airports) {
+          this.onAirportsFetched.emit(airports);
+        }
+        this.loading = false;
+      },
+      error: (_) => {
+        this.toastr.error("Could not get airports. Please try again.")
       }
-
-      this.loading = false;
     });
   }
 

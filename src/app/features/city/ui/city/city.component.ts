@@ -76,11 +76,16 @@ export class CityComponent implements OnInit {
 
     this.loading = true;
 
-    this.cityService.fetchCities(this._country).subscribe((cities) => {
-      if (cities) {
-        this.onCitiesFetched.emit(cities);
+    this.cityService.fetchCities(this._country).subscribe({
+      next: (citites) => {
+        if (citites) {
+          this.onCitiesFetched.emit(citites);
+        }
+        this.loading = false;
+      },
+      error: (_) => {
+        this.toastr.error("Could not get cities. Please try again.")
       }
-      this.loading = false;
     });
   }
 
