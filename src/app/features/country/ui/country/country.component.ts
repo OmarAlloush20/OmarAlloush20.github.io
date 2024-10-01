@@ -57,15 +57,16 @@ export class CountryComponent implements OnInit {
     this.loading = true;
     this.countryService.fetchCountries().subscribe({
       next: (countries) => {
-        if (countries) {
-          this.onCountriesFetched.emit(countries);
-        }
+        countries
+          ? this.onCountriesFetched.emit(countries)
+          : this.toastr.error('Could not get countries. Please try again.');
+
         this.loading = false;
       },
       error: (_) => {
-        this.toastr.error("Could not get countries. Please try again.")
-      }
-    })
+        this.toastr.error('Could not get countries. Please try again.');
+      },
+    });
   }
 
   openAddCountry() {

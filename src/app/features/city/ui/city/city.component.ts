@@ -47,7 +47,9 @@ export class CityComponent implements OnInit {
 
   private _country?: Country;
 
-  get country() {return this._country};
+  get country() {
+    return this._country;
+  }
 
   _selectedCity?: City;
 
@@ -78,14 +80,14 @@ export class CityComponent implements OnInit {
 
     this.cityService.fetchCities(this._country).subscribe({
       next: (citites) => {
-        if (citites) {
-          this.onCitiesFetched.emit(citites);
-        }
+        citites
+          ? this.onCitiesFetched.emit(citites)
+          : this.toastr.error('Could not get cities. Please try again.');
         this.loading = false;
       },
       error: (_) => {
-        this.toastr.error("Could not get cities. Please try again.")
-      }
+        this.toastr.error('Could not get cities. Please try again.');
+      },
     });
   }
 
