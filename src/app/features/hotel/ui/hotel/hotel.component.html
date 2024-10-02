@@ -20,5 +20,8 @@
             <option *ngFor="let hotel of _loadedHotels" [ngValue]="hotel">{{hotel.name}}</option>
         </select>
         <label [ngClass]="{'shrinked-label' : _selectedHotel}" for="hotel">Hotel</label>
+        <div class="loading-container">
+            <div class="loader"></div>
+        </div>
     </div>
 </div>

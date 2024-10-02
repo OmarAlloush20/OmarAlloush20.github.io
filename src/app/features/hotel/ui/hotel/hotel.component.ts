@@ -70,12 +70,16 @@ export class HotelComponent {
 
     this.loading = true;
 
-    this.hotelService.fetchHotels(this._city).subscribe((hotels) => {
-      if (hotels) {
-        this.onHotelsFetched.emit(hotels);
+    this.hotelService.fetchHotels(this._city).subscribe({
+      next: (hotels) => {
+        if (hotels) {
+          this.onHotelsFetched.emit(hotels);
+        }
+        this.loading = false;
+      },
+      error: (_) => {
+        this.toastr.error("Could not get hotels. Please try again.")
       }
-
-      this.loading = false;
     });
   }
 
