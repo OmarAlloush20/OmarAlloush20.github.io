@@ -29,10 +29,6 @@ span {
 /// Input //
 /// ////////
 
-input:focus {
-  border: $focus-border;
-}
-
 $input-background-color: #252525be;
 $input-background-color-autofilled: #202020;
 // Used when the label should be top
@@ -105,7 +101,7 @@ input[type="number"] {
     display: none;
     top: 18px;
     right: 20px;
-    
+
     .loader {
       height: 18px;
       width: 18px;
@@ -114,6 +110,7 @@ input[type="number"] {
 
   &:focus {
     color: white;
+    border: $focus-border;
     ~ label {
       @extend .shrinked-label;
     }
@@ -187,6 +184,98 @@ input[type="password"].with-icon-btn {
 
     &.visible {
       background-color: transparentize($on-dark-color, $amount: 0.7);
+    }
+  }
+}
+
+////////////////////
+/// Multi-select ///
+////////////////////
+
+.multi-select {
+  // height: fit-content;
+
+  .multi-select-field {
+    @extend .input-like;
+    @extend .center;
+
+    span {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      -o-text-overflow: ellipsis;
+      -ms-text-overflow: ellipsis;
+    }
+
+    ~ label {
+      top: 10px !important;
+    }
+
+    ~ label.shrinked-label {
+      top: -18px !important ;
+    }
+
+    &:focus {
+      ~ label {
+        top: -18px !important ;
+      }
+    }
+  }
+
+  .options-container {
+    @extend .input-like;
+    padding: 3px;
+    height: fit-content;
+    max-height: 100px;
+    overflow-y: auto;
+
+    &:hover {
+      background-color: $input-background-color;
+    }
+  }
+
+  .options {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    width: 100%;
+    max-height: 100px;
+    -webkit-user-select: none; /* Safari */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE10+/Edge */
+    user-select: none; /* Standard */
+  }
+
+  .option {
+    padding: 5px 10px;
+    cursor: pointer;
+    transition: 200ms;
+    width: 100%;
+
+    &::before {
+      content: " ";
+      font-size: 1rem;
+      font-weight: 900;
+      text-align: center;
+      color: $primary-color;
+      display: inline-block;
+      width: 13px;
+      height: 13px;
+      border-radius: 2px;
+      background-color: lighten($input-background-color, 20%);
+      margin-right: 10px;
+      transition: 200ms;
+    }
+  }
+
+  .option:hover {
+    background-color: lighten($input-background-color, 1%);
+  }
+
+  .option.selected {
+    background-color: lighten($input-background-color, 5%);
+    &::before {
+      content: "\2714";
     }
   }
 }
