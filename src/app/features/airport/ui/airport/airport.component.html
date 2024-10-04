@@ -1,0 +1,31 @@
+<div class="location-component-container">
+    <h2>Airports</h2>
+
+    <!-- Airport actions -->
+    <div class="actions-container input-like">
+        <div class="crud-actions">
+            <button class="btn btn-icon" (click)="openAddAirport()" [disabled]="city === undefined"><i
+                    class="icon plus-icon"></i></button>
+            <button class="btn btn-icon" [disabled]="_selectedAirport === undefined" (click)="editAirport(_selectedAirport)"><i
+                    class="icon edit-icon"></i></button>
+            <button class="btn btn-icon" [disabled]="_selectedAirport === undefined" (click)="deleteAirport(_selectedAirport)"><i
+                    class="icon ex-icon"></i></button>
+        </div>
+    </div>
+
+    <!-- Airport dropdown -->
+    <div class="dropdown-form-group">
+        <select 
+        id="airport" 
+        [disabled]="loading || ! city" 
+        [(ngModel)]="_selectedAirport" 
+        (ngModelChange)="onSelectedAirportChanged()"
+        [ngClass]="{'loading' : loading}">
+            <option *ngFor="let airport of _loadedAirports" [ngValue]="airport">{{airport.name}}</option>
+        </select>
+        <label [ngClass]="{'shrinked-label' : _selectedAirport}" for="airport">Airport</label>
+        <div class="loading-container">
+            <div class="loader"></div>
+        </div>
+    </div>
+</div>

@@ -1,5 +1,3 @@
-$focus-border: 1px solid $on-dark-color;
-
 ////////////
 /// Text ///
 ////////////
@@ -31,10 +29,6 @@ span {
 /// Input //
 /// ////////
 
-input:focus {
-  border: $focus-border;
-}
-
 $input-background-color: #252525be;
 $input-background-color-autofilled: #202020;
 // Used when the label should be top
@@ -65,7 +59,7 @@ $input-background-color-autofilled: #202020;
     margin-bottom: 15px;
 
     input {
-      border: 1px solid $error-color;
+      border: $error-border;
     }
 
     .error-messages-container {
@@ -76,6 +70,7 @@ $input-background-color-autofilled: #202020;
 
 .input-btn,
 .input-like,
+select,
 input[type="text"],
 input[type="password"],
 input[type="email"],
@@ -88,7 +83,6 @@ input[type="number"] {
   margin: 10px 0px;
   background-color: $input-background-color;
   color: $on-dark-secondary-color;
-  // border: none;
   outline: none;
   transition: 500ms;
 
@@ -102,12 +96,23 @@ input[type="number"] {
     pointer-events: none;
   }
 
+  ~ .loading-container {
+    position: absolute;
+    display: none;
+    top: 18px;
+    right: 20px;
+
+    .loader {
+      height: 18px;
+      width: 18px;
+    }
+  }
+
   &:focus {
-    // &:valid {
+    color: white;
+    border: $focus-border;
     ~ label {
-      font-size: 0.8rem; // Manually applying .shrinked-label styles
-      top: -8px; // Manually applying .shrinked-label styles
-      transition: 200ms; // Manually applying .shrinked-label styles
+      @extend .shrinked-label;
     }
   }
 
@@ -128,9 +133,25 @@ input[type="number"] {
   &:hover {
     background-color: lighten($input-background-color, 5%);
   }
+
+  &:disabled {
+    background-color: darken($input-background-color, 50%);
+    color: darken($on-dark-secondary-color, 50%);
+
+    ~ label {
+      color: darken($on-dark-color, 50%) !important;
+    }
+  }
+
+  &.loading {
+    ~ .loading-container {
+      display: block;
+    }
+  }
 }
 
-.input-btn, .input-like {
+.input-btn,
+.input-like {
   display: flex;
   align-items: center;
 }
@@ -163,6 +184,98 @@ input[type="password"].with-icon-btn {
 
     &.visible {
       background-color: transparentize($on-dark-color, $amount: 0.7);
+    }
+  }
+}
+
+////////////////////
+/// Multi-select ///
+////////////////////
+
+.multi-select {
+  // height: fit-content;
+
+  .multi-select-field {
+    @extend .input-like;
+    @extend .center;
+
+    span {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      -o-text-overflow: ellipsis;
+      -ms-text-overflow: ellipsis;
+    }
+
+    ~ label {
+      top: 10px !important;
+    }
+
+    ~ label.shrinked-label {
+      top: -18px !important ;
+    }
+
+    &:focus {
+      ~ label {
+        top: -18px !important ;
+      }
+    }
+  }
+
+  .options-container {
+    @extend .input-like;
+    padding: 3px;
+    height: fit-content;
+    max-height: 100px;
+    overflow-y: auto;
+
+    &:hover {
+      background-color: $input-background-color;
+    }
+  }
+
+  .options {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    width: 100%;
+    max-height: 100px;
+    -webkit-user-select: none; /* Safari */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE10+/Edge */
+    user-select: none; /* Standard */
+  }
+
+  .option {
+    padding: 5px 10px;
+    cursor: pointer;
+    transition: 200ms;
+    width: 100%;
+
+    &::before {
+      content: " ";
+      font-size: 1rem;
+      font-weight: 900;
+      text-align: center;
+      color: $primary-color;
+      display: inline-block;
+      width: 13px;
+      height: 13px;
+      border-radius: 2px;
+      background-color: lighten($input-background-color, 20%);
+      margin-right: 10px;
+      transition: 200ms;
+    }
+  }
+
+  .option:hover {
+    background-color: lighten($input-background-color, 1%);
+  }
+
+  .option.selected {
+    background-color: lighten($input-background-color, 5%);
+    &::before {
+      content: "\2714";
     }
   }
 }
@@ -232,28 +345,6 @@ input[type="password"].with-icon-btn {
   margin-bottom: 5px;
 }
 
-select {
-  width: 100%;
-  padding: 0px 12px;
-  height: 35px;
-  margin: 10px 0px;
-  background-color: #252525be; /* $input-background-color */
-  color: #ffffff; /* Assuming this is $on-dark-secondary-color */
-  border: none;
-  outline: none;
-  transition: 500ms;
-  // appearance: none; /* Remove default select arrow */
-  // -webkit-appearance: none; /* For Safari */
-
-  &:focus {
-    border: $focus-border;
-  }
-}
-
-// select::-ms-expand {
-//   display: none; /* Hide the default arrow on IE and Edge */
-// }
-
 .form-group.dropdown::after {
   content: "\25BC"; /* Down arrow */
   position: absolute;
@@ -262,29 +353,6 @@ select {
   pointer-events: none;
   font-size: 12px;
   color: $on-dark-color; /* Assuming this is $on-dark-color */
-}
-
-select ~ label {
-  position: absolute;
-  display: block;
-  // color: #ffffff; /* Assuming this is $on-dark-color */
-  color: $on-dark-color; /* Assuming this is $on-dark-color */
-  top: 20px;
-  margin: 0px 10px;
-  transition: 200ms;
-  pointer-events: none;
-}
-
-select:focus ~ label {
-  font-size: 0.8rem;
-  top: -8px;
-  transition: 200ms;
-}
-
-select:focus {
-  box-shadow: 0 0 0px 1000px #202020 inset; /* $input-background-color-autofilled */
-  -webkit-box-shadow: 0 0 0px 1000px #202020 inset;
-  color: #ffffff; /* Assuming this is $on-dark-secondary-color */
 }
 
 option {
@@ -405,7 +473,8 @@ $disabled-btn-color: #454140;
       }
     }
 
-    &.disabled, &:disabled {
+    &.disabled,
+    &:disabled {
       background-color: $disabled-btn-color;
     }
   }
@@ -626,5 +695,26 @@ $scrollbar-track-color: transparent;
         }
       }
     }
+  }
+}
+
+////////////////
+/// Actions ////
+////////////////
+
+.crud-actions {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+/// Location styles ///
+///
+
+.location-component-container {
+  .dropdown-form-group {
+    margin-top: 20px;
   }
 }

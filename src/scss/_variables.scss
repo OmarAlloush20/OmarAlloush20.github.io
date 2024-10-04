@@ -16,6 +16,9 @@ $font-family: Arial, sans-serif;
 
 $error-color: #be1c1c;
 
+$focus-border: 1px solid $on-dark-color;
+$error-border: 1px solid $error-color;
+
 :root {
   --primary-color: $primary-color;
   --secondary-color: $secondary-color;

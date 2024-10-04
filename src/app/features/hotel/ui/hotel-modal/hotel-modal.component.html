@@ -1,0 +1,98 @@
+<div class="app-data-modal-container">
+    <h1>{{title}}</h1>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="app-data-modal-form">
+        <div class="app-data-modal-fields">
+
+            <div class="form-group" [ngClass]="{'invalid' : shouldDisplayErrorContainer('name')}">
+                <input formControlName="name" type="text" id="name" autocomplete="off" />
+                <label for="name" [ngClass]="{'shrinked-label' : form.value.name}">Name</label>
+
+                <div class="error-messages-container">
+                    <div class="error-message">
+                        * Name is required
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group" [ngClass]="{'invalid' : shouldDisplayErrorContainer('rating')}">
+                <star-rating-control class="label-spacing" formControlName="rating" id="rating" labelPosition="left"
+                    labelText="Rating" staticColor="ok"></star-rating-control>
+
+                <div class="error-messages-container">
+                    <div class="error-message" *ngIf="shouldDisplayErrorMessage('rating', 'min')">
+                        * Rating cannot be less than 1
+                    </div>
+                    <div class="error-message" *ngIf="shouldDisplayErrorMessage('rating', 'max')">
+                        * Rating cannot be more than 5
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="form-group" [ngClass]="{'invalid' : shouldDisplayErrorContainer('phone')}">
+                <input formControlName="phone" type="tel" id="phone" />
+                <label for="phone" [ngClass]="{'shrinked-label' : form.value.phone}">Phone</label>
+
+                <div class="error-messages-container">
+                    <div class="error-message" *ngIf="shouldDisplayErrorMessage('phone', 'required')">
+                        * Phone number is required
+                    </div>
+                    <div class="error-message" *ngIf="shouldDisplayErrorMessage('phone', 'pattern')">
+                        * Invalid phone number
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group" [ngClass]="{'invalid' : shouldDisplayErrorContainer('contactPersonName')}">
+                <input formControlName="contactPersonName" type="text" id="contactPersonName" />
+                <label for="contactPersonName" [ngClass]="{'shrinked-label' : form.value.contactPersonName}">Contact
+                    Person Name</label>
+
+                <div class="error-messages-container">
+                    <div class="error-message">
+                        * Field is required
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group" [ngClass]="{'invalid' : shouldDisplayErrorContainer('email')}">
+                <input formControlName="email" type="email" id="email" />
+                <label for="email" [ngClass]="{'shrinked-label' : form.value.email}">Email</label>
+
+                <div class="error-messages-container">
+                    <div class="error-message" *ngIf="shouldDisplayErrorMessage('email', 'required')">
+                        * Phone number is required
+                    </div>
+                    <div class="error-message" *ngIf="shouldDisplayErrorMessage('email', 'email')">
+                        * Invalid email address
+                    </div>
+                </div>
+            </div>
+
+            <!-- <div class="dropdown-form-group">
+                <select multiple="multiple" formControlName="roomTypes" id="roomTypes">
+                    <option *ngFor="let roomType of roomTypes" [ngValue]="roomType">{{roomType.name}}</option>
+                    <option value="single">Single Room</option>
+                    <option value="double">Double Room</option>
+                    <option value="fuck">Fuck Room</option>
+                    <option value="bath">Bath Room</option>
+                </select>
+                <label for="roomTypes">Room Types</label>
+            </div> -->
+
+            <app-multi-select label="Room Types" [options]='["Room A", "Room B", "Room C", "Room D", "Room E", "Room F", "Room G", "Room H"]'
+                formControlName="roomTypes"></app-multi-select>
+
+            <div class="action-btns-container">
+                <div class="action-btns">
+                    <button class="btn btn-secondary btn-confirm" type="button" (click)="cancel()"><i
+                            class="icon ex-icon"></i></button>
+
+                    <button class="btn btn-primary btn-confirm" type="submit">Confirm</button>
+
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,14 @@
+<div class="multi-select">
+    <div class="form-group">
+        <div class="multi-select-field" id="roomTypes"><span>{{selectedOptionsDisplayValue}}</span></div>
+        <label [ngClass]="{'shrinked-label' : selectedOptions.length > 0}">{{label}}</label>
+    </div>
+
+    <div class="options-container">
+        <div class="options">
+            <div class="option" *ngFor="let option of options"
+                [ngClass]="{'selected' : selectedOptions.includes(option)}" (click)="toggleOption(option)">
+                {{valueToString(option)}}</div>
+        </div>
+    </div>
+</div>

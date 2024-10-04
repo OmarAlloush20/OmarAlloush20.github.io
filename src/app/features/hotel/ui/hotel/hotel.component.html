@@ -1,0 +1,27 @@
+<div class="location-component-container">
+    <h2>Hotel</h2>
+
+    <!-- Hotel actions -->
+    <div class="actions-container input-like">
+        <div class="crud-actions">
+            <button class="btn btn-icon" (click)="openAddHotel()" [disabled]="city === undefined"><i
+                    class="icon plus-icon"></i></button>
+            <button class="btn btn-icon" [disabled]="_selectedHotel === undefined"
+                (click)="editHotel(_selectedHotel)"><i class="icon edit-icon"></i></button>
+            <button class="btn btn-icon" [disabled]="_selectedHotel === undefined"
+                (click)="deleteHotel(_selectedHotel)"><i class="icon ex-icon"></i></button>
+        </div>
+    </div>
+
+    <!-- Hotel dropdown -->
+    <div class="dropdown-form-group">
+        <select id="hotel" [disabled]="loading || !city" [(ngModel)]="_selectedHotel"
+            (ngModelChange)="onSelectedHotelChanged()" [ngClass]="{'loading' : loading}">
+            <option *ngFor="let hotel of _loadedHotels" [ngValue]="hotel">{{hotel.name}}</option>
+        </select>
+        <label [ngClass]="{'shrinked-label' : _selectedHotel}" for="hotel">Hotel</label>
+        <div class="loading-container">
+            <div class="loader"></div>
+        </div>
+    </div>
+</div>

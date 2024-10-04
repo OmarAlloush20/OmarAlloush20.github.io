@@ -10,14 +10,7 @@ import { HttpService } from './shared/services/http/http.service';
   styleUrl: './app.component.scss'
 })
 export class AppComponent implements OnInit {
-  http = inject(HttpService)
-
   ngOnInit(): void {
-    if(isDevMode()) {
-      this.http.post('user/createSeed', {}).subscribe(val => console.log(val));
-      this.http.post('agent/seed-agents', {});
-      this.http.post('customer/seed-customers', {});
-    }
   }
   
   title = 'travel-flow';

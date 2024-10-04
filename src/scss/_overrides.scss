@@ -1,0 +1,51 @@
+//////////////////////////////////////
+//////////////////////////////////////
+////////  Material overrides  ////////
+//////////////////////////////////////
+//////////////////////////////////////
+
+.mat-mdc-dialog-surface {
+  border-radius: 0px !important;
+}
+
+/////////////////////////////////////////
+/////////////////////////////////////////
+////////  Star Rating overrides  ////////
+/////////////////////////////////////////
+/////////////////////////////////////////
+
+star-rating-control {
+  .rating {
+    @extend .input-like;
+    width: 100%;
+
+    &:focus {
+      border: $focus-border;
+    }
+  }
+
+  .label-value {
+    color: $on-dark-color;
+    font-size: 1rem !important;
+  }
+  .star-container {
+    gap: 3px;
+  }
+  .star:hover {
+    scale: 1.2;
+  }
+
+  &.label-spacing {
+    .rating {
+      justify-content: space-between !important;
+    }
+  }
+}
+
+.form-group.invalid {  
+  star-rating-control {
+    .rating {
+      border: $error-border;
+    }
+  }
+}

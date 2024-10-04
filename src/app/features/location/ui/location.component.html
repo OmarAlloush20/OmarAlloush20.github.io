@@ -1,0 +1,40 @@
+<div class="component-container">
+  <div class="title">
+    <i class="icon location-icon"></i>
+    <h1>Location</h1>
+  </div>
+
+  <div class="location-container">
+    <div class="location-section country-section">
+      <app-country (onCountriesFetched)="onCountriesFetched($event)"
+        (onCountryChanged)="onCountryChanged($event)"></app-country>
+    </div>
+
+    <div class="divider"></div>
+
+
+    <div class="location-section city-section">
+      <app-city [country]="selectedCountry" (onCitiesFetched)="onCitiesFetched($event)"
+        (onCityChanged)="onCityChanged($event)"></app-city>
+    </div>
+
+    <div class="divider"></div>
+
+
+    <div class="location-section airport-section">
+      <app-airport [city]="selectedCity" (onAirportsFetched)="onAirportsFetched($event)"
+        (onAirportChanged)="onAirportChanged($event)"></app-airport>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="location-section airport-section">
+      <app-hotel [city]="selectedCity" (onHotelsFetched)="onHotelsFetched($event)"
+      (onHotelChanged)="onHotelChanged($event)">
+
+      </app-hotel>
+    </div>
+
+  </div>
+
+</div>

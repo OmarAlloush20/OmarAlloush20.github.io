@@ -1,0 +1,29 @@
+<div class="location-component-container">
+    <h2>Countries</h2>
+
+    <!-- Country actions -->
+    <div class="actions-container input-like">
+        <div class="crud-actions">
+            <button class="btn btn-icon" (click)="openAddCountry()"><i class="icon plus-icon"></i></button>
+            <button class="btn btn-icon" [disabled]="_selectedCountry === undefined"
+                (click)="editCountry(_selectedCountry)"><i class="icon edit-icon"></i></button>
+            <button class="btn btn-icon" [disabled]="_selectedCountry === undefined"
+                (click)="deleteCountry(_selectedCountry)"><i class="icon ex-icon"></i></button>
+        </div>
+    </div>
+
+    <!-- Country dropdown -->
+    <div class="dropdown-form-group">
+        <select 
+        [(ngModel)]="_selectedCountry" 
+        [disabled]="loading" 
+        (ngModelChange)="onSelectedCountryChanged()"
+        [ngClass]="{'loading' : loading}">
+            <option *ngFor="let country of _countries" [ngValue]="country">{{country.name}}</option>
+        </select>
+        <label [ngClass]="{'shrinked-label' : _selectedCountry}" for="country">Country</label>
+        <div class="loading-container">
+            <div class="loader"></div>
+        </div>
+    </div>
+</div>

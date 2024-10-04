@@ -2,7 +2,7 @@ import { afterRender, inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { EncryptionService } from '../encryption/encryption.service';
-import { User } from '../../../pages/users/models/user.model';
+import { User } from '../../../features/users/models/user.model';
 import { ToastrService } from 'ngx-toastr';
 
 const _tokenLocalStorageKey = '__a__';

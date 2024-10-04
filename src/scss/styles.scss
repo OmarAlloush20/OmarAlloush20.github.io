@@ -37,14 +37,11 @@ $travel-flow-theme: mat.define-theme((
 /* You can add global styles to this file, and also import other style files */
 // @use 'variables' as *;
 // @use 'global' as *;
-
+// @import '~css-star-rating/scss/star-rating.scss';
 @import 'reset';
 @import 'variables';
 @import 'presets';
 @import 'global';
 @import 'icons';
 @import 'toastr';
-
-.mat-mdc-dialog-surface {
-    border-radius: 0px !important;
-}
+@import 'overrides';
